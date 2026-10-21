@@ -30,10 +30,12 @@ export interface ProductFormValues {
   salePrice: string;
   unit: string;
   packing: string;
+  packingAr: string;
   capacity: string;
   material: string;
   color: string;
   features: string[];
+  featuresAr: string[];
   stockQty: string;
   minOrderQty: string;
   isFeatured: boolean;
@@ -53,10 +55,12 @@ export const EMPTY_PRODUCT: ProductFormValues = {
   salePrice: '',
   unit: 'carton',
   packing: '',
+  packingAr: '',
   capacity: '',
   material: '',
   color: '',
   features: [],
+  featuresAr: [],
   stockQty: '',
   minOrderQty: '1',
   isFeatured: false,
@@ -247,6 +251,9 @@ export default function ProductForm({
               <Field label="Packing" htmlFor="packing" required error={err('packing')} hint="e.g. 500 sets / carton">
                 <Input id="packing" value={values.packing} onChange={(e) => set('packing', e.target.value)} invalid={!!err('packing')} />
               </Field>
+              <Field label="Packing (Arabic)" htmlFor="packingAr" error={err('packingAr')} hint="e.g. 500 طقم / كرتونة">
+                <Input id="packingAr" dir="rtl" lang="ar" value={values.packingAr} onChange={(e) => set('packingAr', e.target.value)} invalid={!!err('packingAr')} />
+              </Field>
               <Field label="Sold per (unit)" htmlFor="unit" required error={err('unit')} hint="Price is per this unit">
                 <Input id="unit" list="unit-options" value={values.unit} onChange={(e) => set('unit', e.target.value)} invalid={!!err('unit')} />
                 <datalist id="unit-options">
@@ -266,6 +273,11 @@ export default function ProductForm({
               </Field>
               <Field label="Features" htmlFor="features" error={err('features')} hint="Press Enter after each one" className="sm:col-span-2">
                 <TagInput id="features" value={values.features} onChange={(f) => set('features', f)} invalid={!!err('features')} placeholder="e.g. Oven safe" />
+              </Field>
+              <Field label="Features (Arabic)" htmlFor="featuresAr" error={err('featuresAr')} hint="Shown on the Arabic site — press Enter after each one" className="sm:col-span-2">
+                <div dir="rtl" lang="ar">
+                  <TagInput id="featuresAr" value={values.featuresAr} onChange={(f) => set('featuresAr', f)} invalid={!!err('featuresAr')} placeholder="مثال: آمن للفرن" />
+                </div>
               </Field>
             </div>
           </Card>

@@ -63,7 +63,10 @@ export function LanguageProvider({
   };
 
   const isRTL = locale === 'ar';
-  const currentTranslations = translations[locale] || translations.en;
+  // Missing Arabic keys already fall back to English inside translations.ts (withFallback),
+  // which keeps lists (e.g. home.stats) as lists. Don't spread-merge here: spreading an
+  // array into an object breaks .map().
+  const currentTranslations: Translations = translations[locale] ?? translations.en;
 
   return (
     <LanguageContext.Provider

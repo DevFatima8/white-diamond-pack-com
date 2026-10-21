@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import db from '@/lib/db';
 
 /** A category as sent to the browser (header mega-menu, shop filters). */
@@ -12,8 +13,12 @@ export interface CategoryItem {
   count: number; // active products in this category
 }
 
-/** Active categories from the database, in admin-defined order, with product counts. */
-export async function getCategories(): Promise<CategoryItem[]> {
+/**
+ * Active categories from the database, in admin-defined order, with product counts.
+ * Wrapped in React's cache(): the site layout and the page can both call it, and the
+ * database is queried only once per request.
+ */
+export const getCategories = cache(async (): Promise<CategoryItem[]> => {
   const categories = await db.category.findMany({
     where: { isActive: true },
     orderBy: [{ sortOrder: 'asc' }, { nameEn: 'asc' }],
@@ -30,4 +35,4 @@ export async function getCategories(): Promise<CategoryItem[]> {
     image: c.image,
     count: c._count.products,
   }));
-}
+});

@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Check, Eye, Package, Sparkles } from 'lucide-react';
+import { ShoppingCart, Check, Eye, Package } from 'lucide-react';
 import { cn, formatPrice } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -20,8 +21,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   className,
   onQuickView,
 }) => {
-  const { addToCart } = useCart();
-  const { t, isRTL } = useLanguage();
+  const { add } = useCart();
+  const { t } = useLanguage();
   const [isAdded, setIsAdded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -29,7 +30,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     e.preventDefault();
     e.stopPropagation();
 
-    addToCart(product);
+    add(String(product.id));
     setIsAdded(true);
     setTimeout(() => {
       setIsAdded(false);
@@ -69,11 +70,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
 
-        <img
+        <Image
           src={imageSrc}
           alt={product.name}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           onError={() => setImageError(true)}
-          className="h-full w-full object-contain p-2 group-hover:scale-108 transition-transform duration-500 ease-out"
+          className="object-contain p-2 group-hover:scale-108 transition-transform duration-500 ease-out"
         />
 
         {/* Quick View Overlay Button */}

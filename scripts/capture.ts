@@ -21,7 +21,7 @@ const PAGES_TO_CAPTURE = [
 ];
 
 async function capture() {
-  const targetBaseUrl = process.env.CAPTURE_URL || 'https://falconpack.com';
+  const targetBaseUrl = process.env.CAPTURE_URL || 'http://localhost:3001';
   const outDir = process.env.CAPTURE_OUT_DIR || path.join(process.cwd(), 'reference');
 
   if (!fs.existsSync(outDir)) {

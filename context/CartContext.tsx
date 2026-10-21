@@ -1,149 +1,123 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Product } from '@/data/products';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { cartStore, type CartLine } from '@/lib/cart-store';
 
-export interface CartItem extends Omit<Product, 'id'> {
-  id: number | string;
-  _id?: string;
-  quantity: number;
+/** Product details for cart display — always loaded fresh from /api/products. */
+export interface CartProduct {
+  id: string;
+  slug: string | null;
+  name: string;
+  nameAr: string | null;
+  image: string;
+  price: number | null;
+  salePrice: number | null;
+  unit: string;
+  minOrderQty: number;
+  stockQty: number | null;
+  inStock: boolean;
 }
 
-// A product as passed to addToCart. Some API responses carry a string `_id`.
-type CartProductInput = Product & { _id?: string };
-
-interface CartContextType {
-  cartItems: CartItem[];
-  addToCart: (product: CartProductInput) => void;
-  removeFromCart: (productId: number | string) => void;
-  clearCart: () => void;
-  getTotalItems: () => number;
-  isInCart: (productId: number | string) => boolean;
+export interface CartItem extends CartLine {
+  product: CartProduct;
+  unitPrice: number; // sale price if any, else price (0 = price on request)
+  lineTotal: number;
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+interface CartContextValue {
+  lines: CartLine[];
+  /** Lines joined with fresh product data (only products that still exist and are active). */
+  items: CartItem[];
+  count: number; // total quantity, for the header badge
+  subtotal: number;
+  loadingProducts: boolean;
+  add: (productId: string, quantity?: number) => void;
+  setQuantity: (productId: string, quantity: number) => void;
+  remove: (productId: string) => void;
+  clear: () => void;
+  drawerOpen: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
+}
+
+const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // Reads localStorage on the client; renders an empty cart on the server (no hydration mismatch).
+  const lines = useSyncExternalStore(cartStore.subscribe, cartStore.getSnapshot, cartStore.getServerSnapshot);
+  const [products, setProducts] = useState<Record<string, CartProduct>>({});
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Load product details whenever the SET of product ids changes (not on quantity changes).
+  const idsKey = useMemo(() => lines.map((l) => l.productId).sort().join(','), [lines]);
   useEffect(() => {
-    try {
-      if (typeof window !== 'undefined') {
-        const savedCart = localStorage.getItem('cart');
-        if (savedCart) {
-          const parsed = JSON.parse(savedCart);
-          if (Array.isArray(parsed)) {
-            setCartItems(parsed);
-          }
-        }
-      }
-    } catch (e) {
-      console.warn('Could not read cart from localStorage:', e);
-    } finally {
-      setIsLoaded(true);
+    if (!idsKey) {
+      setLoadingProducts(false);
+      return;
     }
-  }, []);
+    const controller = new AbortController();
+    let cancelled = false; // set when ids change or the page unmounts — a newer request takes over
+    const timer = setTimeout(() => controller.abort(), 10000); // safety: never show "loading" forever
 
-  useEffect(() => {
-    if (!isLoaded) return;
-    try {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('cart', JSON.stringify(cartItems));
+    const load = async () => {
+      setLoadingProducts(true);
+      try {
+        const res = await fetch(`/api/products?ids=${encodeURIComponent(idsKey)}`, { signal: controller.signal });
+        if (!res.ok) return; // keep showing what we had; checkout re-checks on the server anyway
+        const json: { data: CartProduct[] } = await res.json();
+        if (cancelled) return;
+        setProducts(Object.fromEntries(json.data.map((p) => [p.id, p])));
+        // Products that were deleted or hidden are removed from the cart.
+        cartStore.keepOnly(new Set(json.data.map((p) => p.id)));
+      } catch {
+        // timed out or offline — ignore
+      } finally {
+        clearTimeout(timer);
+        // Only the latest request may end the loading state (otherwise the cart flashes "empty").
+        if (!cancelled) setLoadingProducts(false);
       }
-    } catch (e) {
-      console.warn('Could not write cart to localStorage:', e);
-    }
-  }, [cartItems, isLoaded]);
+    };
+    void load();
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [idsKey]);
 
-  const addToCart = (product: CartProductInput) => {
-    if (!product) return;
-    const targetId = product._id || product.id;
-    if (!targetId && targetId !== 0) return;
-
-    setCartItems((prev) => {
-      const existingIndex = prev.findIndex(
-        (item) => item.id === targetId || item._id === targetId || item.id?.toString() === targetId?.toString()
-      );
-
-      if (existingIndex > -1) {
-        const updated = [...prev];
-        updated[existingIndex] = {
-          ...updated[existingIndex],
-          quantity: updated[existingIndex].quantity + 1,
-        };
-        return updated;
-      }
-
-      const newItem: CartItem = {
-        ...product,
-        id: targetId,
-        _id: product._id || (typeof targetId === 'string' ? targetId : undefined),
-        quantity: 1,
-      };
-
-      return [...prev, newItem];
-    });
-  };
-
-  const removeFromCart = (productId: number | string) => {
-    if (!productId && productId !== 0) return;
-    setCartItems((prev) =>
-      prev.filter(
-        (item) =>
-          item.id !== productId &&
-          item._id !== productId &&
-          item.id?.toString() !== productId?.toString()
-      )
-    );
-  };
-
-  const clearCart = () => {
-    setCartItems([]);
-  };
-
-  const getTotalItems = () => {
-    return cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
-  };
-
-  const isInCart = (productId: number | string) => {
-    if (!productId && productId !== 0) return false;
-    return cartItems.some(
-      (item) =>
-        item.id === productId ||
-        item._id === productId ||
-        item.id?.toString() === productId?.toString()
-    );
-  };
-
-  return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        clearCart,
-        getTotalItems,
-        isInCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+  const items = useMemo<CartItem[]>(
+    () =>
+      lines.flatMap((line) => {
+        const product = products[line.productId];
+        if (!product) return [];
+        const unitPrice = Math.round(product.salePrice ?? product.price ?? 0);
+        return [{ ...line, product, unitPrice, lineTotal: unitPrice * line.quantity }];
+      }),
+    [lines, products],
   );
+
+  const add = useCallback((productId: string, quantity = 1) => cartStore.add(productId, quantity), []);
+  const value: CartContextValue = {
+    lines,
+    items,
+    count: lines.reduce((sum, l) => sum + l.quantity, 0),
+    subtotal: items.reduce((sum, i) => sum + i.lineTotal, 0),
+    loadingProducts: loadingProducts && items.length < lines.length,
+    add,
+    setQuantity: cartStore.setQuantity,
+    remove: cartStore.remove,
+    clear: cartStore.clear,
+    drawerOpen,
+    openDrawer: useCallback(() => setDrawerOpen(true), []),
+    closeDrawer: useCallback(() => setDrawerOpen(false), []),
+  };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
-export function useCart() {
-  const context = useContext(CartContext);
-  if (!context) {
-    // Provide a safe fallback if used outside provider so Header never crashes
-    return {
-      cartItems: [],
-      addToCart: () => {},
-      removeFromCart: () => {},
-      clearCart: () => {},
-      getTotalItems: () => 0,
-      isInCart: () => false,
-    };
-  }
-  return context;
+export function useCart(): CartContextValue {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error('useCart must be used inside <CartProvider>');
+  return ctx;
 }

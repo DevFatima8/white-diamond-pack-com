@@ -14,7 +14,7 @@ export async function proxy(request: NextRequest) {
   const isLoggedIn = token ? (await verifyAdminToken(token)) !== null : false;
 
   if (pathname === '/admin/login') {
-    return isLoggedIn ? NextResponse.redirect(new URL('/admin', request.url)) : adminPage(request);
+    return isLoggedIn ? NextResponse.redirect(new URL('/admin', request.url)) : NextResponse.next();
   }
 
   if (!isLoggedIn) {
@@ -23,19 +23,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  return adminPage(request);
-}
-
-/**
- * Let the request through, tagged with `x-wd-area: admin`. The root layout reads this
- * tag and skips the legacy Bootstrap/template stylesheets on admin pages (their
- * `!important` utilities like .p-5 clash with Tailwind's classes of the same name).
- * TODO(Phase 4): remove together with the legacy CSS.
- */
-function adminPage(request: NextRequest) {
-  const headers = new Headers(request.headers);
-  headers.set('x-wd-area', 'admin');
-  return NextResponse.next({ request: { headers } });
+  return NextResponse.next();
 }
 
 export const config = {

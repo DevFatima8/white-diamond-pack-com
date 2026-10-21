@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import db from '@/lib/db';
-import { PageHeader } from '@/components/admin/ui';
+import { ExternalLink } from 'lucide-react';
+import { PageHeader, buttonClass } from '@/components/admin/ui';
 import ProductForm, { type ProductFormValues } from '@/components/admin/ProductForm';
 
 type Params = Promise<{ id: string }>;
@@ -39,10 +40,12 @@ export default async function EditProductPage({ params }: { params: Params }) {
     salePrice: product.salePrice != null ? String(Math.round(product.salePrice)) : '',
     unit: product.unit,
     packing: product.packing,
+    packingAr: product.packingAr ?? '',
     capacity: product.capacity ?? '',
     material: product.material ?? '',
     color: product.color ?? '',
     features: stringList(product.features),
+    featuresAr: stringList(product.featuresAr),
     stockQty: product.stockQty != null ? String(product.stockQty) : '',
     minOrderQty: String(product.minOrderQty),
     isFeatured: product.isFeatured,
@@ -55,7 +58,13 @@ export default async function EditProductPage({ params }: { params: Params }) {
         eyebrow="Products"
         title={product.name}
         description="Edit the details below and save."
-        // TODO(Phase 5): add a "View in shop" link once /product/[slug] exists
+        actions={
+          product.slug && product.isActive ? (
+            <a href={`/product/${product.slug}`} target="_blank" rel="noreferrer" className={buttonClass({ variant: 'secondary', size: 'sm' })}>
+              <ExternalLink className="h-4 w-4" aria-hidden /> View in shop
+            </a>
+          ) : undefined
+        }
       />
       <ProductForm mode="edit" productId={product.id} initial={initial} categories={categories} />
     </>

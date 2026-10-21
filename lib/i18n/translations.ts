@@ -1,406 +1,894 @@
+/**
+ * All website text in English and Arabic.
+ *
+ * `Translations` is derived from the English object, and the Arabic object must have
+ * exactly the same shape — so a missing Arabic string is a TypeScript error, not a blank
+ * on the page. Product and category names come from the database (nameEn / nameAr).
+ * Use `{n}`-style placeholders with fill(): fill(t.cart.items, { n: 3 }).
+ */
+
 export type Locale = 'en' | 'ar';
 
-export interface Translations {
+const en = {
   nav: {
-    ourCompany: string;
-    categories: string;
-    industryWeServe: string;
-    businessDivisions: string;
-    careers: string;
-    shopOnline: string;
-    searchPlaceholder: string;
-    language: string;
-    viewAllCategories: string;
-    cart: string;
-    exploreCatalogue: string;
-    menu: string;
-    close: string;
-  };
-  categoriesMenu: {
-    aluminum: { title: string; desc: string };
-    biodegradable: { title: string; desc: string };
-    plastic: { title: string; desc: string };
-    paper: { title: string; desc: string };
-    clingFilm: { title: string; desc: string };
-    hygiene: { title: string; desc: string };
-  };
-  industryMenu: {
-    hospitality: { title: string; desc: string };
-    foodManufacturing: { title: string; desc: string };
-    cloudKitchens: { title: string; desc: string };
-    retailSupermarkets: { title: string; desc: string };
-    healthcareAviation: { title: string; desc: string };
-  };
-  divisionsMenu: {
-    manufacturing: { title: string; desc: string };
-    globalExport: { title: string; desc: string };
-    privateLabel: { title: string; desc: string };
-    ecoSolutions: { title: string; desc: string };
-  };
-  careersMenu: {
-    vacancies: { title: string; desc: string };
-    culture: { title: string; desc: string };
-    internships: { title: string; desc: string };
-  };
-  shopMenu: {
-    bestSellers: { title: string; desc: string };
-    bulkOrders: { title: string; desc: string };
-    instantQuote: { title: string; desc: string };
-    browseShop: { title: string; desc: string };
-  };
-  footer: {
-    aboutText: string;
-    quickLinks: string;
-    ourServices: string;
-    contactUs: string;
-    home: string;
-    services: string;
-    products: string;
-    checkout: string;
-    contact: string;
-    serviceList: {
-      foilContainers: string;
-      bambooSticks: string;
-      thermalPaper: string;
-      cateringSupplies: string;
-      customPackaging: string;
-      bulkOrders: string;
-    };
-    officeLocation: string;
-    officeAddress: string;
-    callUs: string;
-    sendMessage: string;
-    rightsReserved: string;
-    developedWith: string;
-  };
-  common: {
-    addToCart: string;
-    addedToCart: string;
-    viewDetails: string;
-    inStock: string;
-    outOfStock: string;
-    priceOnRequest: string;
-    loading: string;
-    search: string;
-    filter: string;
-    all: string;
-    previous: string;
-    next: string;
-    home: string;
-  };
-}
-
-export const translations: Record<Locale, Translations> = {
-  en: {
-    nav: {
-      ourCompany: 'OUR COMPANY',
-      categories: 'CATEGORIES',
-      industryWeServe: 'INDUSTRY WE SERVE',
-      businessDivisions: 'BUSINESS DIVISIONS',
-      careers: 'CAREERS',
-      shopOnline: 'SHOP ONLINE',
-      searchPlaceholder: 'Search products...',
-      language: 'Language',
-      viewAllCategories: 'View All Categories',
-      cart: 'Cart',
-      exploreCatalogue: 'Explore Complete Catalogue',
-      menu: 'Menu',
-      close: 'Close',
+    ourCompany: 'Our Company',
+    categories: 'Categories',
+    industries: 'Industries We Serve',
+    divisions: 'Business Divisions',
+    careers: 'Careers',
+    shopOnline: 'Shop Online',
+    searchPlaceholder: 'Search products, SKUs…',
+    searchLabel: 'Search products',
+    searchNoResults: 'No products found for “{q}”',
+    searchViewAll: 'See all results for “{q}”',
+    cart: 'Cart',
+    cartWithCount: 'Cart, {n} items',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    switchLanguage: 'العربية',
+    switchLanguageLabel: 'Switch to Arabic',
+    viewAllProducts: 'View all products',
+    productsCount: '{n} products',
+    home: 'Home',
+    company: {
+      about: 'About White Diamond',
+      aboutDesc: 'Our story, mission and the team behind the brand.',
+      quality: 'Quality & Certifications',
+      qualityDesc: 'Food-grade materials and hygienic production.',
+      infrastructure: 'Infrastructure & Presence',
+      infrastructureDesc: 'Faisalabad plant and nationwide distribution.',
     },
-    categoriesMenu: {
-      aluminum: {
-        title: 'Aluminum Foil Containers',
-        desc: 'Oven-safe containers, bakery dishes & heavy-duty catering foil.',
-      },
-      biodegradable: {
-        title: 'Biodegradable & Bagasse',
-        desc: '100% compostable sugarcane meal boxes, bowls & tableware.',
-      },
-      plastic: {
-        title: 'Plastic Food Containers',
-        desc: 'Clear PET deli bowls, microwave-safe PP boxes & sauce cups.',
-      },
-      paper: {
-        title: 'Paper Bags & Wraps',
-        desc: 'FSC kraft shopping bags, burger boxes & greaseproof wraps.',
-      },
-      clingFilm: {
-        title: 'Cling Film & Foil Rolls',
-        desc: 'Food wrap film dispensers, aluminium foil rolls & parchment.',
+    divisionItems: {
+      packaging: { title: 'White Diamond Packaging', desc: 'Foil, containers, wraps and paper packaging.' },
+      hygiene: { title: 'White Diamond Hygiene', desc: 'Hygienic disposables, bags and food-safe wraps.' },
+      oem: { title: 'Custom & Private Label', desc: 'Your logo, sizes and branded cartons.' },
+    },
+    contactTitle: 'Talk to our sales team',
+  },
+  industries: {
+    restaurants: { title: 'Restaurants & Fast Food', desc: 'Takeaway containers, burger wraps, fry bags and meal trays.' },
+    bakeries: { title: 'Bakeries & Confectioneries', desc: 'Silicone baking paper, cake boards, pastry trays and greaseproof sheets.' },
+    catering: { title: 'Industrial Catering', desc: 'Jumbo foil rolls, banquet trays and deep catering pans.' },
+    hotels: { title: 'Hotels & Hospitality', desc: 'Buffet containers, cling wrap and hygienic disposables.' },
+    cloudKitchens: { title: 'Cloud Kitchens & Delivery', desc: 'Leak-proof containers, sealed lids and heat-retaining wraps.' },
+    retail: { title: 'Retail & Supermarkets', desc: 'Shelf-ready retail packs of foil, cling film and baking paper.' },
+  },
+  cart: {
+    title: 'Your cart',
+    items: '{n} items',
+    empty: 'Your cart is empty',
+    emptyText: 'Browse our catalogue and add products to start an order.',
+    startShopping: 'Start shopping',
+    subtotal: 'Subtotal',
+    deliveryNote: 'Delivery is calculated at checkout.',
+    checkout: 'Checkout',
+    viewCart: 'View cart',
+    remove: 'Remove {name}',
+    decrease: 'Decrease quantity',
+    increase: 'Increase quantity',
+    quantity: 'Quantity',
+    per: 'per {unit}',
+    minOrder: 'Minimum order: {n}',
+    priceOnRequest: 'Price on request',
+    loading: 'Loading your cart…',
+    added: 'Added to cart',
+    viewCartAction: 'View cart',
+    pageTitle: 'Shopping cart',
+    continueShopping: 'Continue shopping',
+    product: 'Product',
+    unitPrice: 'Unit price',
+    lineTotal: 'Total',
+    delivery: 'Delivery',
+    free: 'Free',
+    total: 'Total',
+    freeDeliveryProgress: 'Add {amount} more for free delivery',
+    freeDeliveryReached: 'Your order qualifies for free delivery',
+    proceed: 'Proceed to checkout',
+    clear: 'Clear cart',
+  },
+  footer: {
+    about:
+      'Faisalabad-based manufacturer and supplier of aluminium foil, food containers, cling film, baking paper and food-service disposables for businesses and homes across Pakistan.',
+    quickLinks: 'Quick Links',
+    categories: 'Product Categories',
+    contact: 'Contact & Head Office',
+    links: {
+      about: 'About Us',
+      shop: 'Shop Online',
+      presence: 'Our Presence',
+      customPackaging: 'Custom Packaging',
+      careers: 'Careers',
+      contact: 'Contact Us',
+    },
+    whatsapp: 'WhatsApp',
+    rights: '© {year} White Diamond. All rights reserved.',
+    privacy: 'Privacy Policy',
+    terms: 'Terms of Sale',
+    shipping: 'Shipping & Returns',
+    faq: 'FAQ',
+    followUs: 'Follow us',
+  },
+  whatsapp: {
+    label: 'Chat on WhatsApp',
+    sublabel: 'Bulk orders & quotes',
+    message: 'Assalam-o-Alaikum White Diamond, I would like to ask about your products.',
+  },
+  home: {
+    hero: {
+      slides: [
+        {
+          badge: 'Factory direct · Faisalabad',
+          title: 'Premium Food Packaging,',
+          highlight: 'Trusted Across Pakistan',
+          description:
+            'Commercial-grade aluminium foil, food containers, cling film and hygienic disposables for restaurants, bakeries, caterers and homes.',
+          statTitle: 'Heavy Duty Pure Aluminium',
+          statDesc: 'Heat tolerant up to 250°C · 18 micron',
+          statTag: 'Alloy 8011',
+          imageAlt: 'White Diamond aluminium foil rolls, food containers and cling film on a kitchen counter',
+        },
+        {
+          badge: 'For takeaways & caterers',
+          title: 'Foil Containers',
+          highlight: 'That Keep Food Hot',
+          description: 'Oven-safe trays with lids in every size — from 450 ml portions to deep family and catering pans.',
+          statTitle: 'Oven & Freezer Safe',
+          statDesc: '−40°C to +250°C · leak-resistant rim',
+          statTag: '500 sets / carton',
+          imageAlt: 'Stacked White Diamond aluminium food containers with lids',
+        },
+        {
+          badge: 'Eco-friendly range',
+          title: 'Bagasse & Bamboo,',
+          highlight: 'Made for a Cleaner Pakistan',
+          description: 'Compostable sugarcane boxes, bamboo skewers and wooden cutlery — plastic-free packaging your customers will notice.',
+          statTitle: '100% Compostable',
+          statDesc: 'Microwave safe · oil & water resistant',
+          statTag: 'Plastic free',
+          imageAlt: 'Compostable bagasse food boxes and bamboo cutlery',
+        },
+        {
+          badge: 'Wholesale & OEM',
+          title: 'Bulk Orders,',
+          highlight: 'Your Brand on Every Box',
+          description: 'Wholesale cartons at factory prices, custom sizes and private-label printing for chains and supermarkets.',
+          statTitle: 'Custom Private Label',
+          statDesc: 'Your logo on lids, rolls and cartons',
+          statTag: 'Bulk pricing',
+          imageAlt: 'Aluminium foil production line at the White Diamond plant',
+        },
+      ],
+      experience: '10+ years of manufacturing',
+      shopNow: 'Shop Now',
+      bulkQuote: 'Request Bulk Quote',
+      previous: 'Previous slide',
+      next: 'Next slide',
+      pause: 'Pause slideshow',
+      play: 'Play slideshow',
+      slideLabel: 'Slide {n} of {total}',
+      trust: ['100% food-grade materials', 'Direct factory pricing', 'Delivery across Pakistan'],
+    },
+    categories: {
+      label: 'Product categories',
+      eyebrow: 'Complete disposable solutions',
+      title: 'Shop by Category',
+      viewAll: 'View all products',
+      explore: 'Explore {n} items',
+    },
+    divisions: {
+      label: 'Business divisions',
+      eyebrow: 'Manufacturing capacity',
+      title: 'Specialised Manufacturing Divisions',
+      readMore: 'Read more',
+      packaging: {
+        tag: 'Division 01',
+        title: 'White Diamond Packaging',
+        desc: 'Large-scale production of food packaging for caterers, hotels, restaurant chains and retail brands — from household foil rolls to catering-size containers.',
+        points: [
+          'Aluminium foil from 9 to 30 microns',
+          'Embossed finishes for better heat insulation',
+          'Private-label printing and automated carton packing',
+        ],
+        badgeTitle: 'Food-grade aluminium',
+        badgeDesc: 'Safe for direct food contact',
+        imageAlt: 'Foil slitting and rewinding machines at the White Diamond plant',
       },
       hygiene: {
-        title: 'Hygiene & Disposables',
-        desc: 'Nitrile gloves, chef hats, bamboo skewers & catering essentials.',
+        tag: 'Division 02',
+        title: 'White Diamond Hygiene',
+        desc: 'Hygienic disposables for the food supply chain: garbage bags, food-safe wraps, gloves and greaseproof sheets, produced and packed in clean conditions.',
+        points: [
+          'Clean packing area with controlled handling',
+          'Automated winding and sealing',
+          'Non-toxic, skin-safe materials',
+        ],
+        badgeTitle: 'Hygienic production',
+        badgeDesc: 'Packed untouched by hand',
+        imageAlt: 'Clean production hall for hygienic disposables',
       },
     },
-    industryMenu: {
-      hospitality: {
-        title: 'Hotels, Catering & Restaurants',
-        desc: 'Tailored solutions for fine dining, banqueting, and room service.',
-      },
-      foodManufacturing: {
-        title: 'Food Processors & Bakeries',
-        desc: 'Certified packaging for mass food packaging and commercial baking.',
-      },
-      cloudKitchens: {
-        title: 'Cloud Kitchens & QSR',
-        desc: 'Leakproof, thermal-retentive takeaway boxes engineered for delivery.',
-      },
-      retailSupermarkets: {
-        title: 'Retail & Supermarkets',
-        desc: 'Consumer-packed foil, cling films, and display food containers.',
-      },
-      healthcareAviation: {
-        title: 'Healthcare & Aviation Catering',
-        desc: 'Sterile, portion-controlled packaging for in-flight meals and clinical care.',
-      },
-    },
-    divisionsMenu: {
-      manufacturing: {
-        title: 'Advanced Manufacturing',
-        desc: 'State-of-the-art automated manufacturing plants producing 3,000+ SKUs.',
-      },
-      globalExport: {
-        title: 'Export & Global Distribution',
-        desc: 'Shipping world-class packaging to over 70+ countries worldwide.',
-      },
-      privateLabel: {
-        title: 'Private Labeling & OEM',
-        desc: 'Custom embossed branding, printing, and tailored container designs.',
-      },
-      ecoSolutions: {
-        title: 'Falcon Eco-Sustain',
-        desc: 'Leading sustainable packaging transition with 100% circular materials.',
-      },
-    },
-    careersMenu: {
-      vacancies: {
-        title: 'Explore Current Vacancies',
-        desc: 'Join our dynamic manufacturing, commercial, and tech teams.',
-      },
-      culture: {
-        title: 'Life at White Diamond',
-        desc: 'Empowering diversity, safety, career growth, and innovation.',
-      },
-      internships: {
-        title: 'Graduate & Internship Programs',
-        desc: 'Launch your professional journey with hands-on industrial experience.',
-      },
-    },
-    shopMenu: {
-      bestSellers: {
-        title: 'Top Rated Best Sellers',
-        desc: 'Our most ordered disposables across commercial hospitality.',
-      },
-      bulkOrders: {
-        title: 'Bulk & Wholesale Orders',
-        desc: 'Direct factory pricing with container-load global shipping.',
-      },
-      instantQuote: {
-        title: 'Request a Quotation (RFQ)',
-        desc: 'Get personalized pricing within 24 hours from sales specialists.',
-      },
-      browseShop: {
-        title: 'Browse All Online Products',
-        desc: 'Order directly with verified stock and fast doorstep delivery.',
-      },
-    },
-    footer: {
-      aboutText:
-        'WHITE DIAMOND is not only a name of a company. It is a passion, a desire to grow, service and excel. We provide premium disposable containers and food service supplies for catering, food service, and industrial needs.',
-      quickLinks: 'Quick Links',
-      ourServices: 'Our Services',
-      contactUs: 'Contact Us',
-      home: 'Home',
-      services: 'Services',
-      products: 'Products',
-      checkout: 'Checkout',
-      contact: 'Contact',
-      serviceList: {
-        foilContainers: 'Foil Containers Supply',
-        bambooSticks: 'Bamboo Sticks Supply',
-        thermalPaper: 'Thermal Paper Supply',
-        cateringSupplies: 'Catering Supplies',
-        customPackaging: 'Custom Packaging Solutions',
-        bulkOrders: 'Bulk Order Services',
-      },
-      officeLocation: 'Office Location',
-      officeAddress: 'Hanif Garden No# 01 shakhupura Road Faisalabad',
-      callUs: 'Call Us',
-      sendMessage: 'Send a Message',
-      rightsReserved: 'White Diamond. All Rights Reserved.',
-      developedWith: 'Developed with love by on3step',
-    },
-    common: {
-      addToCart: 'Add to Cart',
-      addedToCart: 'Added to Cart',
-      viewDetails: 'View Details',
-      inStock: 'In Stock',
-      outOfStock: 'Out of Stock',
-      priceOnRequest: 'Price on Request',
-      loading: 'Loading...',
-      search: 'Search',
-      filter: 'Filter',
+    featured: {
+      eyebrow: 'Factory direct supply',
+      title: 'Featured & Best Selling Products',
       all: 'All',
-      previous: 'Previous',
-      next: 'Next',
-      home: 'Home',
+      directPrice: 'Direct price',
+      packing: 'Packing',
+      per: '/ {unit}',
+      addToCart: 'Add {name} to cart',
+      outOfStock: 'Out of stock',
+      bestSeller: 'Best seller',
+      onSale: 'Sale',
+      viewAll: 'View all products',
+      empty: 'Featured products will appear here soon.',
+      minOrder: 'Min. order {n}',
+    },
+    presence: {
+      label: 'Our presence',
+      eyebrow: 'National reach',
+      title: 'Over a Decade of Packaging Excellence Across Pakistan',
+      text: 'From our plant in Faisalabad we supply hotels, restaurant chains, caterers and distributors from Karachi to Peshawar, with dispatch every working day.',
+      citiesLabel: 'Cities served nationwide',
+      hubsLabel: 'Key distribution centres',
+      hubs: ['Faisalabad (HQ & plant)', 'Lahore', 'Karachi', 'Islamabad / Rawalpindi', 'Multan', 'Peshawar'],
+      cta: 'Our infrastructure',
+      mapTitle: 'Central hub: Faisalabad plant',
+      mapTag: 'Nationwide',
+      mapCities: {
+        faisalabad: 'Faisalabad (HQ)',
+        lahore: 'Lahore',
+        islamabad: 'Islamabad',
+        peshawar: 'Peshawar',
+        multan: 'Multan',
+        karachi: 'Karachi',
+      },
+      dispatchValue: '24–48 hours',
+      dispatchLabel: 'Dispatch nationwide',
+      capacityValue: '10,000+ tons',
+      capacityLabel: 'Annual capacity',
+      mapAlt: 'Map of White Diamond delivery routes from Faisalabad to major cities in Pakistan',
+    },
+    oem: {
+      label: 'Customize your packaging',
+      eyebrow: 'Tailored specifications & private label',
+      title: 'Custom OEM & Private Label Solutions',
+      text: 'Choose roll sizes, foil thickness, embossed logos and branded cartons for your restaurant chain or supermarket brand.',
+      cards: [
+        { title: 'Logo & Brand Printing', desc: 'Printed lid boards, embossed logos on foil and full-colour branded master cartons.' },
+        { title: 'Custom Sizes & Gauges', desc: 'Roll lengths from 5 m retail to 500 m catering rolls, foil from 11 to 25 microns.' },
+        { title: '100% Food-Safe Materials', desc: 'Virgin food-grade aluminium alloy 8011 and chlorine-free silicone baking paper.' },
+        { title: 'Bulk Supply & Export', desc: 'High-capacity production for container loads, nationwide distribution and export.' },
+      ],
+      ctaTitle: 'Need a custom size or your own brand?',
+      ctaText: 'Our team prepares custom tooling and private-label samples in 7–10 working days.',
+      cta: 'Request a custom quote',
+    },
+    stats: [
+      { label: 'Manufacturing & storage units', desc: 'Automated production' },
+      { label: 'Regional sales centres', desc: 'Local commercial support' },
+      { label: 'Cities with direct delivery', desc: 'Regular truck dispatch' },
+      { label: 'Business customers', desc: 'Restaurants, caterers & retailers' },
+    ],
+    industries: {
+      label: 'Industries we serve',
+      eyebrow: 'Every food business',
+      title: "Serving Every Corner of Pakistan's Food Industry",
+      text: 'From busy catering kitchens to bakeries and supermarket shelves, our packaging protects taste, freshness and temperature.',
     },
   },
-  ar: {
-    nav: {
-      ourCompany: 'شركتنا',
-      categories: 'الفئات والمنتجات',
-      industryWeServe: 'القطاعات التي نخدمها',
-      businessDivisions: 'قطاعات الأعمال',
-      careers: 'الوظائف والمهن',
-      shopOnline: 'تسوق أونلاين',
-      searchPlaceholder: 'ابحث عن المنتجات...',
-      language: 'اللغة',
-      viewAllCategories: 'عرض جميع الفئات',
-      cart: 'السلة',
-      exploreCatalogue: 'استعراض الكتالوج الشامل',
-      menu: 'القائمة',
-      close: 'إغلاق',
+  shop: {
+    eyebrow: 'Factory direct · Faisalabad',
+    title: 'Shop Online',
+    subtitle: 'Wholesale prices in PKR, delivered across Pakistan from our Faisalabad plant.',
+    breadcrumb: 'Shop',
+    searchResultsFor: 'Results for “{q}”',
+    filters: 'Filters',
+    clearAll: 'Clear all',
+    categories: 'Categories',
+    allProducts: 'All products',
+    price: 'Price (Rs)',
+    min: 'Min',
+    max: 'Max',
+    apply: 'Apply',
+    availability: 'Availability',
+    inStockOnly: 'In stock only',
+    searchPlaceholder: 'Search in the shop…',
+    sortLabel: 'Sort by',
+    sort: { newest: 'Newest first', priceAsc: 'Price: low to high', priceDesc: 'Price: high to low', name: 'Name A–Z' },
+    gridView: 'Grid view',
+    listView: 'List view',
+    showing: 'Showing {from}–{to} of {total} products',
+    noResults: 'No products match your filters',
+    noResultsHint: 'Try removing a filter or searching for something else.',
+    resetFilters: 'Reset filters',
+    showResults: 'Show results',
+    previous: 'Previous page',
+    next: 'Next page',
+    bulkTitle: 'Ordering in bulk or need your own branding?',
+    bulkText: 'Full cartons at factory prices, custom sizes and private-label printing for restaurants, caterers and supermarkets.',
+    bulkCta: 'Request a bulk quote',
+  },
+  product: {
+    inStock: 'In stock',
+    outOfStock: 'Out of stock',
+    lowStock: 'Only {n} left in stock',
+    sku: 'SKU',
+    perUnit: 'per {unit}',
+    youSave: 'You save {amount}',
+    quantity: 'Quantity',
+    minOrder: 'Minimum order: {n}',
+    addToCart: 'Add to cart',
+    bulkQuote: 'Request bulk quote',
+    whatsappOrder: 'Order on WhatsApp',
+    whatsappMessage: 'Assalam-o-Alaikum White Diamond, I want to order: {name} — {qty} × {unit}{sku}. Please confirm the price and delivery.',
+    trust: ['Food-grade materials', 'Delivery across Pakistan', 'Cash on delivery available'],
+    tabs: { description: 'Description', specifications: 'Specifications', delivery: 'Delivery & payment' },
+    specs: {
+      packing: 'Packing',
+      capacity: 'Capacity / size',
+      material: 'Material',
+      color: 'Colour',
+      unit: 'Sold per',
+      minOrder: 'Minimum order',
+      sku: 'SKU',
+      category: 'Category',
     },
-    categoriesMenu: {
-      aluminum: {
-        title: 'علب وأطباق الألمنيوم',
-        desc: 'أوعية آمنة للفرن، أطباق للمخبوزات ورولات قصدير متينة للتموين.',
-      },
-      biodegradable: {
-        title: 'منتجات قابلة للتحلل وقصب السكر',
-        desc: 'علب وجبات، أوعية وأدوات مائدة مصنوعة 100% من قصب السكر الطبيعي.',
-      },
-      plastic: {
-        title: 'العبوات البلاستيكية للأغذية',
-        desc: 'أوعية سلطة شفافة PET، علب ميكروويف محكمة PP وكؤوس صوصات.',
-      },
-      paper: {
-        title: 'أكياس وعلب ورقية',
-        desc: 'أكياس تسوق كرافت معتمدة، علب برجر وأوراق تغليف مقاومة للدهون.',
-      },
-      clingFilm: {
-        title: 'رولات القصدير ونايلون التغليف',
-        desc: 'رولات نايلون تغليف الطعام وموزعات، ورق زبدة وقصدير مطابخ.',
-      },
-      hygiene: {
-        title: 'مستلزمات النظافة والاستخدام الواحد',
-        desc: 'قفازات نايتريل، قبعات طهاة، أعواد خيزران ومستلزمات الضيافة.',
-      },
-    },
-    industryMenu: {
-      hospitality: {
-        title: 'الفنادق، الضيافة والمطاعم',
-        desc: 'حلول متكاملة للبوفيهات، الحفلات الفاخرة وخدمات تقديم الطعام.',
-      },
-      foodManufacturing: {
-        title: 'مصانع الأغذية والمخابز',
-        desc: 'تغليف معتمد ومطابق لأعلى معايير سلامة الغذاء والإنتاج الضخم.',
-      },
-      cloudKitchens: {
-        title: 'المطابخ السحابية والوجبات السريعة',
-        desc: 'علب طعام مانعة للتسرب وحافظة للحرارة مصممة خصيصاً للتوصيل.',
-      },
-      retailSupermarkets: {
-        title: 'محلات التجزئة والسوبرماركت',
-        desc: 'منتجات التغليف المنزلية، رولات النايلون والألمنيوم المعبأة للمستهلك.',
-      },
-      healthcareAviation: {
-        title: 'الرعاية الصحية وتموين الطيران',
-        desc: 'تغليف معقم ومقسم بدقة للوجبات على متن الطائرات والمستشفيات.',
-      },
-    },
-    divisionsMenu: {
-      manufacturing: {
-        title: 'التصنيع المتقدم',
-        desc: 'مصانع آلية فائقة التطور تنتج أكثر من 3000 منتج بأعلى جودة.',
-      },
-      globalExport: {
-        title: 'التصدير والتوزيع العالمي',
-        desc: 'توريد حلول التغليف الرائدة لأكثر من 70 دولة حول العالم.',
-      },
-      privateLabel: {
-        title: 'العلامات التجارية الخاصة (OEM)',
-        desc: 'طباعة ونقش شعارات الشركات وتصاميم عبوات مخصصة بالكامل.',
-      },
-      ecoSolutions: {
-        title: 'حلول فالكون المستدامة',
-        desc: 'قيادة التحول نحو التغليف البيئي بمواد قابلة للتدوير والتحلل 100%.',
-      },
-    },
-    careersMenu: {
-      vacancies: {
-        title: 'الوظائف الشاغرة الحالية',
-        desc: 'انضم إلى فرق التصنيع، المبيعات والتطوير في بيئة عمل متميزة.',
-      },
-      culture: {
-        title: 'بيئة العمل في وايت دايموند',
-        desc: 'تعزيز التنوع، الأمان الوظيفي، الابتكار وفرص التطور المهني المستمر.',
-      },
-      internships: {
-        title: 'برامج الخريجين والتدريب العملي',
-        desc: 'ابدأ مسيرتك المهنية واكتسب خبرة عملية مباشرة في القطاع الصناعي.',
+    features: 'Key features',
+    delivery: [
+      'We deliver to all major cities in Pakistan from our Faisalabad plant, usually within 24–48 hours after we confirm your order.',
+      'Delivery charge: {charge}. Free delivery on orders of {threshold} or more.',
+      'Pay with Cash on Delivery or Bank Transfer. Our team calls every customer to confirm the order before dispatch.',
+    ],
+    related: 'Related products',
+    zoomHint: 'Hover over the image to zoom',
+    showImage: 'Show image {n}',
+    quote: {
+      title: 'Request a bulk quote',
+      intro: 'Tell us what you need — our sales team will reply with a price, usually within one working day.',
+      name: 'Your name',
+      phone: 'Mobile number',
+      phoneHint: 'e.g. 0321 6293333',
+      email: 'Email (optional)',
+      company: 'Company (optional)',
+      quantity: 'Quantity',
+      message: 'Message',
+      messagePlaceholder: 'Delivery city, branding, delivery date…',
+      submit: 'Send request',
+      success: 'Thank you! Our sales team will contact you shortly.',
+      errors: {
+        name: 'Please enter your name',
+        phone: 'Enter a valid mobile number, e.g. 03216293333',
+        email: 'Enter a valid email address',
+        message: 'Please write a short message',
+        generic: 'Could not send your request. Please try again or WhatsApp us.',
       },
     },
-    shopMenu: {
-      bestSellers: {
-        title: 'المنتجات الأكثر مبيعاً',
-        desc: 'المنتجات الأكثر طلباً واعتماداً في قطاع الضيافة والمطاعم.',
-      },
-      bulkOrders: {
-        title: 'طلبات الجملة والكميات الكبيرة',
-        desc: 'أسعار مباشرة من المصنع مع إمكانية شحن الحاويات دولياً.',
-      },
-      instantQuote: {
-        title: 'طلب عرض أسعار فوري (RFQ)',
-        desc: 'احصل على تسعيرة مخصصة خلال 24 ساعة من فريق المبيعات المتخصص.',
-      },
-      browseShop: {
-        title: 'تصفح جميع المنتجات أونلاين',
-        desc: 'اطلب مباشرة مع مخزون فوري مؤكد وتوصيل سريع حتى باب المنشأة.',
-      },
+  },
+  checkout: {
+    title: 'Checkout',
+    steps: ['Cart', 'Details', 'Confirm'],
+    back: 'Back',
+    continue: 'Continue',
+    detailsTitle: 'Delivery details',
+    name: 'Full name',
+    phone: 'Mobile number',
+    phoneHint: 'Format: 03XXXXXXXXX',
+    email: 'Email (optional)',
+    city: 'City',
+    cityPlaceholder: 'Select your city',
+    otherCity: 'Other city',
+    otherCityName: 'City name',
+    address: 'Full address',
+    addressPlaceholder: 'House / shop number, street, area',
+    notes: 'Order notes (optional)',
+    notesPlaceholder: 'Best time to deliver, landmark, loading instructions…',
+    payment: 'Payment method',
+    cod: 'Cash on Delivery',
+    codDesc: 'Pay in cash when your order arrives.',
+    bank: 'Bank Transfer',
+    bankDesc: 'Transfer the total to our bank account. We dispatch after the payment arrives.',
+    bankDetails: 'Our bank details',
+    summary: 'Order summary',
+    editCart: 'Edit cart',
+    confirmTitle: 'Review & confirm',
+    deliverTo: 'Deliver to',
+    paymentLabel: 'Payment',
+    placeOrder: 'Place order · {total}',
+    agree: 'We will call you to confirm the order before dispatch.',
+    secure: 'Prices are checked again on our server when you place the order.',
+    errors: {
+      name: 'Please enter your name',
+      phone: 'Enter a valid mobile number, e.g. 03216293333',
+      email: 'Enter a valid email address',
+      city: 'Please choose your city',
+      address: 'Please enter your full address',
+      generic: 'Could not place the order. Please try again.',
+      tooMany: 'Too many attempts. Please wait a few minutes and try again.',
     },
-    footer: {
-      aboutText:
-        'وايت دايموند ليست مجرد اسم لشركة، بل هي شغف وطموح للنمو وتقديم الخدمة الاستثنائية والتميز. نوفر حاويات التغليف الاستهلاكية ومستلزمات تقديم الطعام للفنادق والمطاعم والقطاع الصناعي.',
-      quickLinks: 'روابط سريعة',
-      ourServices: 'خدماتنا',
-      contactUs: 'اتصل بنا',
-      home: 'الرئيسية',
-      services: 'الخدمات',
-      products: 'المنتجات',
-      checkout: 'إتمام الطلب',
-      contact: 'تواصل معنا',
-      serviceList: {
-        foilContainers: 'توريد حاويات الألمنيوم',
-        bambooSticks: 'توريد أعواد الخيزران والأسياخ',
-        thermalPaper: 'توريد الورق الحراري والفواتير',
-        cateringSupplies: 'مستلزمات التموين والضيافة',
-        customPackaging: 'حلول التغليف المخصصة',
-        bulkOrders: 'خدمات طلبات الجملة والكميات',
-      },
-      officeLocation: 'موقع المكتب الرئيسي',
-      officeAddress: 'حديقة حنيف رقم 01، طريق شيخوبورا، فيصل آباد',
-      callUs: 'اتصل بنا',
-      sendMessage: 'أرسل رسالة',
-      rightsReserved: 'وايت دايموند. جميع الحقوق محفوظة.',
-      developedWith: 'تم التطوير بكل فخر بواسطة on3step',
-    },
-    common: {
-      addToCart: 'أضف إلى السلة',
-      addedToCart: 'تمت الإضافة للسلة',
-      viewDetails: 'عرض التفاصيل',
-      inStock: 'متوفر بالمخزون',
-      outOfStock: 'غير متوفر حالياً',
-      priceOnRequest: 'السعر عند الطلب',
-      loading: 'جاري التحميل...',
-      search: 'بحث',
-      filter: 'تصفية',
-      all: 'الكل',
-      previous: 'السابق',
-      next: 'التالي',
-      home: 'الرئيسية',
-    },
+  },
+  order: {
+    badge: 'Order confirmed',
+    title: 'Thank you! Your order {number} has been placed.',
+    subtitle: 'We will call you on {phone} to confirm your order before dispatch.',
+    callNote: 'Our sales team calls during working hours (Monday–Saturday, 9 am – 6 pm).',
+    details: 'Order details',
+    number: 'Order number',
+    date: 'Date',
+    status: 'Status',
+    payment: 'Payment',
+    deliverTo: 'Delivery address',
+    items: 'Items',
+    bankTitle: 'Please transfer {total} to:',
+    bankNote: 'Then send the payment screenshot on WhatsApp with your order number.',
+    whatsapp: 'Message us on WhatsApp',
+    whatsappMessage: 'Assalam-o-Alaikum White Diamond, I placed order {number} ({total}). Please confirm.',
+    continueShopping: 'Continue shopping',
+    notFound: 'Order not found',
+    notFoundText: 'This order link is invalid. Please use the link from your confirmation, or contact us on WhatsApp.',
+    statuses: { PENDING: 'Awaiting confirmation', CONFIRMED: 'Confirmed', SHIPPED: 'Shipped', DELIVERED: 'Delivered', CANCELLED: 'Cancelled' },
+  },
+  common: {
+    addToCart: 'Add to Cart',
+    addedToCart: 'Added to Cart',
+    viewDetails: 'View Details',
+    inStock: 'In Stock',
+    outOfStock: 'Out of Stock',
+    priceOnRequest: 'Price on Request',
+    loading: 'Loading...',
+    search: 'Search',
+    filter: 'Filter',
+    all: 'All',
+    previous: 'Previous',
+    next: 'Next',
+    home: 'Home',
   },
 };
+
+export type Translations = typeof en;
+
+const ar: Translations = {
+  nav: {
+    ourCompany: 'شركتنا',
+    categories: 'الفئات',
+    industries: 'القطاعات التي نخدمها',
+    divisions: 'أقسام الأعمال',
+    careers: 'الوظائف',
+    shopOnline: 'تسوق الآن',
+    searchPlaceholder: 'ابحث عن المنتجات…',
+    searchLabel: 'البحث عن المنتجات',
+    searchNoResults: 'لا توجد منتجات لـ «{q}»',
+    searchViewAll: 'عرض كل النتائج لـ «{q}»',
+    cart: 'السلة',
+    cartWithCount: 'السلة، {n} منتجات',
+    openMenu: 'فتح القائمة',
+    closeMenu: 'إغلاق القائمة',
+    switchLanguage: 'English',
+    switchLanguageLabel: 'التبديل إلى الإنجليزية',
+    viewAllProducts: 'عرض كل المنتجات',
+    productsCount: '{n} منتجات',
+    home: 'الرئيسية',
+    company: {
+      about: 'عن وايت دايموند',
+      aboutDesc: 'قصتنا ورسالتنا والفريق وراء العلامة.',
+      quality: 'الجودة والشهادات',
+      qualityDesc: 'مواد آمنة للغذاء وإنتاج صحي.',
+      infrastructure: 'البنية التحتية والانتشار',
+      infrastructureDesc: 'مصنع فيصل آباد والتوزيع في جميع أنحاء البلاد.',
+    },
+    divisionItems: {
+      packaging: { title: 'وايت دايموند للتغليف', desc: 'ورق الألمنيوم والعلب وأفلام التغليف والتغليف الورقي.' },
+      hygiene: { title: 'وايت دايموند للنظافة', desc: 'منتجات صحية للاستعمال مرة واحدة وأكياس وأغلفة آمنة للغذاء.' },
+      oem: { title: 'التصنيع حسب الطلب', desc: 'شعارك ومقاساتك وكراتين بعلامتك التجارية.' },
+    },
+    contactTitle: 'تحدث مع فريق المبيعات',
+  },
+  industries: {
+    restaurants: { title: 'المطاعم والوجبات السريعة', desc: 'علب الطلبات الخارجية وأغلفة البرجر وأكياس البطاطس وصواني الوجبات.' },
+    bakeries: { title: 'المخابز والحلويات', desc: 'ورق خبز بالسيليكون وقواعد الكيك وصواني المعجنات وأوراق مقاومة للدهون.' },
+    catering: { title: 'التموين الصناعي', desc: 'لفائف ألمنيوم كبيرة وصواني الولائم وأوعية التموين العميقة.' },
+    hotels: { title: 'الفنادق والضيافة', desc: 'أوعية البوفيه وأفلام التغليف ومنتجات صحية للاستعمال مرة واحدة.' },
+    cloudKitchens: { title: 'المطابخ السحابية والتوصيل', desc: 'علب مانعة للتسرب وأغطية محكمة وأغلفة تحافظ على الحرارة.' },
+    retail: { title: 'التجزئة والسوبرماركت', desc: 'عبوات جاهزة للرفوف من الألمنيوم وأفلام التغليف وورق الخبز.' },
+  },
+  cart: {
+    title: 'سلة التسوق',
+    items: '{n} منتجات',
+    empty: 'سلتك فارغة',
+    emptyText: 'تصفح الكتالوج وأضف المنتجات لبدء الطلب.',
+    startShopping: 'ابدأ التسوق',
+    subtotal: 'المجموع الفرعي',
+    deliveryNote: 'تُحسب رسوم التوصيل عند إتمام الطلب.',
+    checkout: 'إتمام الطلب',
+    viewCart: 'عرض السلة',
+    remove: 'إزالة {name}',
+    decrease: 'تقليل الكمية',
+    increase: 'زيادة الكمية',
+    quantity: 'الكمية',
+    per: 'لكل {unit}',
+    minOrder: 'الحد الأدنى للطلب: {n}',
+    priceOnRequest: 'السعر عند الطلب',
+    loading: 'جارٍ تحميل السلة…',
+    added: 'تمت الإضافة إلى السلة',
+    viewCartAction: 'عرض السلة',
+    pageTitle: 'سلة التسوق',
+    continueShopping: 'متابعة التسوق',
+    product: 'المنتج',
+    unitPrice: 'سعر الوحدة',
+    lineTotal: 'الإجمالي',
+    delivery: 'التوصيل',
+    free: 'مجاني',
+    total: 'الإجمالي',
+    freeDeliveryProgress: 'أضف {amount} للحصول على توصيل مجاني',
+    freeDeliveryReached: 'طلبك مؤهل للتوصيل المجاني',
+    proceed: 'المتابعة لإتمام الطلب',
+    clear: 'إفراغ السلة',
+  },
+  footer: {
+    about:
+      'مصنّع ومورّد مقره فيصل آباد لورق الألمنيوم وعلب الطعام وأفلام التغليف وورق الخبز ومستلزمات خدمات الطعام للشركات والمنازل في جميع أنحاء باكستان.',
+    quickLinks: 'روابط سريعة',
+    categories: 'فئات المنتجات',
+    contact: 'التواصل والمكتب الرئيسي',
+    links: {
+      about: 'من نحن',
+      shop: 'تسوق الآن',
+      presence: 'انتشارنا',
+      customPackaging: 'تغليف حسب الطلب',
+      careers: 'الوظائف',
+      contact: 'اتصل بنا',
+    },
+    whatsapp: 'واتساب',
+    rights: '© {year} وايت دايموند. جميع الحقوق محفوظة.',
+    privacy: 'سياسة الخصوصية',
+    terms: 'شروط البيع',
+    shipping: 'الشحن والإرجاع',
+    faq: 'الأسئلة الشائعة',
+    followUs: 'تابعنا',
+  },
+  whatsapp: {
+    label: 'تحدث معنا على واتساب',
+    sublabel: 'الطلبات بالجملة وعروض الأسعار',
+    message: 'السلام عليكم وايت دايموند، أود الاستفسار عن منتجاتكم.',
+  },
+  home: {
+    hero: {
+      slides: [
+        {
+          badge: 'من المصنع مباشرة · فيصل آباد',
+          title: 'تغليف غذائي فاخر',
+          highlight: 'موثوق في جميع أنحاء باكستان',
+          description: 'ورق ألمنيوم وعلب طعام وأفلام تغليف ومنتجات صحية بجودة تجارية للمطاعم والمخابز وشركات التموين والمنازل.',
+          statTitle: 'ألمنيوم نقي شديد التحمل',
+          statDesc: 'يتحمل حتى 250 درجة مئوية · 18 ميكرون',
+          statTag: 'سبيكة 8011',
+          imageAlt: 'لفائف ألمنيوم وعلب طعام وأفلام تغليف من وايت دايموند على طاولة مطبخ',
+        },
+        {
+          badge: 'للطلبات الخارجية والتموين',
+          title: 'علب ألمنيوم',
+          highlight: 'تحافظ على حرارة الطعام',
+          description: 'صواني آمنة للفرن مع أغطية بجميع المقاسات، من حصص 450 مل إلى أوعية العائلة والتموين.',
+          statTitle: 'آمنة للفرن والفريزر',
+          statDesc: 'من −40 إلى +250 درجة · حافة مانعة للتسرب',
+          statTag: '500 طقم / كرتونة',
+          imageAlt: 'علب ألمنيوم مكدسة مع أغطية من وايت دايموند',
+        },
+        {
+          badge: 'منتجات صديقة للبيئة',
+          title: 'تفل القصب والخيزران',
+          highlight: 'من أجل باكستان أنظف',
+          description: 'علب من قصب السكر قابلة للتحلل وأعواد خيزران وأدوات مائدة خشبية، تغليف خالٍ من البلاستيك يلاحظه عملاؤك.',
+          statTitle: 'قابلة للتحلل 100%',
+          statDesc: 'آمنة للميكروويف · مقاومة للزيت والماء',
+          statTag: 'خالية من البلاستيك',
+          imageAlt: 'علب طعام من تفل القصب وأدوات مائدة من الخيزران',
+        },
+        {
+          badge: 'الجملة والتصنيع حسب الطلب',
+          title: 'طلبات بالجملة',
+          highlight: 'علامتك على كل علبة',
+          description: 'كراتين بالجملة بأسعار المصنع ومقاسات خاصة وطباعة بعلامتك التجارية للسلاسل والسوبرماركت.',
+          statTitle: 'علامة تجارية خاصة',
+          statDesc: 'شعارك على الأغطية واللفائف والكراتين',
+          statTag: 'أسعار الجملة',
+          imageAlt: 'خط إنتاج ورق الألمنيوم في مصنع وايت دايموند',
+        },
+      ],
+      experience: 'أكثر من 10 سنوات في التصنيع',
+      shopNow: 'تسوق الآن',
+      bulkQuote: 'اطلب عرض سعر بالجملة',
+      previous: 'الشريحة السابقة',
+      next: 'الشريحة التالية',
+      pause: 'إيقاف العرض',
+      play: 'تشغيل العرض',
+      slideLabel: 'الشريحة {n} من {total}',
+      trust: ['مواد آمنة للغذاء 100%', 'أسعار المصنع مباشرة', 'توصيل في جميع أنحاء باكستان'],
+    },
+    categories: {
+      label: 'فئات المنتجات',
+      eyebrow: 'حلول متكاملة للاستعمال مرة واحدة',
+      title: 'تسوق حسب الفئة',
+      viewAll: 'عرض كل المنتجات',
+      explore: 'استكشف {n} منتجات',
+    },
+    divisions: {
+      label: 'أقسام الأعمال',
+      eyebrow: 'قدرات التصنيع',
+      title: 'أقسام تصنيع متخصصة',
+      readMore: 'اقرأ المزيد',
+      packaging: {
+        tag: 'القسم 01',
+        title: 'وايت دايموند للتغليف',
+        desc: 'إنتاج واسع لتغليف الأغذية لشركات التموين والفنادق وسلاسل المطاعم وعلامات التجزئة، من لفائف الألمنيوم المنزلية إلى علب التموين.',
+        points: ['ورق ألمنيوم من 9 إلى 30 ميكرون', 'تشطيبات بارزة لعزل حراري أفضل', 'طباعة بعلامتك وتعبئة آلية في الكراتين'],
+        badgeTitle: 'ألمنيوم آمن للغذاء',
+        badgeDesc: 'آمن للتلامس المباشر مع الطعام',
+        imageAlt: 'آلات قص ولف ورق الألمنيوم في مصنع وايت دايموند',
+      },
+      hygiene: {
+        tag: 'القسم 02',
+        title: 'وايت دايموند للنظافة',
+        desc: 'منتجات صحية لسلسلة إمداد الغذاء: أكياس القمامة وأغلفة آمنة للغذاء وقفازات وأوراق مقاومة للدهون، تُنتج وتُعبأ في ظروف نظيفة.',
+        points: ['منطقة تعبئة نظيفة مع تداول مضبوط', 'لف وإغلاق آلي', 'مواد غير سامة وآمنة على الجلد'],
+        badgeTitle: 'إنتاج صحي',
+        badgeDesc: 'تُعبأ دون لمس اليد',
+        imageAlt: 'قاعة إنتاج نظيفة للمنتجات الصحية',
+      },
+    },
+    featured: {
+      eyebrow: 'توريد مباشر من المصنع',
+      title: 'المنتجات المميزة والأكثر مبيعاً',
+      all: 'الكل',
+      directPrice: 'سعر المصنع',
+      packing: 'التعبئة',
+      per: '/ {unit}',
+      addToCart: 'أضف {name} إلى السلة',
+      outOfStock: 'نفد المخزون',
+      bestSeller: 'الأكثر مبيعاً',
+      onSale: 'تخفيض',
+      viewAll: 'عرض كل المنتجات',
+      empty: 'ستظهر المنتجات المميزة هنا قريباً.',
+      minOrder: 'الحد الأدنى {n}',
+    },
+    presence: {
+      label: 'انتشارنا',
+      eyebrow: 'تغطية وطنية',
+      title: 'أكثر من عقد من التميز في التغليف في جميع أنحاء باكستان',
+      text: 'من مصنعنا في فيصل آباد نزوّد الفنادق وسلاسل المطاعم وشركات التموين والموزعين من كراتشي إلى بيشاور، مع شحن في كل يوم عمل.',
+      citiesLabel: 'مدينة نخدمها في أنحاء البلاد',
+      hubsLabel: 'مراكز التوزيع الرئيسية',
+      hubs: ['فيصل آباد (المقر والمصنع)', 'لاهور', 'كراتشي', 'إسلام آباد / راولبندي', 'ملتان', 'بيشاور'],
+      cta: 'بنيتنا التحتية',
+      mapTitle: 'المركز الرئيسي: مصنع فيصل آباد',
+      mapTag: 'تغطية وطنية',
+      mapCities: {
+        faisalabad: 'فيصل آباد (المقر)',
+        lahore: 'لاهور',
+        islamabad: 'إسلام آباد',
+        peshawar: 'بيشاور',
+        multan: 'ملتان',
+        karachi: 'كراتشي',
+      },
+      dispatchValue: '24–48 ساعة',
+      dispatchLabel: 'شحن لجميع المدن',
+      capacityValue: '+10,000 طن',
+      capacityLabel: 'الطاقة السنوية',
+      mapAlt: 'خريطة مسارات توصيل وايت دايموند من فيصل آباد إلى المدن الكبرى في باكستان',
+    },
+    oem: {
+      label: 'خصص تغليفك',
+      eyebrow: 'مواصفات خاصة وعلامة تجارية خاصة',
+      title: 'حلول التصنيع والعلامة الخاصة',
+      text: 'اختر مقاسات اللفائف وسماكة الألمنيوم والشعارات البارزة والكراتين بعلامتك لسلسلة مطاعمك أو متجرك.',
+      cards: [
+        { title: 'طباعة الشعار والعلامة', desc: 'أغطية مطبوعة وشعارات بارزة على الألمنيوم وكراتين ملونة بعلامتك.' },
+        { title: 'مقاسات وسماكات خاصة', desc: 'لفائف من 5 أمتار للتجزئة حتى 500 متر للتموين، وسماكة من 11 إلى 25 ميكرون.' },
+        { title: 'مواد آمنة للغذاء 100%', desc: 'سبيكة ألمنيوم 8011 أصلية آمنة للغذاء وورق خبز سيليكون خالٍ من الكلور.' },
+        { title: 'توريد بالجملة وتصدير', desc: 'إنتاج بطاقة عالية لشحنات الحاويات والتوزيع المحلي والتصدير.' },
+      ],
+      ctaTitle: 'تحتاج مقاساً خاصاً أو علامتك التجارية؟',
+      ctaText: 'يجهز فريقنا القوالب الخاصة وعينات العلامة الخاصة خلال 7–10 أيام عمل.',
+      cta: 'اطلب عرض سعر مخصص',
+    },
+    stats: [
+      { label: 'وحدات تصنيع وتخزين', desc: 'إنتاج آلي' },
+      { label: 'مراكز مبيعات إقليمية', desc: 'دعم تجاري محلي' },
+      { label: 'مدينة بتوصيل مباشر', desc: 'شحن منتظم بالشاحنات' },
+      { label: 'عميل تجاري', desc: 'مطاعم وشركات تموين ومتاجر' },
+    ],
+    industries: {
+      label: 'القطاعات التي نخدمها',
+      eyebrow: 'لكل نشاط غذائي',
+      title: 'نخدم كل أركان صناعة الأغذية في باكستان',
+      text: 'من مطابخ التموين المزدحمة إلى المخابز ورفوف السوبرماركت، يحافظ تغليفنا على المذاق والطزاجة والحرارة.',
+    },
+  },
+  shop: {
+    eyebrow: 'من المصنع مباشرة · فيصل آباد',
+    title: 'تسوق الآن',
+    subtitle: 'أسعار الجملة بالروبية الباكستانية، مع التوصيل إلى جميع أنحاء باكستان من مصنعنا في فيصل آباد.',
+    breadcrumb: 'المتجر',
+    searchResultsFor: 'نتائج البحث عن «{q}»',
+    filters: 'التصفية',
+    clearAll: 'مسح الكل',
+    categories: 'الفئات',
+    allProducts: 'كل المنتجات',
+    price: 'السعر (روبية)',
+    min: 'من',
+    max: 'إلى',
+    apply: 'تطبيق',
+    availability: 'التوفر',
+    inStockOnly: 'المتوفر فقط',
+    searchPlaceholder: 'ابحث في المتجر…',
+    sortLabel: 'الترتيب',
+    sort: { newest: 'الأحدث أولاً', priceAsc: 'السعر: من الأقل', priceDesc: 'السعر: من الأعلى', name: 'الاسم أ–ي' },
+    gridView: 'عرض شبكي',
+    listView: 'عرض قائمة',
+    showing: 'عرض {from}–{to} من {total} منتج',
+    noResults: 'لا توجد منتجات مطابقة',
+    noResultsHint: 'جرّب إزالة أحد عوامل التصفية أو البحث عن شيء آخر.',
+    resetFilters: 'إعادة ضبط التصفية',
+    showResults: 'عرض النتائج',
+    previous: 'الصفحة السابقة',
+    next: 'الصفحة التالية',
+    bulkTitle: 'تطلب بالجملة أو تحتاج علامتك التجارية؟',
+    bulkText: 'كراتين كاملة بأسعار المصنع ومقاسات خاصة وطباعة بعلامتك للمطاعم وشركات التموين والسوبرماركت.',
+    bulkCta: 'اطلب عرض سعر بالجملة',
+  },
+  product: {
+    inStock: 'متوفر',
+    outOfStock: 'غير متوفر',
+    lowStock: 'بقي {n} فقط في المخزون',
+    sku: 'رمز المنتج',
+    perUnit: 'لكل {unit}',
+    youSave: 'توفر {amount}',
+    quantity: 'الكمية',
+    minOrder: 'الحد الأدنى للطلب: {n}',
+    addToCart: 'أضف إلى السلة',
+    bulkQuote: 'اطلب عرض سعر بالجملة',
+    whatsappOrder: 'اطلب عبر واتساب',
+    whatsappMessage: 'السلام عليكم وايت دايموند، أريد طلب: {name} — {qty} × {unit}{sku}. أرجو تأكيد السعر والتوصيل.',
+    trust: ['مواد آمنة للغذاء', 'توصيل في جميع أنحاء باكستان', 'الدفع عند الاستلام متاح'],
+    tabs: { description: 'الوصف', specifications: 'المواصفات', delivery: 'التوصيل والدفع' },
+    specs: {
+      packing: 'التعبئة',
+      capacity: 'السعة / المقاس',
+      material: 'المادة',
+      color: 'اللون',
+      unit: 'يُباع لكل',
+      minOrder: 'الحد الأدنى للطلب',
+      sku: 'رمز المنتج',
+      category: 'الفئة',
+    },
+    features: 'المزايا الرئيسية',
+    delivery: [
+      'نوصل إلى جميع المدن الكبرى في باكستان من مصنعنا في فيصل آباد، عادةً خلال 24–48 ساعة بعد تأكيد الطلب.',
+      'رسوم التوصيل: {charge}. التوصيل مجاني للطلبات بقيمة {threshold} أو أكثر.',
+      'ادفع نقداً عند الاستلام أو بالتحويل البنكي. يتصل فريقنا بكل عميل لتأكيد الطلب قبل الشحن.',
+    ],
+    related: 'منتجات ذات صلة',
+    zoomHint: 'مرر المؤشر فوق الصورة للتكبير',
+    showImage: 'عرض الصورة {n}',
+    quote: {
+      title: 'اطلب عرض سعر بالجملة',
+      intro: 'أخبرنا بما تحتاجه وسيرد فريق المبيعات بالسعر، عادةً خلال يوم عمل واحد.',
+      name: 'الاسم',
+      phone: 'رقم الجوال',
+      phoneHint: 'مثال: 0321 6293333',
+      email: 'البريد الإلكتروني (اختياري)',
+      company: 'الشركة (اختياري)',
+      quantity: 'الكمية',
+      message: 'الرسالة',
+      messagePlaceholder: 'مدينة التوصيل، العلامة التجارية، موعد التسليم…',
+      submit: 'إرسال الطلب',
+      success: 'شكراً لك! سيتواصل معك فريق المبيعات قريباً.',
+      errors: {
+        name: 'يرجى إدخال الاسم',
+        phone: 'أدخل رقم جوال صحيحاً، مثل 03216293333',
+        email: 'أدخل بريداً إلكترونياً صحيحاً',
+        message: 'يرجى كتابة رسالة قصيرة',
+        generic: 'تعذر إرسال الطلب. حاول مرة أخرى أو راسلنا على واتساب.',
+      },
+    },
+  },
+  checkout: {
+    title: 'إتمام الطلب',
+    steps: ['السلة', 'البيانات', 'التأكيد'],
+    back: 'رجوع',
+    continue: 'متابعة',
+    detailsTitle: 'بيانات التوصيل',
+    name: 'الاسم الكامل',
+    phone: 'رقم الجوال',
+    phoneHint: 'الصيغة: 03XXXXXXXXX',
+    email: 'البريد الإلكتروني (اختياري)',
+    city: 'المدينة',
+    cityPlaceholder: 'اختر مدينتك',
+    otherCity: 'مدينة أخرى',
+    otherCityName: 'اسم المدينة',
+    address: 'العنوان الكامل',
+    addressPlaceholder: 'رقم المنزل / المحل، الشارع، المنطقة',
+    notes: 'ملاحظات الطلب (اختياري)',
+    notesPlaceholder: 'أفضل وقت للتوصيل، علامة مميزة، تعليمات التحميل…',
+    payment: 'طريقة الدفع',
+    cod: 'الدفع عند الاستلام',
+    codDesc: 'ادفع نقداً عند وصول طلبك.',
+    bank: 'تحويل بنكي',
+    bankDesc: 'حوّل المبلغ إلى حسابنا البنكي. نشحن الطلب بعد وصول الدفعة.',
+    bankDetails: 'بياناتنا البنكية',
+    summary: 'ملخص الطلب',
+    editCart: 'تعديل السلة',
+    confirmTitle: 'المراجعة والتأكيد',
+    deliverTo: 'التوصيل إلى',
+    paymentLabel: 'الدفع',
+    placeOrder: 'تأكيد الطلب · {total}',
+    agree: 'سنتصل بك لتأكيد الطلب قبل الشحن.',
+    secure: 'تتم مراجعة الأسعار مرة أخرى على خادمنا عند تأكيد الطلب.',
+    errors: {
+      name: 'يرجى إدخال الاسم',
+      phone: 'أدخل رقم جوال صحيحاً، مثل 03216293333',
+      email: 'أدخل بريداً إلكترونياً صحيحاً',
+      city: 'يرجى اختيار المدينة',
+      address: 'يرجى إدخال العنوان الكامل',
+      generic: 'تعذر إتمام الطلب. يرجى المحاولة مرة أخرى.',
+      tooMany: 'محاولات كثيرة. انتظر بضع دقائق ثم حاول مرة أخرى.',
+    },
+  },
+  order: {
+    badge: 'تم تأكيد الطلب',
+    title: 'شكراً لك! تم استلام طلبك {number}.',
+    subtitle: 'سنتصل بك على {phone} لتأكيد الطلب قبل الشحن.',
+    callNote: 'يتصل فريق المبيعات خلال ساعات العمل (الاثنين–السبت، 9 صباحاً – 6 مساءً).',
+    details: 'تفاصيل الطلب',
+    number: 'رقم الطلب',
+    date: 'التاريخ',
+    status: 'الحالة',
+    payment: 'الدفع',
+    deliverTo: 'عنوان التوصيل',
+    items: 'المنتجات',
+    bankTitle: 'يرجى تحويل {total} إلى:',
+    bankNote: 'ثم أرسل صورة الدفع على واتساب مع رقم الطلب.',
+    whatsapp: 'راسلنا على واتساب',
+    whatsappMessage: 'السلام عليكم وايت دايموند، قمت بالطلب رقم {number} ({total}). أرجو التأكيد.',
+    continueShopping: 'متابعة التسوق',
+    notFound: 'الطلب غير موجود',
+    notFoundText: 'رابط الطلب غير صالح. استخدم الرابط من صفحة التأكيد أو تواصل معنا على واتساب.',
+    statuses: { PENDING: 'بانتظار التأكيد', CONFIRMED: 'مؤكد', SHIPPED: 'تم الشحن', DELIVERED: 'تم التسليم', CANCELLED: 'ملغي' },
+  },
+  common: {
+    addToCart: 'أضف إلى السلة',
+    addedToCart: 'تمت الإضافة',
+    viewDetails: 'عرض التفاصيل',
+    inStock: 'متوفر',
+    outOfStock: 'غير متوفر',
+    priceOnRequest: 'السعر عند الطلب',
+    loading: 'جارٍ التحميل...',
+    search: 'بحث',
+    filter: 'تصفية',
+    all: 'الكل',
+    previous: 'السابق',
+    next: 'التالي',
+    home: 'الرئيسية',
+  },
+};
+
+/**
+ * Safety net: fill any key missing from `dict` with the English text. TypeScript already
+ * forces both languages to have the same keys, but at runtime (e.g. a dev server still
+ * running an older copy of this file) a missing section would otherwise be `undefined`
+ * and crash the page — now it shows English instead.
+ */
+export function withFallback<T>(dict: T, fallback: T): T {
+  if (Array.isArray(fallback)) return (Array.isArray(dict) ? dict : fallback) as T;
+  if (typeof fallback !== 'object' || fallback === null) return (typeof dict === typeof fallback ? dict : fallback) as T;
+  const out: Record<string, unknown> = {};
+  for (const key of Object.keys(fallback)) {
+    out[key] = withFallback((dict as Record<string, unknown> | undefined)?.[key], (fallback as Record<string, unknown>)[key]);
+  }
+  return out as T;
+}
+
+export const translations: Record<Locale, Translations> = { en, ar: withFallback(ar, en) };
+
+/** Replace {placeholders}: fill('Cart, {n} items', { n: 3 }) → 'Cart, 3 items' */
+export function fill(template: string, values: Record<string, string | number>): string {
+  return template.replace(/\{(\w+)\}/g, (_, key: string) => String(values[key] ?? `{${key}}`));
+}

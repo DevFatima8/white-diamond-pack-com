@@ -36,8 +36,7 @@ export const DEFAULT_SETTINGS: Record<SettingKey, string> = {
   whatsapp_number: '923216293333',
   contact_phone: '+92 321 6293333',
   contact_email: 'whitediamond344@gmail.com',
-  // DUMMY address — replace with the real one.
-  contact_address: 'Small Industrial Estate, Sargodha Road, Faisalabad, Punjab, Pakistan',
+  contact_address: 'Hanif Garden No# 01, Sheikhupura Road, Faisalabad, Punjab, Pakistan',
   social_facebook: '',
   social_instagram: '',
   social_linkedin: '',

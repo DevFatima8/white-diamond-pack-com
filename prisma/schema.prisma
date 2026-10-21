@@ -63,6 +63,8 @@ model Product {
   slug          String?   @unique @db.VarChar(191)
   nameAr        String?   @db.VarChar(255)
   descriptionAr String?   @db.Text
+  packingAr     String?   @db.VarChar(255) // Arabic version of `packing`
+  featuresAr    Json? // Arabic version of `features`: string[]
   categoryId    String?
   // Named categoryRef because `category` is already taken by the old text column.
   categoryRef   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
@@ -166,6 +168,7 @@ model Counter {
 enum MessageType {
   CONTACT
   QUOTE
+  CAREER // job application from the Careers page
 }
 
 model Message {
@@ -175,6 +178,7 @@ model Message {
   phone       String      @db.VarChar(20)
   email       String?     @db.VarChar(254)
   company     String?     @db.VarChar(150)
+  subject     String?     @db.VarChar(150) // e.g. "Bulk order", "Careers: Sales Executive"
   message     String      @db.Text
   // Optional context for quote requests sent from a product page
   productId   String?     @db.VarChar(30)

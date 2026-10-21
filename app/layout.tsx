@@ -1,12 +1,10 @@
 import type { Metadata } from 'next';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { Plus_Jakarta_Sans, Outfit, Cairo } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { CartProvider } from '@/context/CartContext';
 import { ToastProvider } from '@/context/ToastContext';
-import HeaderWrapper from '@/components/HeaderWrapper';
-import Footer from '@/components/Footer';
 import type { Locale } from '@/lib/i18n/translations';
 
 const fontSans = Plus_Jakarta_Sans({
@@ -31,27 +29,52 @@ const fontArabic = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: 'White Diamond — Leader in Food Packaging & Disposables',
+  // Base for absolute URLs in social previews / canonical links. Set NEXT_PUBLIC_SITE_URL in production.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001'),
+  title: {
+    default: 'White Diamond — Food Packaging & Disposables in Pakistan',
+    template: '%s · White Diamond',
+  },
   description:
-    'White Diamond / Falcon Pack is a premier manufacturer and distributor of disposable food packaging containers and catering supplies across the UAE and global markets.',
+    'White Diamond, Faisalabad: aluminium foil, foil and plastic food containers, cling film, baking paper, paper bags and eco-friendly disposables at factory prices, delivered across Pakistan.',
   // app/favicon.ico is picked up automatically; the square icon is used for
   // high-resolution tabs and the iPhone home screen. (Never the wide logo — it would be squashed.)
   icons: {
     icon: [{ url: '/favicon.ico', sizes: 'any' }, { url: '/images/logo-icon.png', type: 'image/png', sizes: '512x512' }],
     apple: '/images/logo-icon.png',
   },
+  openGraph: {
+    type: 'website',
+    locale: 'en_PK',
+    alternateLocale: ['ar_AE'],
+    siteName: 'White Diamond',
+    title: 'White Diamond — Food Packaging & Disposables in Pakistan',
+    description:
+      'Aluminium foil, food containers, cling film, baking paper and eco-friendly packaging at factory prices.',
+    images: [
+      {
+        url: '/images/home/hero-studio-showcase.jpg',
+        width: 1400,
+        height: 764,
+        alt: 'White Diamond Food Packaging',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'White Diamond — Food Packaging & Disposables',
+    description:
+      'Aluminium foil, food containers, cling film, baking paper and eco-friendly packaging at factory prices.',
+    images: ['/images/home/hero-studio-showcase.jpg'],
+  },
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const cookieStore = await cookies();
-  // Set by proxy.ts on /admin requests. (If a visitor fakes it elsewhere, they only
-  // unstyle their own page.) TODO(Phase 4): remove with the legacy CSS.
-  const isAdmin = (await headers()).get('x-wd-area') === 'admin';
-  const localeCookie = cookieStore.get('locale')?.value;
+/**
+ * Root layout: fonts, language direction and the providers every page needs.
+ * The public header/footer live in app/(site)/layout.tsx; the admin has its own shell.
+ */
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const localeCookie = (await cookies()).get('locale')?.value;
   const locale: Locale = localeCookie === 'ar' ? 'ar' : 'en';
   const isRTL = locale === 'ar';
 
@@ -59,32 +82,12 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={isRTL ? 'rtl' : 'ltr'}
-      className={`${fontSans.variable} ${fontHeading.variable} ${fontArabic.variable} ${
-        isRTL ? 'rtl' : ''
-      }`}
+      className={`${fontSans.variable} ${fontHeading.variable} ${fontArabic.variable}`}
     >
-      <head>
-        {/* Legacy template CSS for the public site only — kept out of the admin, where
-            Bootstrap's !important utilities (.p-5, .mt-3 …) break Tailwind spacing. */}
-        {!isAdmin && (
-          <>
-            <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap" />
-            <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
-            <link href="/css/style.css" rel="stylesheet" type="text/css" />
-            <link href="/css/colors/scheme-01.css" rel="stylesheet" type="text/css" id="colors" />
-          </>
-        )}
-      </head>
-      <body className="min-h-screen bg-background font-sans antialiased flex flex-col">
+      <body className="flex min-h-screen flex-col bg-white font-sans text-brand-ink antialiased">
         <LanguageProvider initialLocale={locale}>
           <CartProvider>
-            <ToastProvider>
-              <HeaderWrapper />
-              <div className="flex-1 w-full flex flex-col">
-                {children}
-              </div>
-              <Footer />
-            </ToastProvider>
+            <ToastProvider>{children}</ToastProvider>
           </CartProvider>
         </LanguageProvider>
       </body>
