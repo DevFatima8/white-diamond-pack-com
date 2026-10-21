@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
-import { CategoryItem, fallbackCategories } from '@/lib/categories';
+import type { CategoryItem } from '@/lib/categories';
 
 // Returns false during server render / hydration and true afterwards, without a
 // setState-in-effect. Used so the cart badge (read from localStorage) doesn't cause
@@ -53,7 +53,7 @@ export default function Header({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [categories, setCategories] = useState<CategoryItem[]>(fallbackCategories);
+  const [categories, setCategories] = useState<CategoryItem[]>([]); // filled from /api/categories
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function Header({
         }
       })
       .catch((err) => {
-        console.warn('Could not load categories dynamically, using fallback', err);
+        console.warn('Could not load categories', err);
       });
 
     return () => {
@@ -200,7 +200,7 @@ export default function Header({
                         {categories.map((cat, idx) => (
                           <Link
                             key={cat.id || idx}
-                            href={`/products?category=${encodeURIComponent(cat.name)}`}
+                            href={`/products?category=${encodeURIComponent(cat.slug)}`}
                             onClick={() => setActiveDropdown(null)}
                             className="group p-3 rounded-xl bg-white/[0.03] hover:bg-[#6366F1]/15 border border-white/5 hover:border-[#6366F1]/30 transition-all duration-200 flex items-start gap-3"
                           >
@@ -212,10 +212,10 @@ export default function Header({
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="text-xs font-bold text-white group-hover:text-[#818CF8] transition-colors truncate">
-                                {cat.name}
+                                {isRTL ? cat.nameAr : cat.name}
                               </h4>
                               <p className="text-[11px] text-white/60 line-clamp-2 mt-0.5 leading-snug">
-                                {cat.description || t.nav.exploreCatalogue}
+                                {(isRTL ? cat.descriptionAr : cat.description) || t.nav.exploreCatalogue}
                               </p>
                             </div>
                           </Link>
@@ -624,11 +624,11 @@ export default function Header({
                         {categories.map((cat, idx) => (
                           <Link
                             key={cat.id || idx}
-                            href={`/products?category=${encodeURIComponent(cat.name)}`}
+                            href={`/products?category=${encodeURIComponent(cat.slug)}`}
                             onClick={() => setMobileMenuOpen(false)}
                             className="block py-2 px-3 text-xs text-white/80 hover:text-[#818CF8] rounded-md transition-colors"
                           >
-                            {cat.name}
+                            {isRTL ? cat.nameAr : cat.name}
                           </Link>
                         ))}
                         <Link

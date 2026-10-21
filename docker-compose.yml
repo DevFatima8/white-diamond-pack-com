@@ -1,0 +1,37 @@
+# Local development database (MariaDB in Docker). NOT used in production.
+# MariaDB 11.8 = the same engine and version as the live Hostinger database,
+# so local behaviour (e.g. how JSON columns are stored) matches production.
+#
+#   docker compose up -d      start it (data is kept in the "wd-mysql-data" volume)
+#   docker compose stop       stop it
+#   docker compose down -v    delete it completely, including all data
+#
+# The app connects to it through DATABASE_URL in .env.local:
+#   DATABASE_URL="mysql://whitediamond:whitediamond_local@127.0.0.1:3307/whitediamond"
+#
+# These credentials only work on this computer, so they are fine to commit.
+# Port 3307 (not 3306) so it can't clash with another MySQL on this machine.
+
+services:
+  mysql:
+    image: mariadb:11.8
+    container_name: wd-mysql
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: whitediamond
+      MARIADB_USER: whitediamond
+      MARIADB_PASSWORD: whitediamond_local
+      MARIADB_ROOT_PASSWORD: whitediamond_root_local
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    ports:
+      - "127.0.0.1:3307:3306" # only reachable from this computer
+    volumes:
+      - wd-mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  wd-mysql-data:

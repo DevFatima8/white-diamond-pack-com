@@ -1,4 +1,10 @@
 // prisma/schema.prisma
+//
+// RULE for this project: changes must be ADDITIVE ONLY (the database is live).
+//  - new tables / new columns are fine;
+//  - a new column on an existing table must be nullable (`?`) or have a @default,
+//    otherwise MySQL can't add it to rows that already exist;
+//  - never drop, rename, or change the type of an existing column.
 
 generator client {
   provider = "prisma-client-js"
@@ -9,23 +15,185 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ─────────────────────────────────────────────────────────────
+// Catalogue
+// ─────────────────────────────────────────────────────────────
+
+model Category {
+  id            String    @id @default(cuid())
+  slug          String    @unique @db.VarChar(120)
+  nameEn        String    @db.VarChar(150)
+  nameAr        String    @db.VarChar(150)
+  descriptionEn String?   @db.Text
+  descriptionAr String?   @db.Text
+  image         String?   @db.Text
+  sortOrder     Int       @default(0)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  products      Product[]
+
+  @@index([isActive, sortOrder])
+  @@map("categories")
+}
+
 model Product {
+  // ── Existing columns (unchanged) ──
   id          String   @id @default(cuid())
   name        String   @db.VarChar(255)
+  // Old free-text category name. Kept for compatibility with existing rows/code;
+  // new code should use `categoryId` / `categoryRef`.
   category    String   @db.VarChar(100)
-  image       String   @db.Text
+  image       String   @db.Text // main image
   capacity    String?  @db.VarChar(100)
   description String   @db.Text
   features    Json
   packing     String   @db.VarChar(255)
   material    String?  @db.VarChar(100)
   color       String?  @db.VarChar(100)
-  price       Float?
+  price       Float? // PKR. Existing column, so it stays Float (see Order for money notes)
   inStock     Boolean  @default(true)
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  // @default(now()) matches the live table (it has a DB default), so a push doesn't alter this column.
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  // ── New columns (all nullable or with a default) ──
+  // Nullable so it can be added to rows that already exist; the seed script
+  // fills it for every product. MySQL allows many NULLs in a UNIQUE column.
+  slug          String?   @unique @db.VarChar(191)
+  nameAr        String?   @db.VarChar(255)
+  descriptionAr String?   @db.Text
+  categoryId    String?
+  // Named categoryRef because `category` is already taken by the old text column.
+  categoryRef   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  images        Json? // gallery: string[] of image URLs (main image stays in `image`)
+  salePrice     Float?
+  unit          String    @default("carton") @db.VarChar(50)
+  minOrderQty   Int       @default(1)
+  stockQty      Int? // null = stock not tracked
+  sku           String?   @unique @db.VarChar(64)
+  isFeatured    Boolean   @default(false)
+  isActive      Boolean   @default(true)
+
+  orderItems OrderItem[]
 
   @@index([category])
   @@index([createdAt])
+  @@index([categoryId])
+  @@index([isActive, isFeatured])
   @@map("products")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Orders
+// ─────────────────────────────────────────────────────────────
+//
+// Money: amounts are stored as Int = whole Pakistani rupees.
+// Float can't store most decimals exactly (0.1 + 0.2 = 0.30000000000000004),
+// so it's a bad fit for totals. PKR prices here are whole rupees, which makes
+// Int exact and simple. (If paisa are ever needed: switch to Decimal.)
+
+enum PaymentMethod {
+  COD
+  BANK_TRANSFER
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id             String        @id @default(cuid())
+  orderNumber    String        @unique @db.VarChar(20) // "WD-1001", from Counter "order"
+  customerName   String        @db.VarChar(120)
+  phone          String        @db.VarChar(20) // stored as 03XXXXXXXXX
+  email          String?       @db.VarChar(254)
+  city           String        @db.VarChar(80)
+  address        String        @db.Text
+  notes          String?       @db.Text
+  paymentMethod  PaymentMethod @default(COD)
+  status         OrderStatus   @default(PENDING)
+  subtotal       Int
+  deliveryCharge Int           @default(0)
+  total          Int
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  items          OrderItem[]
+
+  @@index([status, createdAt])
+  @@index([createdAt])
+  @@index([phone])
+  @@map("orders")
+}
+
+// One line of an order. Name and price are a SNAPSHOT taken when the order was
+// placed, so later price changes or a deleted product don't change old orders.
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String? // becomes null if the product is deleted later
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName String   @db.VarChar(255)
+  unitPrice   Int // PKR, whole rupees
+  quantity    Int
+  lineTotal   Int // unitPrice × quantity
+  createdAt   DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
+}
+
+// Atomic counters, e.g. name "order" → last used order number (1000 → next is WD-1001).
+// Incrementing a row inside the order transaction is safe even when two customers
+// check out at the same moment: MySQL locks the row, so each gets a different number.
+model Counter {
+  name  String @id @db.VarChar(50)
+  value Int
+
+  @@map("counters")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Messages (contact form + quote requests) and settings
+// ─────────────────────────────────────────────────────────────
+
+enum MessageType {
+  CONTACT
+  QUOTE
+}
+
+model Message {
+  id          String      @id @default(cuid())
+  type        MessageType @default(CONTACT)
+  name        String      @db.VarChar(120)
+  phone       String      @db.VarChar(20)
+  email       String?     @db.VarChar(254)
+  company     String?     @db.VarChar(150)
+  message     String      @db.Text
+  // Optional context for quote requests sent from a product page
+  productId   String?     @db.VarChar(30)
+  productName String?     @db.VarChar(255)
+  quantity    Int?
+  isRead      Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+
+  @@index([isRead, createdAt])
+  @@index([type, createdAt])
+  @@map("messages")
+}
+
+// Simple key/value store for settings the admin can change without a deploy.
+// Values are strings; the code converts them (e.g. Number(value) for amounts).
+model Setting {
+  key       String   @id @db.VarChar(80)
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
 }

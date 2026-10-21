@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
-import { initialProducts } from '@/data/products';
 import { requireAdmin } from '@/lib/auth';
 import { isNotFoundError, serverError, validationError } from '@/lib/api';
 import { productUpdateSchema } from '@/lib/validation/product';
@@ -10,18 +9,18 @@ type RouteContext = { params: Promise<{ id: string }> };
 const notFound = () =>
   NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
 
-// Public: read one product.
+// Public: read one active product, from the database only.
 export async function GET(_request: NextRequest, { params }: RouteContext) {
   const { id } = await params;
 
   try {
-    const product = await db.product.findUnique({ where: { id } });
+    const product = await db.product.findFirst({
+      where: { id, isActive: true },
+      include: { categoryRef: { select: { slug: true, nameEn: true, nameAr: true } } },
+    });
     return product ? NextResponse.json({ success: true, data: product }) : notFound();
-  } catch (dbErr) {
-    // TODO(Phase 2): remove this fallback once the database is seeded.
-    console.warn('[product GET] database unavailable, using static catalogue:', dbErr);
-    const product = initialProducts.find((p) => p.id.toString() === id);
-    return product ? NextResponse.json({ success: true, data: product }) : notFound();
+  } catch (err) {
+    return serverError('product GET', err, 'Catalogue is temporarily unavailable', 503);
   }
 }
 

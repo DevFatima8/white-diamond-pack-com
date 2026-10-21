@@ -38,7 +38,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   const imageSrc =
     imageError || !product.image
-      ? '/images/food-containers.png'
+      ? '/images/product-placeholder.png'
       : product.image;
 
   return (

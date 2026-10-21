@@ -5,7 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatPrice(price: number | null | undefined, currency: string = 'AED') {
+/** PKR price in whole rupees: 4500 → "Rs 4,500". */
+export function formatPrice(price: number | null | undefined) {
   if (price == null) return 'Price on Request';
-  return `${currency} ${price.toFixed(2)}`;
+  return `Rs ${Math.round(price).toLocaleString('en-US')}`;
 }

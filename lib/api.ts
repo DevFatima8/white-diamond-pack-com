@@ -13,9 +13,14 @@ export function validationError(error: z.ZodError) {
  * 500 response with a generic message. The real error is logged on the server only,
  * so database details or stack traces never reach the browser.
  */
-export function serverError(context: string, err: unknown, message = 'Something went wrong') {
+export function serverError(
+  context: string,
+  err: unknown,
+  message = 'Something went wrong',
+  status = 500, // use 503 "Service Unavailable" when the database can't be reached
+) {
   console.error(`[${context}]`, err);
-  return NextResponse.json({ success: false, error: message }, { status: 500 });
+  return NextResponse.json({ success: false, error: message }, { status });
 }
 
 /** Prisma error code P2025 = "record to update/delete was not found". */

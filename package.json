@@ -9,10 +9,11 @@
     "start": "next start",
     "lint": "eslint",
     "postinstall": "npx prisma generate",
-    "db:push": "npx prisma db push",
+    "db:up": "docker compose up -d --wait",
+    "db:push": "prisma db push",
     "db:migrate": "npx prisma migrate deploy",
     "db:seed": "tsx scripts/seed.ts",
-    "db:studio": "npx prisma studio",
+    "db:studio": "prisma studio",
     "hash-password": "tsx scripts/hash-password.ts"
   },
   "dependencies": {
