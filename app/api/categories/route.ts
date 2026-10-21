@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getCategories } from '@/lib/categories';
+import { serverError } from '@/lib/api';
 
 export async function GET() {
   try {
@@ -9,10 +10,7 @@ export async function GET() {
       count: categories.length,
       data: categories,
     });
-  } catch (error: any) {
-    return NextResponse.json(
-      { success: false, error: error.message || 'Failed to fetch categories' },
-      { status: 500 }
-    );
+  } catch (err) {
+    return serverError('categories GET', err, 'Failed to fetch categories');
   }
 }

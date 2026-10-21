@@ -13,6 +13,14 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+function applyLocaleAttributes(targetLocale: Locale) {
+  const isArabic = targetLocale === 'ar';
+  const html = document.documentElement;
+  html.setAttribute('lang', targetLocale);
+  html.setAttribute('dir', isArabic ? 'rtl' : 'ltr');
+  html.classList.toggle('rtl', isArabic);
+}
+
 export function LanguageProvider({
   children,
   initialLocale = 'en',
@@ -21,40 +29,16 @@ export function LanguageProvider({
   initialLocale?: Locale;
 }) {
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
-  const [mounted, setMounted] = useState(false);
 
+  // Keep <html lang/dir> in sync with the current language.
+  // (The server already sets them from the `locale` cookie on first load.)
   useEffect(() => {
-    setMounted(true);
-    // Check cookie or localStorage on client mount
-    if (typeof document !== 'undefined') {
-      const match = document.cookie.match(new RegExp('(?:^|; )locale=([^;]+)'));
-      const saved = match ? (match[1] as Locale) : (localStorage.getItem('locale') as Locale | null);
-      if (saved && (saved === 'en' || saved === 'ar') && saved !== locale) {
-        setLocaleState(saved);
-        applyLocaleAttributes(saved);
-        return;
-      }
-    }
     applyLocaleAttributes(locale);
-  }, []);
-
-  const applyLocaleAttributes = (targetLocale: Locale) => {
-    if (typeof document !== 'undefined') {
-      const isArabic = targetLocale === 'ar';
-      document.documentElement.setAttribute('lang', targetLocale);
-      document.documentElement.setAttribute('dir', isArabic ? 'rtl' : 'ltr');
-      if (isArabic) {
-        document.documentElement.classList.add('rtl');
-      } else {
-        document.documentElement.classList.remove('rtl');
-      }
-    }
-  };
+  }, [locale]);
 
   const setLocale = (newLocale: Locale) => {
     if (newLocale !== 'en' && newLocale !== 'ar') return;
     setLocaleState(newLocale);
-    applyLocaleAttributes(newLocale);
 
     if (typeof document !== 'undefined') {
       // 1 year expiration

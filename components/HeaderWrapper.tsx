@@ -12,7 +12,7 @@ export default function HeaderWrapper() {
   }
 
   let headerClass = 'transparent scroll-light';
-  let useHeaderInner = false;
+  const useHeaderInner = false;
   const isHomepage = pathname === '/' || pathname.startsWith('/homepage-');
 
   if (!isHomepage) {

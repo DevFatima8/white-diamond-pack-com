@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -28,6 +28,14 @@ import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { CategoryItem, fallbackCategories } from '@/lib/categories';
 
+// Returns false during server render / hydration and true afterwards, without a
+// setState-in-effect. Used so the cart badge (read from localStorage) doesn't cause
+// a hydration mismatch.
+const subscribeNoop = () => () => {};
+function useIsClient() {
+  return useSyncExternalStore(subscribeNoop, () => true, () => false);
+}
+
 export default function Header({
   className = 'transparent scroll-light',
   useHeaderInner = false,
@@ -39,7 +47,7 @@ export default function Header({
   const { locale, setLocale, isRTL, t } = useLanguage();
   const router = useRouter();
 
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -49,8 +57,6 @@ export default function Header({
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    setMounted(true);
-
     const handleScroll = () => {
       if (window.scrollY > 20) {
         setIsScrolled(true);

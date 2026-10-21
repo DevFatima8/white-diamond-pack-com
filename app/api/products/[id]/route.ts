@@ -1,80 +1,60 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
 import { initialProducts } from '@/data/products';
+import { requireAdmin } from '@/lib/auth';
+import { isNotFoundError, serverError, validationError } from '@/lib/api';
+import { productUpdateSchema } from '@/lib/validation/product';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+type RouteContext = { params: Promise<{ id: string }> };
+
+const notFound = () =>
+  NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
+
+// Public: read one product.
+export async function GET(_request: NextRequest, { params }: RouteContext) {
+  const { id } = await params;
+
   try {
-    const { id } = await params;
-
-    let product;
-    try {
-      product = await db.product.findUnique({
-        where: { id },
-      });
-    } catch (dbErr) {
-      product = initialProducts.find((p) => p.id.toString() === id);
-    }
-
-    if (!product) {
-      return NextResponse.json(
-        { success: false, error: 'Product not found' },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({ success: true, data: product });
-  } catch (err: any) {
-    return NextResponse.json(
-      { success: false, error: err.message || 'Error fetching product' },
-      { status: 500 }
-    );
+    const product = await db.product.findUnique({ where: { id } });
+    return product ? NextResponse.json({ success: true, data: product }) : notFound();
+  } catch (dbErr) {
+    // TODO(Phase 2): remove this fallback once the database is seeded.
+    console.warn('[product GET] database unavailable, using static catalogue:', dbErr);
+    const product = initialProducts.find((p) => p.id.toString() === id);
+    return product ? NextResponse.json({ success: true, data: product }) : notFound();
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// Admin only: update a product. Only whitelisted fields are accepted.
+export async function PUT(request: NextRequest, { params }: RouteContext) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
+  const { id } = await params;
+  const parsed = productUpdateSchema.safeParse(await request.json().catch(() => null));
+  if (!parsed.success) return validationError(parsed.error);
+
   try {
-    const { id } = await params;
-    const body = await request.json();
-
-    const updated = await db.product.update({
-      where: { id },
-      data: body,
-    });
-
+    const updated = await db.product.update({ where: { id }, data: parsed.data });
     return NextResponse.json({ success: true, data: updated });
-  } catch (err: any) {
-    return NextResponse.json(
-      { success: false, error: err.message || 'Failed to update product' },
-      { status: 500 }
-    );
+  } catch (err) {
+    if (isNotFoundError(err)) return notFound();
+    return serverError('product PUT', err, 'Failed to update product');
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// Admin only: delete a product.
+export async function DELETE(request: NextRequest, { params }: RouteContext) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
+  const { id } = await params;
+
   try {
-    const { id } = await params;
-
-    await db.product.delete({
-      where: { id },
-    });
-
-    return NextResponse.json({
-      success: true,
-      message: 'Product deleted successfully',
-    });
-  } catch (err: any) {
-    return NextResponse.json(
-      { success: false, error: err.message || 'Failed to delete product' },
-      { status: 500 }
-    );
+    await db.product.delete({ where: { id } });
+    return NextResponse.json({ success: true, message: 'Product deleted successfully' });
+  } catch (err) {
+    if (isNotFoundError(err)) return notFound();
+    return serverError('product DELETE', err, 'Failed to delete product');
   }
 }

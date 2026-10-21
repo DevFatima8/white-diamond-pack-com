@@ -31,8 +31,8 @@ export default function AdminLoginPage() {
 
       router.push('/admin/products');
       router.refresh();
-    } catch (err: any) {
-      setError(err.message || 'Invalid email or password');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Invalid email or password');
     } finally {
       setLoading(false);
     }

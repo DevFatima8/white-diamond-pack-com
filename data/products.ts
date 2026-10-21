@@ -5,7 +5,7 @@ export interface Product {
   image: string;
   capacity?: string | null;
   description: string;
-  features: string[] | Record<string, any>;
+  features: string[] | Record<string, unknown>;
   packing: string;
   material?: string | null;
   color?: string | null;

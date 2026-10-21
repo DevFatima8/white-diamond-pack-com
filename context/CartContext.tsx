@@ -9,9 +9,12 @@ export interface CartItem extends Omit<Product, 'id'> {
   quantity: number;
 }
 
+// A product as passed to addToCart. Some API responses carry a string `_id`.
+type CartProductInput = Product & { _id?: string };
+
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: Product | any) => void;
+  addToCart: (product: CartProductInput) => void;
   removeFromCart: (productId: number | string) => void;
   clearCart: () => void;
   getTotalItems: () => number;
@@ -53,7 +56,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [cartItems, isLoaded]);
 
-  const addToCart = (product: Product | any) => {
+  const addToCart = (product: CartProductInput) => {
     if (!product) return;
     const targetId = product._id || product.id;
     if (!targetId && targetId !== 0) return;

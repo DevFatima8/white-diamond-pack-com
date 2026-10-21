@@ -5,7 +5,7 @@ export interface Product {
   image: string;
   capacity?: string | null;
   description: string;
-  features: string[] | Record<string, any>;
+  features: string[] | Record<string, unknown>;
   packing: string;
   material?: string | null;
   color?: string | null;
@@ -37,7 +37,7 @@ export interface AdminUser {
   role: 'admin';
 }
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   message?: string;
   data?: T;

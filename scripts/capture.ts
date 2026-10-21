@@ -69,8 +69,8 @@ async function capture() {
           await page.waitForTimeout(1000);
           await page.screenshot({ path: screenshotPath, fullPage: true });
           console.log(`  Saved screenshot: ${screenshotPath}`);
-        } catch (err: any) {
-          console.warn(`  Warning capturing ${fullUrl}: ${err.message}`);
+        } catch (err) {
+          console.warn(`  Warning capturing ${fullUrl}: ${err instanceof Error ? err.message : err}`);
         }
       }
 
