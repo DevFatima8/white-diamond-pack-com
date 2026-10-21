@@ -56,6 +56,16 @@ export async function verifyAdminToken(token: string): Promise<AdminPayload | nu
 }
 
 /**
+ * For Server Components (admin pages/layouts): returns the logged-in admin, or null.
+ * Reads the cookie through next/headers, so it can only run on the server.
+ */
+export async function getAdminSession(): Promise<AdminPayload | null> {
+  const { cookies } = await import('next/headers');
+  const token = (await cookies()).get(ADMIN_COOKIE_NAME)?.value;
+  return token ? verifyAdminToken(token) : null;
+}
+
+/**
  * Guard for admin-only API routes. Use it at the top of every write/admin handler:
  *
  *   const denied = await requireAdmin(request);

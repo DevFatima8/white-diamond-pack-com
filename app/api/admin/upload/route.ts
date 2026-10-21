@@ -5,7 +5,13 @@ import { requireAdmin } from '@/lib/auth';
 import { serverError } from '@/lib/api';
 
 const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
-const CLOUDINARY_FOLDER = 'whitediamond/products';
+// ?folder=products|categories → Cloudinary folder. A fixed list, so a request can't
+// write into arbitrary folders of the Cloudinary account.
+const FOLDERS = {
+  products: 'whitediamond/products',
+  categories: 'whitediamond/categories',
+} as const;
+type FolderKey = keyof typeof FOLDERS;
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const;
 type AllowedType = (typeof ALLOWED_TYPES)[number];
 
@@ -35,10 +41,15 @@ function detectImageType(buf: Buffer): AllowedType | null {
 const badRequest = (error: string, status = 400) =>
   NextResponse.json({ success: false, error }, { status });
 
-// Admin only: upload one product image to Cloudinary.
+// Admin only: upload one image to Cloudinary. POST /api/admin/upload?folder=products
 export async function POST(request: NextRequest) {
   const denied = await requireAdmin(request);
   if (denied) return denied;
+
+  const folderParam = request.nextUrl.searchParams.get('folder') ?? 'products';
+  // Object.hasOwn, not `in`: `'constructor' in FOLDERS` would be true (inherited property).
+  if (!Object.hasOwn(FOLDERS, folderParam)) return badRequest('Unknown upload folder');
+  const folder = FOLDERS[folderParam as FolderKey];
 
   // Reject obviously oversized requests before reading the body into memory.
   const contentLength = Number(request.headers.get('content-length') ?? 0);
@@ -62,7 +73,7 @@ export async function POST(request: NextRequest) {
     const result = await new Promise<UploadApiResponse>((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
-          { folder: CLOUDINARY_FOLDER, resource_type: 'image' },
+          { folder, resource_type: 'image' },
           (error, response) => {
             if (error || !response) reject(error ?? new Error('Empty Cloudinary response'));
             else resolve(response);

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { Plus_Jakarta_Sans, Outfit, Cairo } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
@@ -34,10 +34,11 @@ export const metadata: Metadata = {
   title: 'White Diamond — Leader in Food Packaging & Disposables',
   description:
     'White Diamond / Falcon Pack is a premier manufacturer and distributor of disposable food packaging containers and catering supplies across the UAE and global markets.',
+  // app/favicon.ico is picked up automatically; the square icon is used for
+  // high-resolution tabs and the iPhone home screen. (Never the wide logo — it would be squashed.)
   icons: {
-    icon: '/images/logo.png',
-    shortcut: '/images/logo.png',
-    apple: '/images/logo.png',
+    icon: [{ url: '/favicon.ico', sizes: 'any' }, { url: '/images/logo-icon.png', type: 'image/png', sizes: '512x512' }],
+    apple: '/images/logo-icon.png',
   },
 };
 
@@ -47,6 +48,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
+  // Set by proxy.ts on /admin requests. (If a visitor fakes it elsewhere, they only
+  // unstyle their own page.) TODO(Phase 4): remove with the legacy CSS.
+  const isAdmin = (await headers()).get('x-wd-area') === 'admin';
   const localeCookie = cookieStore.get('locale')?.value;
   const locale: Locale = localeCookie === 'ar' ? 'ar' : 'en';
   const isRTL = locale === 'ar';
@@ -60,11 +64,16 @@ export default async function RootLayout({
       }`}
     >
       <head>
-        {/* Support existing Header and Footer styling & icon sets */}
-        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap" />
-        <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
-        <link href="/css/style.css" rel="stylesheet" type="text/css" />
-        <link href="/css/colors/scheme-01.css" rel="stylesheet" type="text/css" id="colors" />
+        {/* Legacy template CSS for the public site only — kept out of the admin, where
+            Bootstrap's !important utilities (.p-5, .mt-3 …) break Tailwind spacing. */}
+        {!isAdmin && (
+          <>
+            <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap" />
+            <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
+            <link href="/css/style.css" rel="stylesheet" type="text/css" />
+            <link href="/css/colors/scheme-01.css" rel="stylesheet" type="text/css" id="colors" />
+          </>
+        )}
       </head>
       <body className="min-h-screen bg-background font-sans antialiased flex flex-col">
         <LanguageProvider initialLocale={locale}>

@@ -52,7 +52,7 @@ export function LanguageProvider({
       }
       try {
         localStorage.setItem('locale', newLocale);
-      } catch (e) {
+      } catch {
         // Ignore localStorage error if cookies disabled
       }
     }

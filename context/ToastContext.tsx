@@ -99,27 +99,20 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className={`pointer-events-auto flex items-start gap-3 p-4 rounded-2xl shadow-xl border backdrop-blur-xl ${
-                toast.type === 'success'
-                  ? 'bg-[#12102E]/95 border-[#6366F1]/40 text-[#EEF2FF]'
-                  : toast.type === 'error'
-                  ? 'bg-rose-950/90 border-rose-500/30 text-rose-100'
+              className={`pointer-events-auto flex items-start gap-3 p-4 rounded-2xl shadow-level-3 border ${
+                // Brand colours only — no green/orange (see DESIGN.md "Color Rules")
+                toast.type === 'error'
+                  ? 'bg-white border-brand-primary/40 text-brand-ink'
                   : toast.type === 'warning'
-                  ? 'bg-amber-950/90 border-amber-500/30 text-amber-100'
-                  : 'bg-slate-900/90 border-white/10 text-white'
+                  ? 'bg-[#FFF1F2] border-brand-primary/30 text-brand-ink'
+                  : 'bg-brand-navy-dark border-brand-secondary/40 text-brand-tint'
               }`}
             >
               <div className="shrink-0 mt-0.5">
-                {toast.type === 'success' && (
-                  <CheckCircle2 className="w-5 h-5 text-[#818CF8]" />
-                )}
-                {toast.type === 'error' && (
-                  <AlertCircle className="w-5 h-5 text-rose-400" />
-                )}
-                {toast.type === 'warning' && (
-                  <AlertTriangle className="w-5 h-5 text-amber-400" />
-                )}
-                {toast.type === 'info' && <Info className="w-5 h-5 text-sky-400" />}
+                {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-[#818CF8]" />}
+                {toast.type === 'error' && <AlertCircle className="w-5 h-5 text-brand-primary" />}
+                {toast.type === 'warning' && <AlertTriangle className="w-5 h-5 text-brand-primary" />}
+                {toast.type === 'info' && <Info className="w-5 h-5 text-[#818CF8]" />}
               </div>
 
               <div className="flex-1 min-w-0">

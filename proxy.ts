@@ -2,40 +2,40 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyAdminToken, ADMIN_COOKIE_NAME } from '@/lib/auth';
 
+/**
+ * Runs before every /admin page request.
+ *  - not logged in → redirect to /admin/login?callbackUrl=<page they wanted>
+ *  - logged in and visiting /admin/login → straight to the dashboard
+ * (Admin pages ALSO check the session themselves; API routes use requireAdmin.)
+ */
 export async function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
+  const token = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+  const isLoggedIn = token ? (await verifyAdminToken(token)) !== null : false;
 
-  // Protect all /admin routes
-  if (pathname.startsWith('/admin')) {
-    const token = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
-    const isValidToken = token ? await verifyAdminToken(token) : null;
-
-    const isLoginPage = pathname === '/admin/login';
-
-    // If user is accessing login page:
-    if (isLoginPage) {
-      // If already logged in with valid token, redirect to admin dashboard
-      if (isValidToken) {
-        return NextResponse.redirect(new URL('/admin/products', request.url));
-      }
-      // Otherwise allow them to see the login page
-      return NextResponse.next();
-    }
-
-    // For all other /admin routes (e.g. /admin, /admin/products, etc.):
-    if (!isValidToken) {
-      const loginUrl = new URL('/admin/login', request.url);
-      loginUrl.searchParams.set('callbackUrl', pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-
-    // If accessing root /admin, redirect directly to /admin/products
-    if (pathname === '/admin' || pathname === '/admin/') {
-      return NextResponse.redirect(new URL('/admin/products', request.url));
-    }
+  if (pathname === '/admin/login') {
+    return isLoggedIn ? NextResponse.redirect(new URL('/admin', request.url)) : adminPage(request);
   }
 
-  return NextResponse.next();
+  if (!isLoggedIn) {
+    const loginUrl = new URL('/admin/login', request.url);
+    loginUrl.searchParams.set('callbackUrl', pathname + search);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  return adminPage(request);
+}
+
+/**
+ * Let the request through, tagged with `x-wd-area: admin`. The root layout reads this
+ * tag and skips the legacy Bootstrap/template stylesheets on admin pages (their
+ * `!important` utilities like .p-5 clash with Tailwind's classes of the same name).
+ * TODO(Phase 4): remove together with the legacy CSS.
+ */
+function adminPage(request: NextRequest) {
+  const headers = new Headers(request.headers);
+  headers.set('x-wd-area', 'admin');
+  return NextResponse.next({ request: { headers } });
 }
 
 export const config = {
