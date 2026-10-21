@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand Palette Tokens: Red, White & Bluish Purple */
+  --theme-red: #E63946;
+  --theme-red-hover: #C92A37;
+  --theme-red-light: #FEE2E2;
+  --theme-white: #FFFFFF;
+  --theme-purple: #6366F1;
+  --theme-purple-hover: #4F46E5;
+  --theme-purple-light: #EEF2FF;
+  --theme-navy: #1E1B4B;
+  --theme-navy-dark: #12102E;
+  --theme-lavender: #EEF2FF;
+  --theme-gray: #64748B;
+
+  /* Legacy Tokens mapped to new palette for comprehensive coverage */
+  --falcon-green: #E63946;
+  --falcon-green-dark: #C92A37;
+  --falcon-green-light: #F87171;
+  --falcon-parrot: #6366F1;
+  --falcon-parrot-hover: #4F46E5;
+  --falcon-black: #1E1B4B;
+  --falcon-header: #12102E;
+  --falcon-footer: #12102E;
+  --falcon-sage: #EEF2FF;
+  --falcon-sage-light: #F8FAFC;
+  --falcon-gray: #64748B;
+
+  /* Semantic UI Tokens */
+  --primary: #E63946;
+  --primary-foreground: #ffffff;
+  --primary-hover: #C92A37;
+
+  --secondary: #1E1B4B;
+  --secondary-foreground: #ffffff;
+
+  --accent: #6366F1;
+  --accent-foreground: #ffffff;
+  --accent-hover: #4F46E5;
+
+  --background: #ffffff;
+  --foreground: #1E1B4B;
+
+  --muted: #EEF2FF;
+  --muted-foreground: #64748B;
+
+  --card: #ffffff;
+  --card-foreground: #1E1B4B;
+
+  --border: #E2E8F0;
+  --ring: #E63946;
+
+  /* Spacing & Radii */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+}
+
+.dark {
+  --background: #12102E;
+  --foreground: #EEF2FF;
+  --card: #1E1B4B;
+  --card-foreground: #EEF2FF;
+  --muted: #2E2A72;
+  --muted-foreground: #94A3B8;
+  --border: #312E81;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background-color: var(--background);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+html[dir="rtl"], [dir="rtl"], .rtl {
+  font-family: var(--font-arabic), var(--font-sans), system-ui, sans-serif;
+}
+
+/* Custom Themed Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EEF2FF;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6366F1;
+  border-radius: 9999px;
+  border: 2px solid #EEF2FF;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #E63946;
+}
+
+/* Header & Navigation Micro-styling */
+#mainmenu a {
+  transition: color 0.2s ease;
+}
+
+#mainmenu a:hover {
+  color: var(--accent) !important;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dark .glass-panel {
+  background: rgba(30, 27, 75, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
