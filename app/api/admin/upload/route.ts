@@ -5,11 +5,12 @@ import { requireAdmin } from '@/lib/auth';
 import { serverError } from '@/lib/api';
 
 const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
-// ?folder=products|categories → Cloudinary folder. A fixed list, so a request can't
+// ?folder=products|categories|gallery → Cloudinary folder. A fixed list, so a request can't
 // write into arbitrary folders of the Cloudinary account.
 const FOLDERS = {
   products: 'whitediamond/products',
   categories: 'whitediamond/categories',
+  gallery: 'whitediamond/gallery',
 } as const;
 type FolderKey = keyof typeof FOLDERS;
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const;

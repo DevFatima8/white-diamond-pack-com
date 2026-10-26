@@ -36,7 +36,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
           <li className="inline-flex items-center">
             <Link
               href="/"
-              className="inline-flex items-center gap-1 hover:text-[#E63946] dark:hover:text-[#818CF8] transition-colors"
+              className="inline-flex items-center gap-1 hover:text-[#C1121F] dark:hover:text-[#F8C9CD] transition-colors"
             >
               <Home className="w-3.5 h-3.5" />
               <span className="sr-only">{t.common.home}</span>
@@ -68,7 +68,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
                 ) : (
                   <Link
                     href={item.href}
-                    className="hover:text-[#E63946] dark:hover:text-[#818CF8] transition-colors"
+                    className="hover:text-[#C1121F] dark:hover:text-[#F8C9CD] transition-colors"
                   >
                     {item.label}
                   </Link>

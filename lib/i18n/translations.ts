@@ -33,7 +33,7 @@ const en = {
     company: {
       about: 'About White Diamond',
       aboutDesc: 'Our story, mission and the team behind the brand.',
-      quality: 'Quality & Certifications',
+      quality: 'Quality Standards',
       qualityDesc: 'Food-grade materials and hygienic production.',
       infrastructure: 'Infrastructure & Presence',
       infrastructureDesc: 'Faisalabad plant and nationwide distribution.',
@@ -173,7 +173,7 @@ const en = {
       eyebrow: 'Complete disposable solutions',
       title: 'Shop by Category',
       viewAll: 'View all products',
-      explore: 'Explore {n} items',
+      explore: 'Explore products',
     },
     divisions: {
       label: 'Business divisions',
@@ -244,7 +244,7 @@ const en = {
       dispatchValue: '24–48 hours',
       dispatchLabel: 'Dispatch nationwide',
       capacityValue: '10,000+ tons',
-      capacityLabel: 'Annual capacity',
+      capacityLabel: 'Annual production capacity (foil & packaging)',
       mapAlt: 'Map of White Diamond delivery routes from Faisalabad to major cities in Pakistan',
     },
     oem: {
@@ -278,6 +278,9 @@ const en = {
   shop: {
     eyebrow: 'Factory direct · Faisalabad',
     title: 'Shop Online',
+    unavailableTitle: 'The shop is temporarily unavailable',
+    unavailableText: 'We could not load the products right now. Please try again in a minute, or order directly on WhatsApp.',
+    tryAgain: 'Try again',
     subtitle: 'Wholesale prices in PKR, delivered across Pakistan from our Faisalabad plant.',
     breadcrumb: 'Shop',
     searchResultsFor: 'Results for “{q}”',
@@ -469,7 +472,7 @@ const ar: Translations = {
     company: {
       about: 'عن وايت دايموند',
       aboutDesc: 'قصتنا ورسالتنا والفريق وراء العلامة.',
-      quality: 'الجودة والشهادات',
+      quality: 'معايير الجودة',
       qualityDesc: 'مواد آمنة للغذاء وإنتاج صحي.',
       infrastructure: 'البنية التحتية والانتشار',
       infrastructureDesc: 'مصنع فيصل آباد والتوزيع في جميع أنحاء البلاد.',
@@ -608,7 +611,7 @@ const ar: Translations = {
       eyebrow: 'حلول متكاملة للاستعمال مرة واحدة',
       title: 'تسوق حسب الفئة',
       viewAll: 'عرض كل المنتجات',
-      explore: 'استكشف {n} منتجات',
+      explore: 'استكشف المنتجات',
     },
     divisions: {
       label: 'أقسام الأعمال',
@@ -671,7 +674,7 @@ const ar: Translations = {
       dispatchValue: '24–48 ساعة',
       dispatchLabel: 'شحن لجميع المدن',
       capacityValue: '+10,000 طن',
-      capacityLabel: 'الطاقة السنوية',
+      capacityLabel: 'الطاقة الإنتاجية السنوية (الألمنيوم والتغليف)',
       mapAlt: 'خريطة مسارات توصيل وايت دايموند من فيصل آباد إلى المدن الكبرى في باكستان',
     },
     oem: {
@@ -705,6 +708,9 @@ const ar: Translations = {
   shop: {
     eyebrow: 'من المصنع مباشرة · فيصل آباد',
     title: 'تسوق الآن',
+    unavailableTitle: 'المتجر غير متاح مؤقتاً',
+    unavailableText: 'تعذر تحميل المنتجات الآن. يرجى المحاولة بعد دقيقة، أو اطلب مباشرة عبر واتساب.',
+    tryAgain: 'حاول مرة أخرى',
     subtitle: 'أسعار الجملة بالروبية الباكستانية، مع التوصيل إلى جميع أنحاء باكستان من مصنعنا في فيصل آباد.',
     breadcrumb: 'المتجر',
     searchResultsFor: 'نتائج البحث عن «{q}»',

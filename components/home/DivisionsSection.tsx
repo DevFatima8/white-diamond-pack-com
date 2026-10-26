@@ -15,8 +15,8 @@ export default function DivisionsSection() {
   const td = t.home.divisions;
 
   const rows = [
-    { key: 'packaging', data: td.packaging, image: '/images/home/division-packaging.jpg', icon: BadgeCheck, badge: 'bg-brand-navy-dark', iconColor: 'text-brand-primary' },
-    { key: 'hygiene', data: td.hygiene, image: '/images/home/division-hygiene.jpg', icon: ShieldCheck, badge: 'bg-brand-secondary', iconColor: 'text-white' },
+    { key: 'packaging', data: td.packaging, image: '/images/home/division-packaging-plant.jpg', icon: BadgeCheck, badge: 'bg-brand-primary', iconColor: 'text-white' },
+    { key: 'hygiene', data: td.hygiene, image: '/images/hero2.png', icon: ShieldCheck, badge: 'bg-brand-secondary', iconColor: 'text-white' },
   ] as const;
 
   return (
@@ -41,7 +41,7 @@ export default function DivisionsSection() {
                       <ul className="space-y-2.5 pt-2 text-[13px] text-brand-ink">
                         {data.points.map((p) => (
                           <li key={p} className="flex items-center gap-2.5">
-                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#E1E0FF] text-[#07006C]">
+                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#FCE8E9] text-[#5C0E0E]">
                               <Check className="h-3 w-3" strokeWidth={3} aria-hidden />
                             </span>
                             {p}

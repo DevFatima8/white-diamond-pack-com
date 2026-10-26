@@ -4,13 +4,13 @@ export const ORDER_STATUSES: OrderStatus[] = ['PENDING', 'CONFIRMED', 'SHIPPED',
 
 /**
  * Label + badge style per status. Brand colours only (no green/orange):
- * red = needs attention, indigo = in progress, navy = done, grey = cancelled.
+ * red = needs attention, maroon = in progress / done, grey = cancelled.
  */
 export const ORDER_STATUS_META: Record<OrderStatus, { label: string; badge: string; dot: string }> = {
-  PENDING: { label: 'Pending', badge: 'bg-[#FFF1F2] text-brand-primary ring-1 ring-brand-primary/25', dot: 'bg-brand-primary' },
+  PENDING: { label: 'Pending', badge: 'bg-[#FDECEC] text-brand-primary ring-1 ring-brand-primary/25', dot: 'bg-brand-primary' },
   CONFIRMED: { label: 'Confirmed', badge: 'bg-brand-tint text-brand-secondary ring-1 ring-brand-secondary/25', dot: 'bg-brand-secondary' },
   SHIPPED: { label: 'Shipped', badge: 'bg-brand-secondary text-white', dot: 'bg-brand-secondary' },
-  DELIVERED: { label: 'Delivered', badge: 'bg-brand-navy text-white', dot: 'bg-brand-navy' },
+  DELIVERED: { label: 'Delivered', badge: 'bg-brand-secondary text-white', dot: 'bg-brand-secondary' },
   CANCELLED: { label: 'Cancelled', badge: 'bg-slate-100 text-brand-muted line-through', dot: 'bg-slate-400' },
 };
 

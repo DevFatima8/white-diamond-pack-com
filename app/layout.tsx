@@ -37,6 +37,17 @@ export const metadata: Metadata = {
   },
   description:
     'White Diamond, Faisalabad: aluminium foil, foil and plastic food containers, cling film, baking paper, paper bags and eco-friendly disposables at factory prices, delivered across Pakistan.',
+  // Search terms customers in Pakistan use (also used in page titles/descriptions).
+  keywords: [
+    'food packaging Pakistan', 'aluminium foil Pakistan', 'aluminium foil manufacturer Faisalabad', 'aluminium foil roll',
+    'foil containers', 'foil container with lid', 'disposable food containers', 'takeaway containers', 'plastic containers',
+    'sauce cups', 'cling film', 'food wrap', 'baking paper', 'parchment paper', 'butter paper', 'paper bags', 'kraft paper bags',
+    'thermal paper rolls', 'garbage bags', 'bagasse containers', 'eco-friendly packaging', 'bamboo skewers',
+    'wholesale food packaging', 'catering supplies Pakistan', 'restaurant packaging', 'packaging supplier Lahore', 'packaging supplier Karachi',
+    'White Diamond packaging', 'White Diamond foil',
+  ],
+  applicationName: 'White Diamond',
+  manifest: '/manifest.webmanifest',
   // app/favicon.ico is picked up automatically; the square icon is used for
   // high-resolution tabs and the iPhone home screen. (Never the wide logo — it would be squashed.)
   icons: {

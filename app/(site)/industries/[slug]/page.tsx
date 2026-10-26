@@ -6,6 +6,7 @@ import { translations } from '@/lib/i18n/translations';
 import { pageTexts } from '@/lib/i18n/pages';
 import { industryHref } from '@/lib/routes';
 import { getSiteSettings } from '@/lib/site-data';
+import { logDataError } from '@/lib/db-errors';
 import IndustryDetailView from '@/components/pages/IndustryDetailView';
 
 type Params = Promise<{ slug: string }>;
@@ -34,7 +35,7 @@ export default async function IndustryPage({ params }: { params: Params }) {
   const [products, settings] = await Promise.all([
     // The page still works (without products) if the database is unreachable
     getProductsInCategories(industry.categories, 8).catch((err): ProductCardData[] => {
-      console.error('[industry products]', err);
+      logDataError('industry products', err);
       return [];
     }),
     getSiteSettings(),

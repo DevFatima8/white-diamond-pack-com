@@ -112,10 +112,11 @@ export default function ProductDetail({
           </ol>
         </nav>
 
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+        {/* min-w-0: grid items may shrink below their content, so nothing pushes the page wider than the phone */}
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 [&>*]:min-w-0">
           <ProductGallery images={product.images} alt={name} />
 
-          <div>
+          <div className="min-w-0">
             {categoryName && (
               <Link href={categoryHref(product.category!.slug)} className="text-xs font-bold uppercase tracking-[0.14em] text-brand-primary hover:underline">
                 {categoryName}
@@ -139,7 +140,7 @@ export default function ProductDetail({
             </div>
 
             {/* Price */}
-            <div className="mt-6 rounded-2xl border border-brand-border bg-white p-5 shadow-level-1">
+            <div className="mt-6 rounded-2xl border border-brand-border bg-white p-6 shadow-level-1">
               {price != null ? (
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                   <span className="font-heading text-4xl font-bold text-brand-primary">{formatPrice(price)}</span>
@@ -147,7 +148,7 @@ export default function ProductDetail({
                   {onSale && (
                     <>
                       <span className="text-base text-brand-muted line-through">{formatPrice(product.price)}</span>
-                      <span className="rounded-full bg-[#FFF1F2] px-2.5 py-0.5 text-xs font-bold text-brand-primary">
+                      <span className="rounded-full bg-[#FDECEC] px-2.5 py-0.5 text-xs font-bold text-brand-primary">
                         {fill(tp.youSave, { amount: formatPrice(product.price! - product.salePrice!) })}
                       </span>
                     </>
@@ -224,7 +225,7 @@ export default function ProductDetail({
                 href={whatsappLink(whatsapp, waText)}
                 target="_blank"
                 rel="noreferrer"
-                className="flex h-12 items-center justify-center gap-2 rounded-full bg-brand-navy text-sm font-semibold text-white transition hover:bg-[#2E2A72]"
+                className="flex h-12 items-center justify-center gap-2 rounded-full bg-brand-secondary text-sm font-semibold text-white transition hover:bg-brand-secondary-hover"
               >
                 <BrandIcon name="whatsapp" className="h-4 w-4" /> {tp.whatsappOrder}
               </a>

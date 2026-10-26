@@ -8,13 +8,18 @@ html {
   scroll-behavior: smooth;
   /* Room for the sticky header when jumping to #anchors */
   scroll-padding-top: 6rem;
+  /* Phones: never allow sideways swiping into an empty gap. `clip` (unlike `hidden`)
+     is respected by mobile browsers and doesn't break the sticky header. */
+  overflow-x: clip;
 }
 
 body {
   background-color: #ffffff;
-  color: #0f172a;
+  color: #1a1212;
   font-family: var(--font-sans), system-ui, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
+  /* Long words/emails/URLs wrap instead of pushing the page wider */
+  overflow-wrap: anywhere;
 }
 
 /* Arabic: Cairo for everything, including headings that use font-heading */
@@ -25,7 +30,7 @@ html[dir='rtl'] .font-heading {
 
 /* Visible keyboard focus everywhere (mouse clicks don't show it) */
 :focus-visible {
-  outline: 2px solid #6366f1;
+  outline: 2px solid #8B1414;
   outline-offset: 2px;
 }
 

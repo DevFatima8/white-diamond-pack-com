@@ -15,7 +15,7 @@ interface Uploading {
 }
 
 /** Upload one file to Cloudinary through our API. Returns the image URL. */
-async function uploadFile(file: File, folder: 'products' | 'categories'): Promise<string> {
+async function uploadFile(file: File, folder: 'products' | 'categories' | 'gallery'): Promise<string> {
   const body = new FormData();
   body.append('file', file);
   const res = await fetch(`/api/admin/upload?folder=${folder}`, { method: 'POST', body });
@@ -41,7 +41,7 @@ export default function ImageUploader({
 }: {
   value: string[];
   onChange: (next: string[]) => void;
-  folder: 'products' | 'categories';
+  folder: 'products' | 'categories' | 'gallery';
   max?: number;
   invalid?: boolean;
 }) {
@@ -109,7 +109,7 @@ export default function ImageUploader({
           }}
           className={cn(
             'flex flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-8 text-center transition-colors',
-            dragging ? 'border-brand-secondary bg-brand-tint' : invalid ? 'border-brand-primary/60 bg-[#FFF1F2]/40' : 'border-brand-border bg-brand-surface',
+            dragging ? 'border-brand-secondary bg-brand-tint' : invalid ? 'border-brand-primary/60 bg-[#FDECEC]/40' : 'border-brand-border bg-brand-surface',
           )}
         >
           <div className="mb-3 rounded-full bg-white p-3 text-brand-secondary shadow-level-1">

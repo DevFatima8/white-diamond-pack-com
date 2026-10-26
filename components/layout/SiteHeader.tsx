@@ -70,7 +70,7 @@ export default function SiteHeader({ categories, contact }: { categories: Catego
   const tn = t.nav;
 
   return (
-    <header className="sticky top-0 z-40 bg-brand-navy shadow-[0_12px_24px_-6px_rgba(30,27,75,0.25)]">
+    <header className="sticky top-0 z-40 border-b border-brand-border bg-white shadow-level-1">
       <div className="relative mx-auto flex h-16 max-w-site items-center justify-between gap-4 px-4 sm:px-6 lg:h-20 lg:px-12">
         <Logo priority className="h-9 lg:h-11 2xl:h-12" />
 
@@ -100,17 +100,14 @@ export default function SiteHeader({ categories, contact }: { categories: Catego
                       <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-brand-surface">
                         <Image src={c.image || '/images/product-placeholder.png'} alt="" fill sizes="48px" className="object-cover" />
                       </span>
-                      <span className="min-w-0">
-                        <span className="line-clamp-1 text-sm font-semibold group-hover:text-brand-secondary">{isRTL ? c.nameAr : c.name}</span>
-                        <span className="text-xs text-brand-muted">{fill(tn.productsCount, { n: c.count })}</span>
-                      </span>
+                      <span className="min-w-0 text-sm font-semibold text-brand-ink group-hover:text-brand-secondary">{isRTL ? c.nameAr : c.name}</span>
                     </Link>
                   ))}
                 </div>
                 <Link
                   href={routes.shop}
                   onClick={close}
-                  className="mt-3 flex items-center justify-between rounded-xl bg-brand-navy px-4 py-3 text-sm font-semibold text-white hover:bg-[#2E2A72]"
+                  className="mt-3 flex items-center justify-between rounded-xl bg-brand-secondary px-4 py-3 text-sm font-semibold text-white hover:bg-brand-secondary-hover"
                 >
                   {tn.viewAllProducts}
                   <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden />
@@ -139,7 +136,7 @@ export default function SiteHeader({ categories, contact }: { categories: Catego
             )}
           </NavDropdown>
 
-          <Link href={routes.careers} className="whitespace-nowrap py-2 text-xs font-semibold uppercase tracking-wide text-[#DAE2FD]/90 transition-colors hover:text-white 2xl:text-[13px]">
+          <Link href={routes.careers} className="whitespace-nowrap py-2 text-xs font-semibold uppercase tracking-wide text-brand-ink transition-colors hover:text-brand-secondary 2xl:text-[13px]">
             {tn.careers}
           </Link>
 
@@ -158,19 +155,19 @@ export default function SiteHeader({ categories, contact }: { categories: Catego
           <button
             type="button"
             onClick={() => setSearchOpen((v) => !v)}
-            className="rounded-full p-2 text-white transition-colors hover:bg-white/10"
+            className="rounded-full p-2 text-brand-ink transition-colors hover:bg-brand-tint hover:text-brand-secondary"
             aria-label={tn.searchLabel}
             aria-expanded={searchOpen}
           >
             {searchOpen ? <X className="h-[22px] w-[22px]" aria-hidden /> : <Search className="h-[22px] w-[22px]" aria-hidden />}
           </button>
           <div className="hidden sm:block">
-            <LanguageToggle />
+            <LanguageToggle tone="light" />
           </div>
           <button
             type="button"
             onClick={openDrawer}
-            className="relative rounded-full p-2 text-white transition-colors hover:bg-white/10"
+            className="relative rounded-full p-2 text-brand-ink transition-colors hover:bg-brand-tint hover:text-brand-secondary"
             aria-label={fill(tn.cartWithCount, { n: count })}
           >
             <ShoppingBag className="h-[22px] w-[22px]" aria-hidden />
@@ -183,7 +180,7 @@ export default function SiteHeader({ categories, contact }: { categories: Catego
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
-            className="rounded-full p-2 text-white transition-colors hover:bg-white/10 xl:hidden"
+            className="rounded-full p-2 text-brand-ink transition-colors hover:bg-brand-tint xl:hidden"
             aria-label={tn.openMenu}
             aria-expanded={menuOpen}
           >
@@ -193,7 +190,7 @@ export default function SiteHeader({ categories, contact }: { categories: Catego
       </div>
 
       {searchOpen && (
-        <div className="border-t border-white/10 bg-brand-navy">
+        <div className="border-t border-brand-border bg-white">
           <div className="mx-auto max-w-site px-4 py-3 sm:px-6 lg:px-12">
             <SearchBox id="header-search" onNavigate={() => setSearchOpen(false)} />
           </div>

@@ -41,7 +41,7 @@ export default function OrderConfirmation({ order, bankDetails, whatsapp }: { or
               <Check className="h-8 w-8" strokeWidth={3} aria-hidden />
             </span>
           </div>
-          <span className="relative mt-5 inline-flex items-center gap-2 rounded-full bg-brand-navy px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
+          <span className="relative mt-5 inline-flex items-center gap-2 rounded-full bg-brand-secondary px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" aria-hidden /> {to.badge}
           </span>
           <h1 className="relative mx-auto mt-4 max-w-2xl font-heading text-3xl font-bold leading-tight tracking-tight sm:text-[40px] sm:leading-[48px]">
@@ -66,7 +66,7 @@ export default function OrderConfirmation({ order, bankDetails, whatsapp }: { or
               href={whatsappLink(whatsapp, waText)}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand-navy-dark px-7 text-sm font-bold text-white hover:bg-brand-navy"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand-secondary px-7 text-sm font-bold text-white hover:bg-brand-secondary-hover"
             >
               <BrandIcon name="whatsapp" className="h-4 w-4" /> {to.whatsapp}
             </a>
@@ -74,10 +74,10 @@ export default function OrderConfirmation({ order, bankDetails, whatsapp }: { or
         </section>
 
         {order.paymentMethod === 'BANK_TRANSFER' && bankDetails && (
-          <section className="mt-6 rounded-2xl bg-brand-navy p-6 text-white">
+          <section className="mt-6 rounded-2xl border border-brand-border bg-brand-tint p-6 text-brand-ink">
             <h2 className="font-heading text-lg font-bold">{fill(to.bankTitle, { total })}</h2>
-            <p className="mt-2 whitespace-pre-line text-sm text-[#DAE2FD]" dir="ltr">{bankDetails}</p>
-            <p className="mt-3 text-xs text-[#C7D2FE]/80">{to.bankNote}</p>
+            <p className="mt-2 whitespace-pre-line text-sm text-brand-ink" dir="ltr">{bankDetails}</p>
+            <p className="mt-3 text-xs text-brand-muted">{to.bankNote}</p>
           </section>
         )}
 
@@ -90,7 +90,7 @@ export default function OrderConfirmation({ order, bankDetails, whatsapp }: { or
               <Row icon={Truck} label={to.status} value={to.statuses[order.status]} />
               <Row icon={CreditCard} label={to.payment} value={order.paymentMethod === 'COD' ? t.checkout.cod : t.checkout.bank} />
             </dl>
-            <div className="mt-5 rounded-xl bg-brand-surface p-4 text-sm">
+            <div className="mt-5 rounded-xl bg-brand-surface p-5 text-sm">
               <p className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-brand-secondary">
                 <MapPin className="h-3.5 w-3.5" aria-hidden /> {to.deliverTo}
               </p>

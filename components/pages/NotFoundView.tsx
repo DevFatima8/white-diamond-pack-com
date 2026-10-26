@@ -15,7 +15,7 @@ export default function NotFoundView() {
     <section className="relative flex flex-1 items-center overflow-hidden bg-brand-tint/60 py-20 sm:py-28">
       <div className="pointer-events-none absolute -end-24 -top-24 h-80 w-80 rounded-full bg-brand-secondary/15 blur-3xl" aria-hidden />
       <div className="relative mx-auto max-w-2xl px-5 text-center">
-        <p className="bg-[linear-gradient(135deg,#E63946_0%,#6366F1_100%)] bg-clip-text font-heading text-[96px] font-bold leading-none tracking-tighter text-transparent sm:text-[140px]">
+        <p className="bg-[linear-gradient(135deg,#C1121F_0%,#8B1414_100%)] bg-clip-text font-heading text-[96px] font-bold leading-none tracking-tighter text-transparent sm:text-[140px]">
           {n.code}
         </p>
         <h1 className="mt-4 font-heading text-[28px] font-bold leading-9 text-brand-ink sm:text-4xl">{n.title}</h1>

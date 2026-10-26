@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getSiteSettings } from '@/lib/site-data';
+import { getSiteGallery } from '@/lib/gallery';
 import AboutView from '@/components/pages/AboutView';
 
 export const metadata: Metadata = {
@@ -10,6 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const settings = await getSiteSettings();
-  return <AboutView whatsapp={settings.whatsapp_number} />;
+  const [settings, gallery] = await Promise.all([getSiteSettings(), getSiteGallery()]);
+  return <AboutView whatsapp={settings.whatsapp_number} gallery={gallery} />;
 }

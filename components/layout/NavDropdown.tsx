@@ -69,7 +69,7 @@ export default function NavDropdown({
         onClick={() => setOpen((v) => !v)}
         className={cn(
           'flex items-center gap-1 whitespace-nowrap py-2 text-xs font-semibold uppercase tracking-wide transition-colors 2xl:text-[13px]',
-          open ? 'text-white' : 'text-[#DAE2FD]/90 hover:text-white',
+          open ? 'text-brand-secondary' : 'text-brand-ink hover:text-brand-secondary',
         )}
       >
         {label}
@@ -84,7 +84,7 @@ export default function NavDropdown({
           panelClassName,
         )}
       >
-        <div className="rounded-2xl border border-white/10 bg-white p-4 text-brand-ink shadow-level-3">{children(close)}</div>
+        <div className="rounded-2xl border border-brand-border bg-white p-4 text-brand-ink shadow-level-3">{children(close)}</div>
       </div>
     </div>
   );

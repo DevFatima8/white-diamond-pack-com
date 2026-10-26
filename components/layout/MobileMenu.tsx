@@ -4,7 +4,6 @@ import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDown, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-import { fill } from '@/lib/i18n/translations';
 import { INDUSTRIES } from '@/lib/industries';
 import { whatsappLink } from '@/lib/phone';
 import { categoryHref, industryHref, routes } from '@/lib/routes';
@@ -52,7 +51,8 @@ export default function MobileMenu({
   const tn = t.nav;
   const [section, setSection] = useState<string | null>(null);
   const toggle = (s: string) => setSection((cur) => (cur === s ? null : s));
-  const subLink = 'block rounded-lg px-3 py-2.5 text-sm text-brand-muted hover:bg-brand-tint hover:text-brand-secondary';
+  // Sub-links: black and slightly larger so they're easy to read on a phone (client request)
+  const subLink = 'block rounded-lg px-3 py-3 text-[15px] font-medium text-brand-ink hover:bg-brand-tint hover:text-brand-secondary';
 
   return (
     <Drawer open={open} onClose={onClose} side="start" title={tn.home} closeLabel={tn.closeMenu}>
@@ -67,9 +67,8 @@ export default function MobileMenu({
           </Accordion>
           <Accordion title={tn.categories} id="mobile-categories" open={section === 'categories'} onToggle={() => toggle('categories')}>
             {categories.map((c) => (
-              <Link key={c.id} href={categoryHref(c.slug)} onClick={onClose} className={cn(subLink, 'flex justify-between gap-3')}>
-                <span>{isRTL ? c.nameAr : c.name}</span>
-                <span className="text-xs">{fill(tn.productsCount, { n: c.count })}</span>
+              <Link key={c.id} href={categoryHref(c.slug)} onClick={onClose} className={subLink}>
+                {isRTL ? c.nameAr : c.name}
               </Link>
             ))}
             <Link href={routes.shop} onClick={onClose} className={cn(subLink, 'font-semibold text-brand-secondary')}>
@@ -116,7 +115,7 @@ export default function MobileMenu({
               href={whatsappLink(contact.whatsapp, t.whatsapp.message)}
               target="_blank"
               rel="noreferrer"
-              className="flex h-11 items-center justify-center gap-2 rounded-full bg-brand-navy text-sm font-semibold text-white"
+              className="flex h-11 items-center justify-center gap-2 rounded-full bg-brand-secondary text-sm font-semibold text-white"
             >
               <BrandIcon name="whatsapp" className="h-4 w-4" /> WhatsApp
             </a>

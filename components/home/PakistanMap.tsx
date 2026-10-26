@@ -32,20 +32,20 @@ export default function PakistanMap() {
 
   return (
     <svg viewBox="0 0 490 440" className="h-auto w-full max-w-[460px]" role="img" aria-label={tm.mapAlt} direction={isRTL ? 'rtl' : 'ltr'}>
-      <path d={OUTLINE} fill="rgba(99,102,241,0.08)" stroke="rgba(199,210,254,0.45)" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="4 3" />
+      <path d={OUTLINE} fill="rgba(139, 20, 20, 0.06)" stroke="rgba(139, 20, 20, 0.35)" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="4 3" />
 
       {CITIES.map((c) => (
-        <line key={`l-${c.key}`} x1={HUB.x} y1={HUB.y} x2={c.x} y2={c.y} stroke="#818CF8" strokeWidth="2" strokeDasharray="5 3" />
+        <line key={`l-${c.key}`} x1={HUB.x} y1={HUB.y} x2={c.x} y2={c.y} stroke="#D98A8F" strokeWidth="2" strokeDasharray="5 3" />
       ))}
 
       {CITIES.map((c) => (
         <g key={c.key}>
-          <circle cx={c.x} cy={c.y} r={c.port ? 6 : 5} fill={c.port ? '#E63946' : '#6366F1'} stroke="#12102E" strokeWidth="2" />
+          <circle cx={c.x} cy={c.y} r={c.port ? 6 : 5} fill={c.port ? '#C1121F' : '#8B1414'} stroke="#FFFFFF" strokeWidth="2" />
           <text
             x={c.x + (c.side === 'right' ? 10 : -10)}
             y={c.y + 4}
             textAnchor={anchor(c.side)}
-            fill={c.port ? '#FFFFFF' : '#E2E7FF'}
+            fill="#1A1212"
             fontSize="13"
             fontWeight={c.port ? 700 : 500}
             style={{ fontFamily: 'var(--font-sans), var(--font-arabic), sans-serif' }}
@@ -56,14 +56,14 @@ export default function PakistanMap() {
       ))}
 
       {/* Faisalabad hub: pulsing ring + pin */}
-      <circle cx={HUB.x} cy={HUB.y} r="16" fill="#E63946" opacity="0.25" className="origin-center animate-ping [transform-box:fill-box]" />
-      <circle cx={HUB.x} cy={HUB.y} r="8" fill="#E63946" stroke="#FFFFFF" strokeWidth="3" />
+      <circle cx={HUB.x} cy={HUB.y} r="16" fill="#C1121F" opacity="0.25" className="origin-center animate-ping [transform-box:fill-box]" />
+      <circle cx={HUB.x} cy={HUB.y} r="8" fill="#C1121F" stroke="#FFFFFF" strokeWidth="3" />
       {/* below-right of the pin: left is taken by Multan, right by Lahore */}
       <text
         x={HUB.x + 6}
         y={HUB.y + 28}
         textAnchor={anchor('right')}
-        fill="#FFFFFF"
+        fill="#1A1212"
         fontSize="13"
         fontWeight="700"
         style={{ fontFamily: 'var(--font-heading), var(--font-arabic), sans-serif' }}

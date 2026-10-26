@@ -1,9 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import type { MessageType } from '@prisma/client';
 import db from '@/lib/db';
 import { serverError, validationError } from '@/lib/api';
 import { RateLimiter, getClientIp } from '@/lib/rate-limit';
 import { contactRequestSchema } from '@/lib/validation/order';
+import { notifyNewMessage } from '@/lib/notify';
 
 // 5 messages per IP per 15 minutes — enough for real people, blocks spam scripts.
 const contactLimiter = new RateLimiter(5, 15 * 60 * 1000);
@@ -27,8 +28,10 @@ export async function POST(request: NextRequest) {
   const { kind, ...data } = parsed.data;
 
   try {
-    await db.message.create({ data: { ...data, type: TYPE_BY_KIND[kind] } });
+    const saved = await db.message.create({ data: { ...data, type: TYPE_BY_KIND[kind] } });
     contactLimiter.hit(ip);
+    // Email the owner after responding, so the visitor doesn't wait
+    after(() => notifyNewMessage(saved, `${request.nextUrl.origin}/admin/messages`));
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (err) {
     return serverError('contact POST', err, 'Could not send the message');

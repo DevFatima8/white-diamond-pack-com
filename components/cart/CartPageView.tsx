@@ -104,7 +104,7 @@ export default function CartPageView({ delivery }: { delivery: DeliverySettings 
                         <button
                           type="button"
                           onClick={() => remove(item.productId)}
-                          className="mt-2 inline-flex items-center gap-1 text-xs text-brand-muted hover:text-brand-primary md:mt-0 md:justify-self-end md:rounded-lg md:p-2 md:hover:bg-[#FFF1F2]"
+                          className="mt-2 inline-flex items-center gap-1 text-xs text-brand-muted hover:text-brand-primary md:mt-0 md:justify-self-end md:rounded-lg md:p-2 md:hover:bg-[#FDECEC]"
                           aria-label={fill(tc.remove, { name })}
                         >
                           <Trash2 className="h-4 w-4" aria-hidden />

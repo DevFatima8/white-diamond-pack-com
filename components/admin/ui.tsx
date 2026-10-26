@@ -1,6 +1,6 @@
 /**
  * Small UI kit for the admin panel, following DESIGN.md:
- * 12px radius on cards/inputs, #E2E8F0 borders, indigo focus ring,
+ * 12px radius on cards/inputs, #F1DFDF borders, maroon focus ring,
  * pill-shaped primary buttons, brand colours only.
  * No hooks here, so these work in both Server and Client Components.
  */
@@ -71,9 +71,9 @@ const buttonVariants = {
   primary: 'rounded-full bg-brand-primary text-white hover:bg-brand-primary-hover focus-visible:ring-brand-primary/25',
   secondary:
     'rounded-full border border-brand-border bg-white text-brand-navy hover:border-brand-secondary hover:bg-brand-tint focus-visible:ring-brand-secondary/15',
-  navy: 'rounded-xl bg-brand-navy text-white hover:bg-[#2E2A72] focus-visible:ring-brand-secondary/25',
+  navy: 'rounded-xl bg-brand-navy text-white hover:bg-[#1A0B0B] focus-visible:ring-brand-secondary/25',
   ghost: 'rounded-lg text-brand-muted hover:bg-brand-tint hover:text-brand-navy focus-visible:ring-brand-secondary/15',
-  danger: 'rounded-full border border-brand-primary/30 bg-white text-brand-primary hover:bg-[#FFF1F2] focus-visible:ring-brand-primary/25',
+  danger: 'rounded-full border border-brand-primary/30 bg-white text-brand-primary hover:bg-[#FDECEC] focus-visible:ring-brand-primary/25',
 } as const;
 
 const buttonSizes = { sm: 'h-8 px-3 text-xs', md: 'h-10 px-4 text-sm', lg: 'h-11 px-6 text-sm' } as const;
@@ -176,7 +176,7 @@ export function Select({ className, invalid, ...props }: ComponentProps<'select'
   );
 }
 
-/** On/off switch. Indigo when on (DESIGN.md: checked = solid #6366F1). */
+/** On/off switch. Amber when on (checked = solid #8B1414). */
 export function Toggle({
   checked,
   onChange,

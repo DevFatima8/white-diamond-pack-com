@@ -104,15 +104,15 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                 toast.type === 'error'
                   ? 'bg-white border-brand-primary/40 text-brand-ink'
                   : toast.type === 'warning'
-                  ? 'bg-[#FFF1F2] border-brand-primary/30 text-brand-ink'
-                  : 'bg-brand-navy-dark border-brand-secondary/40 text-brand-tint'
+                  ? 'bg-[#FDECEC] border-brand-primary/30 text-brand-ink'
+                  : 'bg-white border-brand-secondary/40 text-brand-ink'
               }`}
             >
               <div className="shrink-0 mt-0.5">
-                {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-[#818CF8]" />}
+                {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-brand-secondary" />}
                 {toast.type === 'error' && <AlertCircle className="w-5 h-5 text-brand-primary" />}
                 {toast.type === 'warning' && <AlertTriangle className="w-5 h-5 text-brand-primary" />}
-                {toast.type === 'info' && <Info className="w-5 h-5 text-[#818CF8]" />}
+                {toast.type === 'info' && <Info className="w-5 h-5 text-brand-secondary" />}
               </div>
 
               <div className="flex-1 min-w-0">

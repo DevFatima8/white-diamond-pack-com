@@ -147,7 +147,7 @@ export default function CheckoutView({ delivery, bankDetails }: { delivery: Deli
                   <span
                     className={cn(
                       'flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold',
-                      done ? 'bg-brand-secondary text-white' : current ? 'bg-brand-navy text-white' : 'bg-brand-tint text-brand-muted',
+                      done ? 'bg-brand-secondary text-white' : current ? 'bg-brand-primary text-white' : 'bg-brand-tint text-brand-muted',
                     )}
                   >
                     {done ? <Check className="h-4 w-4" aria-hidden /> : n}
@@ -162,7 +162,7 @@ export default function CheckoutView({ delivery, bankDetails }: { delivery: Deli
         <div className="grid items-start gap-6 lg:grid-cols-[1fr_380px]">
           <div className="rounded-2xl border border-brand-border bg-white p-6 shadow-level-1 sm:p-8">
             {submitError && (
-              <p className="mb-6 rounded-xl bg-[#FFF1F2] px-4 py-3 text-sm font-medium text-brand-primary" role="alert">
+              <p className="mb-6 rounded-xl bg-[#FDECEC] px-4 py-3 text-sm font-medium text-brand-primary" role="alert">
                 {submitError}
               </p>
             )}
@@ -251,7 +251,7 @@ export default function CheckoutView({ delivery, bankDetails }: { delivery: Deli
               <section aria-labelledby="step3">
                 <h2 id="step3" className="mb-6 font-heading text-xl font-bold">{tk.confirmTitle}</h2>
 
-                <div className="mb-6 rounded-xl border border-brand-border p-4">
+                <div className="mb-6 rounded-xl border border-brand-border p-5">
                   <div className="mb-1 flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-wider text-brand-secondary">{tk.deliverTo}</span>
                     <button type="button" onClick={() => goTo(2)} className="text-xs font-semibold text-brand-secondary hover:underline">
@@ -277,7 +277,7 @@ export default function CheckoutView({ delivery, bankDetails }: { delivery: Deli
                       <label
                         key={value}
                         className={cn(
-                          'flex cursor-pointer items-start gap-4 rounded-xl border-2 p-4 transition-colors',
+                          'flex cursor-pointer items-start gap-4 rounded-xl border-2 p-5 transition-colors',
                           payment === value ? 'border-brand-secondary bg-brand-tint/50' : 'border-brand-border hover:border-brand-secondary/40',
                         )}
                       >
@@ -293,9 +293,9 @@ export default function CheckoutView({ delivery, bankDetails }: { delivery: Deli
                     ))}
                   </div>
                   {payment === 'BANK_TRANSFER' && bankDetails && (
-                    <div className="mt-3 rounded-xl bg-brand-navy p-4 text-sm text-white">
+                    <div className="mt-3 rounded-xl border border-brand-border bg-brand-tint p-5 text-sm text-brand-ink">
                       <p className="mb-1 font-semibold">{tk.bankDetails}</p>
-                      <p className="whitespace-pre-line text-[#DAE2FD]" dir="ltr">{bankDetails}</p>
+                      <p className="whitespace-pre-line text-brand-ink" dir="ltr">{bankDetails}</p>
                     </div>
                   )}
                 </fieldset>

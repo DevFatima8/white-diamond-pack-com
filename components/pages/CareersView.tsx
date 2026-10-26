@@ -93,7 +93,7 @@ export default function CareersView({ email }: { email: string }) {
         <div className="lg:col-span-4">
           <SectionTitle>{c.formTitle}</SectionTitle>
           <p className="mt-3 text-base leading-7 text-brand-muted">{c.formText}</p>
-          <p className="mt-6 rounded-2xl bg-brand-tint p-4 text-sm leading-6 text-brand-navy">
+          <p className="mt-6 rounded-2xl bg-brand-tint p-5 text-sm leading-7 text-brand-navy sm:p-6">
             {fill(c.cvNote, { email })}
           </p>
         </div>

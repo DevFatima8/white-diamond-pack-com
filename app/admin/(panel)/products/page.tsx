@@ -27,10 +27,10 @@ const STATUS_FILTERS: Record<string, { label: string; where: Prisma.ProductWhere
 
 function StockCell({ stockQty, unit }: { stockQty: number | null; unit: string }) {
   if (stockQty === null) return <span className="text-xs text-brand-muted">Not tracked</span>;
-  if (stockQty === 0) return <Badge className="bg-[#FFF1F2] text-brand-primary ring-1 ring-brand-primary/25">Out of stock</Badge>;
+  if (stockQty === 0) return <Badge className="bg-[#FDECEC] text-brand-primary ring-1 ring-brand-primary/25">Out of stock</Badge>;
   if (stockQty <= LOW_STOCK)
     return (
-      <Badge className="bg-[#FFF1F2] text-brand-primary">
+      <Badge className="bg-[#FDECEC] text-brand-primary">
         Low · {stockQty} {unit}s
       </Badge>
     );

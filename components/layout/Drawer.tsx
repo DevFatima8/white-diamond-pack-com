@@ -64,7 +64,7 @@ export default function Drawer({
   return (
     <div className={cn('fixed inset-0 z-[60]', open ? 'visible' : 'invisible')} aria-hidden={!open}>
       <div
-        className={cn('absolute inset-0 bg-brand-navy-dark/60 transition-opacity duration-300', open ? 'opacity-100' : 'opacity-0')}
+        className={cn('absolute inset-0 bg-brand-navy-dark/40 transition-opacity duration-300', open ? 'opacity-100' : 'opacity-0')}
         onClick={onClose}
       />
       <div

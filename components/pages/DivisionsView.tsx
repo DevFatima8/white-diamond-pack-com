@@ -33,7 +33,7 @@ export default function DivisionsView({ whatsapp }: { whatsapp: string }) {
             <Reveal className={cn(i % 2 === 1 && 'lg:order-2')}>
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-brand-tint shadow-level-2">
                 <Image src={item.image} alt={item.title} fill sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" />
-                <span className="absolute start-4 top-4 rounded-full bg-brand-navy/90 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
+                <span className="absolute start-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-secondary shadow-level-1">
                   {item.tag}
                 </span>
               </div>
@@ -53,7 +53,7 @@ export default function DivisionsView({ whatsapp }: { whatsapp: string }) {
                 ))}
               </ul>
 
-              <p className="mt-6 flex items-start gap-3 rounded-2xl bg-brand-tint p-4 text-sm text-brand-ink">
+              <p className="mt-6 flex items-start gap-3 rounded-2xl bg-brand-tint p-5 text-sm leading-6 text-brand-ink sm:p-6">
                 <Users className="mt-0.5 h-5 w-5 shrink-0 text-brand-secondary" aria-hidden />
                 <span>
                   <span className="font-bold">{d.whoFor}: </span>

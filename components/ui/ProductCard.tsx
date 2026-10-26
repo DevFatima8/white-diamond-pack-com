@@ -55,7 +55,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="relative aspect-square w-full bg-slate-50 dark:bg-black/30 overflow-hidden flex items-center justify-center p-4">
         {/* Category Badge */}
         <div className="absolute top-3 left-3 z-10">
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#EEF2FF] dark:bg-[#1E1B4B]/70 text-[#6366F1] dark:text-[#818CF8] border border-[#6366F1]/20 backdrop-blur-md">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#FDF3F3] dark:bg-[#2B1212]/70 text-[#FBD5D8] dark:text-[#F8C9CD] border border-[#FBD5D8]/20 backdrop-blur-md">
             {product.category}
           </span>
         </div>
@@ -63,8 +63,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* In Stock Badge */}
         {product.inStock !== false && (
           <div className="absolute top-3 right-3 z-10">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EEF2FF] text-[#6366F1] dark:bg-[#1E1B4B] dark:text-[#818CF8] border border-[#6366F1]/30">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] animate-pulse" />
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FDF3F3] text-[#FBD5D8] dark:bg-[#2B1212] dark:text-[#F8C9CD] border border-[#FBD5D8]/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FBD5D8] animate-pulse" />
               {t.common.inStock}
             </span>
           </div>
@@ -87,7 +87,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               e.preventDefault();
               onQuickView(product);
             }}
-            className="absolute bottom-3 right-3 z-10 p-2.5 rounded-xl bg-white/90 dark:bg-black/80 hover:bg-[#E63946] hover:text-white text-slate-700 shadow-md opacity-0 group-hover:opacity-100 transition-all duration-200"
+            className="absolute bottom-3 right-3 z-10 p-2.5 rounded-xl bg-white/90 dark:bg-black/80 hover:bg-[#C1121F] hover:text-white text-slate-700 shadow-md opacity-0 group-hover:opacity-100 transition-all duration-200"
             title="Quick view"
           >
             <Eye className="w-4 h-4" />
@@ -99,9 +99,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="flex flex-col flex-1 p-5">
         <Link
           href={`/products?search=${encodeURIComponent(product.name)}`}
-          className="group-hover:text-[#E63946] dark:group-hover:text-[#818CF8] transition-colors"
+          className="group-hover:text-[#C1121F] dark:group-hover:text-[#F8C9CD] transition-colors"
         >
-          <h3 className="font-bold text-[#1E1B4B] dark:text-white text-base line-clamp-2 leading-snug">
+          <h3 className="font-bold text-[#2B1212] dark:text-white text-base line-clamp-2 leading-snug">
             {product.name}
           </h3>
         </Link>
@@ -109,18 +109,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Specs snippet */}
         <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-[#64748B] dark:text-slate-400">
           {product.capacity && (
-            <span className="bg-[#EEF2FF] dark:bg-white/5 text-[#1E1B4B] dark:text-white px-2 py-0.5 rounded-md font-medium">
+            <span className="bg-[#FDF3F3] dark:bg-white/5 text-[#2B1212] dark:text-white px-2 py-0.5 rounded-md font-medium">
               {product.capacity}
             </span>
           )}
           {product.packing && (
-            <span className="bg-[#EEF2FF] dark:bg-white/5 text-[#1E1B4B] dark:text-white px-2 py-0.5 rounded-md flex items-center gap-1 font-medium">
+            <span className="bg-[#FDF3F3] dark:bg-white/5 text-[#2B1212] dark:text-white px-2 py-0.5 rounded-md flex items-center gap-1 font-medium">
               <Package className="w-3 h-3 text-[#64748B]" />
               {product.packing}
             </span>
           )}
           {product.material && (
-            <span className="bg-[#EEF2FF] dark:bg-white/5 text-[#1E1B4B] dark:text-white px-2 py-0.5 rounded-md font-medium">
+            <span className="bg-[#FDF3F3] dark:bg-white/5 text-[#2B1212] dark:text-white px-2 py-0.5 rounded-md font-medium">
               {product.material}
             </span>
           )}
@@ -132,7 +132,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <div className="text-[10px] uppercase font-bold text-[#64748B] tracking-wider">
               Price
             </div>
-            <div className="text-base font-extrabold text-[#E63946] dark:text-[#F87171]">
+            <div className="text-base font-extrabold text-[#C1121F] dark:text-[#F87171]">
               {formatPrice(product.price)}
             </div>
           </div>
@@ -143,8 +143,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             className={cn(
               'inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer',
               isAdded
-                ? 'bg-[#6366F1] text-white shadow-sm shadow-[#6366F1]/30'
-                : 'bg-[#E63946] hover:bg-[#C92A37] text-white shadow-sm hover:shadow'
+                ? 'bg-[#8B1414] text-white shadow-sm shadow-[#FBD5D8]/30'
+                : 'bg-[#C1121F] hover:bg-[#9B0F1A] text-white shadow-sm hover:shadow'
             )}
           >
             {isAdded ? (

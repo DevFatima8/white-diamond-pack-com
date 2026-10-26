@@ -58,23 +58,23 @@ export default function CustomPackagingView({ phone, whatsapp }: { phone: string
       </section>
 
       {/* Process */}
-      <section className="bg-brand-navy py-16 text-white lg:py-20">
+      <section className="bg-brand-tint py-16 text-brand-ink lg:py-20">
         <div className="mx-auto max-w-site px-5 sm:px-6 lg:px-12">
           <h2 className="font-heading text-[28px] font-bold leading-9 sm:text-[40px] sm:leading-[48px]">{c.processTitle}</h2>
           <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {c.process.map((s, i) => (
-              <li key={s.title} className="relative rounded-2xl bg-white/5 p-6 ring-1 ring-white/10">
-                <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary font-heading text-base font-bold">{i + 1}</span>
+              <li key={s.title} className="relative rounded-2xl bg-white p-6 ring-1 ring-brand-border">
+                <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary font-heading text-base font-bold text-white">{i + 1}</span>
                 <h3 className="font-heading text-base font-bold">{s.title}</h3>
-                <p className="mt-1.5 text-sm leading-6 text-[#DAE2FD]/80">{s.desc}</p>
+                <p className="mt-1.5 text-sm leading-6 text-brand-muted">{s.desc}</p>
               </li>
             ))}
           </ol>
-          <div className="mt-8 flex items-start gap-3 rounded-2xl bg-white/10 p-5">
-            <Package className="mt-0.5 h-5 w-5 shrink-0 text-[#A5B4FC]" aria-hidden />
+          <div className="mt-8 flex items-start gap-3 rounded-2xl bg-white p-5 ring-1 ring-brand-border sm:p-6">
+            <Package className="mt-0.5 h-5 w-5 shrink-0 text-brand-secondary" aria-hidden />
             <p className="text-sm leading-6">
               <span className="font-bold">{c.moqTitle}: </span>
-              <span className="text-[#DAE2FD]/90">{c.moqText}</span>
+              <span className="text-brand-muted">{c.moqText}</span>
             </p>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function CustomPackagingView({ phone, whatsapp }: { phone: string
           <SectionTitle>{c.formTitle}</SectionTitle>
           <p className="mt-3 text-base leading-7 text-brand-muted">{c.formText}</p>
           <div className="mt-8 space-y-3">
-            <a href={`tel:${phone.replace(/\s/g, '')}`} className="flex items-center gap-3 rounded-2xl bg-brand-tint p-4 text-sm font-bold text-brand-navy hover:bg-[#E0E7FF]">
+            <a href={`tel:${phone.replace(/\s/g, '')}`} className="flex items-center gap-3 rounded-2xl bg-brand-tint p-5 text-sm font-bold text-brand-navy hover:bg-[#FCE8E9]">
               <Phone className="h-5 w-5 text-brand-secondary" aria-hidden />
               <span dir="ltr">{phone}</span>
             </a>
@@ -94,7 +94,7 @@ export default function CustomPackagingView({ phone, whatsapp }: { phone: string
               href={whatsappLink(whatsapp, t.whatsapp.message)}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-3 rounded-2xl bg-brand-tint p-4 text-sm font-bold text-brand-navy hover:bg-[#E0E7FF]"
+              className="flex items-center gap-3 rounded-2xl bg-brand-tint p-5 text-sm font-bold text-brand-navy hover:bg-[#FCE8E9]"
             >
               <BrandIcon name="whatsapp" className="h-5 w-5 text-brand-secondary" />
               {p.common.ctaWhatsapp}

@@ -23,7 +23,7 @@ export default function FaqView({ whatsapp }: { whatsapp: string }) {
 
       <div className="mx-auto grid w-full max-w-site gap-10 px-5 py-16 sm:px-6 lg:grid-cols-12 lg:px-12 lg:py-20">
         <nav aria-label={p.common.onThisPage} className="hidden lg:col-span-3 lg:block">
-          <div className="sticky top-28 rounded-2xl bg-brand-tint p-5">
+          <div className="sticky top-28 rounded-2xl bg-brand-tint p-6">
             <p className="text-xs font-bold uppercase tracking-wider text-brand-muted">{p.common.onThisPage}</p>
             <ul className="mt-3 space-y-1">
               {f.groups.map((g, i) => (
@@ -55,15 +55,15 @@ export default function FaqView({ whatsapp }: { whatsapp: string }) {
             </section>
           ))}
 
-          <div className="rounded-3xl bg-brand-navy p-8 text-white">
+          <div className="rounded-3xl bg-brand-tint p-8 text-brand-ink ring-1 ring-brand-border">
             <h2 className="font-heading text-2xl font-bold">{f.stillTitle}</h2>
-            <p className="mt-2 text-sm text-[#DAE2FD]/90">{f.stillText}</p>
+            <p className="mt-2 text-sm text-brand-muted">{f.stillText}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href={whatsappLink(whatsapp, t.whatsapp.message)} target="_blank" rel="noreferrer" className={pillClass('primary')}>
                 <BrandIcon name="whatsapp" className="h-4 w-4" />
                 {p.common.ctaWhatsapp}
               </a>
-              <Link href={routes.contact} className={pillClass('ghost-dark')}>{p.common.ctaContact}</Link>
+              <Link href={routes.contact} className={pillClass('outline')}>{p.common.ctaContact}</Link>
             </div>
           </div>
         </div>

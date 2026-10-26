@@ -117,11 +117,11 @@ export default function SearchBox({
         className={cn(
           'flex items-center rounded-full transition-colors',
           isHeader
-            ? 'bg-white/10 ps-3.5 pe-2 focus-within:bg-white/20'
+            ? 'border border-brand-border bg-brand-tint ps-3.5 pe-2 focus-within:border-brand-secondary focus-within:bg-white'
             : 'border border-brand-border bg-white ps-4 pe-2 focus-within:border-brand-secondary',
         )}
       >
-        <Search className={cn('h-4 w-4 shrink-0', isHeader ? 'text-[#C7D2FE]' : 'text-brand-muted')} aria-hidden />
+        <Search className={cn('h-4 w-4 shrink-0', 'text-brand-muted')} aria-hidden />
         <input
           type="search"
           role="combobox"
@@ -140,10 +140,10 @@ export default function SearchBox({
           placeholder={t.nav.searchPlaceholder}
           className={cn(
             'w-full bg-transparent py-2 ps-2 text-sm focus:outline-none [&::-webkit-search-cancel-button]:hidden',
-            isHeader ? 'text-white placeholder:text-[#C7D2FE]/80' : 'py-2.5 text-brand-ink placeholder:text-slate-400',
+            isHeader ? 'text-brand-ink placeholder:text-brand-muted' : 'py-2.5 text-brand-ink placeholder:text-slate-400',
           )}
         />
-        {loading && <Loader2 className={cn('h-4 w-4 shrink-0 animate-spin', isHeader ? 'text-white/70' : 'text-brand-muted')} aria-hidden />}
+        {loading && <Loader2 className={cn('h-4 w-4 shrink-0 animate-spin', 'text-brand-muted')} aria-hidden />}
       </div>
 
       {showPanel && (

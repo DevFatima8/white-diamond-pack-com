@@ -31,12 +31,12 @@ export default function SectionRail({
         )}
         aria-hidden
       >
-        <Icon className={cn('mb-6 h-6 w-6', dark ? 'text-[#A5B4FC]' : 'text-brand-secondary')} />
+        <Icon className={cn('mb-6 h-6 w-6', dark ? 'text-[#FBD5D8]' : 'text-brand-secondary')} />
         {/* writing-mode turns the text vertical; rotate-180 makes it read bottom-to-top */}
         <span
           className={cn(
             'rotate-180 whitespace-nowrap font-heading text-[11px] font-bold uppercase tracking-[0.25em] [writing-mode:vertical-rl]',
-            dark ? 'text-[#A5B4FC]' : 'text-brand-secondary',
+            dark ? 'text-[#FBD5D8]' : 'text-brand-secondary',
           )}
         >
           {label}

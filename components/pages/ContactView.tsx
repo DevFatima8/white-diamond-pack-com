@@ -7,6 +7,7 @@ import BrandIcon from '@/components/layout/BrandIcon';
 import { SectionTitle } from '@/components/ui/SectionRail';
 import PageHero from './PageHero';
 import EnquiryForm from './EnquiryForm';
+import InstagramCard from './InstagramCard';
 import { usePageTexts } from './usePageTexts';
 
 export interface ContactDetails {
@@ -17,7 +18,7 @@ export interface ContactDetails {
 }
 
 /** /contact — contact cards, message form (→ Admin → Messages), map and hours. */
-export default function ContactView({ contact }: { contact: ContactDetails }) {
+export default function ContactView({ contact, instagram = '' }: { contact: ContactDetails; instagram?: string }) {
   const { p, t } = usePageTexts();
   const c = p.contact;
   const mapQuery = encodeURIComponent(contact.address);
@@ -46,20 +47,20 @@ export default function ContactView({ contact }: { contact: ContactDetails }) {
       <PageHero eyebrow={c.eyebrow} title={c.title} intro={c.intro} />
 
       <section className="mx-auto -mt-8 w-full max-w-site px-5 sm:px-6 lg:px-12">
-        <ul className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-4 [&>li]:min-w-0">
           {cards.map((card) => (
             <li key={card.title}>
               <a
                 href={card.href}
                 {...(card.external && { target: '_blank', rel: 'noreferrer' })}
-                className="group flex h-full items-start gap-4 rounded-2xl border border-brand-border bg-white p-5 shadow-level-2 transition-colors hover:border-brand-secondary"
+                className="group flex h-full items-start gap-4 rounded-2xl border border-brand-border bg-white p-5 shadow-level-2 sm:p-6 transition-colors hover:border-brand-secondary"
               >
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-tint text-brand-secondary transition-colors group-hover:bg-brand-secondary group-hover:text-white">
                   {card.icon}
                 </span>
                 <span className="min-w-0">
                   <span className="block text-xs font-bold uppercase tracking-wider text-brand-muted">{card.title}</span>
-                  <span className="mt-1 block break-words text-sm font-semibold text-brand-navy" dir={card.ltr ? 'ltr' : undefined}>
+                  <span className="mt-1 block text-sm font-semibold [overflow-wrap:anywhere] text-brand-navy" dir={card.ltr ? 'ltr' : undefined}>
                     {card.value}
                   </span>
                 </span>
@@ -102,17 +103,18 @@ export default function ContactView({ contact }: { contact: ContactDetails }) {
             </div>
           </div>
 
-          <div className="rounded-3xl bg-brand-navy p-6 text-white sm:p-8">
+          <div className="rounded-3xl bg-brand-tint p-6 text-brand-ink ring-1 ring-brand-border sm:p-8">
             <h2 className="flex items-center gap-2 font-heading text-lg font-bold">
-              <Clock className="h-5 w-5 text-[#A5B4FC]" aria-hidden />
+              <Clock className="h-5 w-5 text-brand-secondary" aria-hidden />
               {c.hoursTitle}
             </h2>
-            <ul className="mt-4 space-y-2 text-sm text-[#DAE2FD]">
+            <ul className="mt-4 space-y-2 text-sm text-brand-ink">
               {c.hours.map((h) => (
                 <li key={h}>{h}</li>
               ))}
             </ul>
           </div>
+          <InstagramCard url={instagram} />
         </div>
       </section>
     </>

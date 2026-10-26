@@ -28,18 +28,18 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-[#E63946] text-white hover:bg-[#C92A37] active:bg-[#B0222F] shadow-sm hover:shadow border border-transparent',
+    'bg-[#C1121F] text-white hover:bg-[#9B0F1A] active:bg-[#B0222F] shadow-sm hover:shadow border border-transparent',
   accent:
-    'bg-[#6366F1] text-white font-bold hover:bg-[#4F46E5] active:bg-[#4338CA] shadow-sm hover:shadow border border-transparent',
+    'bg-[#8B1414] text-white font-bold hover:bg-[#6E0F0F] active:bg-[#5C0E0E] shadow-sm hover:shadow border border-transparent',
   secondary:
-    'bg-[#1E1B4B] text-white hover:bg-[#2E2A72] active:bg-[#12102E] border border-white/10 shadow-sm',
+    'bg-[#2B1212] text-white hover:bg-[#1A0B0B] active:bg-[#1A0B0B] border border-white/10 shadow-sm',
   outline:
-    'border border-slate-300 dark:border-white/20 bg-transparent text-[#1E1B4B] dark:text-white hover:bg-[#EEF2FF] dark:hover:bg-white/10 active:bg-slate-200',
+    'border border-slate-300 dark:border-white/20 bg-transparent text-[#2B1212] dark:text-white hover:bg-[#FDF3F3] dark:hover:bg-white/10 active:bg-slate-200',
   ghost:
-    'bg-transparent text-slate-700 dark:text-slate-200 hover:bg-[#EEF2FF] dark:hover:bg-white/10 active:bg-slate-200',
+    'bg-transparent text-slate-700 dark:text-slate-200 hover:bg-[#FDF3F3] dark:hover:bg-white/10 active:bg-slate-200',
   danger:
     'bg-rose-600 text-white hover:bg-rose-700 active:bg-rose-800 shadow-sm border border-transparent',
-  link: 'text-[#E63946] dark:text-[#818CF8] hover:underline p-0 h-auto font-semibold',
+  link: 'text-[#C1121F] dark:text-[#F8C9CD] hover:underline p-0 h-auto font-semibold',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -69,7 +69,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseClasses = cn(
-      'inline-flex items-center justify-center font-medium transition-all duration-200 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E63946] focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-[0.98]',
+      'inline-flex items-center justify-center font-medium transition-all duration-200 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C1121F] focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-[0.98]',
       variantClasses[variant],
       sizeClasses[size],
       fullWidth && 'w-full',

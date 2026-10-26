@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getShopPage } from '@/lib/shop';
+import { logDataError } from '@/lib/db-errors';
+import ShopUnavailable from '@/components/shop/ShopUnavailable';
 import { SHOP_PAGE_SIZE, parseShopParams } from '@/lib/shop-params';
 import { getSiteCategories, getSiteSettings } from '@/lib/site-data';
 import { categoryHref } from '@/lib/routes';
@@ -27,11 +29,17 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function CategoryPage({ params, searchParams }: { params: Params; searchParams: SearchParams }) {
   const { slug } = await params;
   const [categories, settings] = await Promise.all([getSiteCategories(), getSiteSettings()]);
+  // No categories at all = the database is offline: show "temporarily unavailable", not a false 404
+  if (!categories.length) return <ShopUnavailable whatsapp={settings.whatsapp_number} />;
   const category = categories.find((c) => c.slug === slug);
   if (!category) notFound();
 
   const shopParams = parseShopParams(await searchParams, category.slug);
-  const result = await getShopPage(shopParams);
+  const result = await getShopPage(shopParams).catch((err) => {
+    logDataError('category', err);
+    return null;
+  });
+  if (!result) return <ShopUnavailable whatsapp={settings.whatsapp_number} />;
 
   return (
     <ShopView

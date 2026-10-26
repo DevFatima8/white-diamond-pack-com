@@ -61,7 +61,7 @@ function LoginForm() {
 
       {error && (
         <div
-          className="mb-5 flex items-start gap-2 rounded-xl border border-brand-primary/25 bg-[#FFF1F2] px-3.5 py-3 text-sm text-brand-primary"
+          className="mb-5 flex items-start gap-2 rounded-xl border border-brand-primary/25 bg-[#FDECEC] px-3.5 py-3 text-sm text-brand-primary"
           role="alert"
         >
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
@@ -132,7 +132,7 @@ export default function AdminLoginPage() {
     <div
       dir="ltr"
       lang="en"
-      className="flex min-h-screen items-center justify-center bg-brand-navy-dark bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.22),transparent_60%)] p-4 font-sans"
+      className="flex min-h-screen items-center justify-center bg-brand-navy-dark bg-[radial-gradient(ellipse_at_top,rgba(251, 213, 216,0.22),transparent_60%)] p-4 font-sans"
     >
       {/* useSearchParams needs a Suspense boundary in the App Router */}
       <Suspense fallback={null}>

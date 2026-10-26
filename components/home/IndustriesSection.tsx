@@ -28,7 +28,7 @@ export default function IndustriesSection() {
                 href={industryHref(slug)}
                 className="group flex h-full items-start gap-4 rounded-2xl bg-brand-tint/60 p-6 transition duration-300 hover:bg-white hover:shadow-level-2"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#E1E0FF] text-[#07006C] transition-colors group-hover:bg-brand-secondary group-hover:text-white">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#FCE8E9] text-[#5C0E0E] transition-colors group-hover:bg-brand-secondary group-hover:text-white">
                   <Icon className="h-6 w-6" aria-hidden />
                 </span>
                 <span>

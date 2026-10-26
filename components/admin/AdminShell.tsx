@@ -4,20 +4,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  ExternalLink,
-  FolderTree,
-  LayoutDashboard,
-  LogOut,
-  Mail,
-  Menu,
-  Package,
-  Plus,
-  Search,
-  Settings,
-  ShoppingBag,
-  X,
-} from 'lucide-react';
+import { ExternalLink, FolderTree, Images, LayoutDashboard, LogOut, Mail, Menu, Package, Plus, Search, Settings, ShoppingBag, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { buttonClass } from './ui';
 
@@ -45,6 +32,7 @@ export default function AdminShell({ adminLabel, pendingOrders, unreadMessages, 
     { href: '/admin/products', label: 'Products', icon: Package },
     { href: '/admin/categories', label: 'Categories', icon: FolderTree },
     { href: '/admin/messages', label: 'Messages', icon: Mail, badge: unreadMessages },
+    { href: '/admin/gallery', label: 'Gallery', icon: Images },
     { href: '/admin/settings', label: 'Settings', icon: Settings },
   ];
 

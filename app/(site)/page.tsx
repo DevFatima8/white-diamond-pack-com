@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { getSiteCategories } from '@/lib/site-data';
+import { logDataError } from '@/lib/db-errors';
+import { getSiteCategories, getSiteSettings } from '@/lib/site-data';
 import { getFeaturedProducts } from '@/lib/catalog';
 import type { ProductCardData } from '@/lib/catalog-types';
 import HeroSlider from '@/components/home/HeroSlider';
@@ -10,6 +11,7 @@ import PresenceSection from '@/components/home/PresenceSection';
 import OemSection from '@/components/home/OemSection';
 import StatsStrip from '@/components/home/StatsStrip';
 import IndustriesSection from '@/components/home/IndustriesSection';
+import InstagramCard from '@/components/pages/InstagramCard';
 
 // Products and categories change in the admin, so always render fresh.
 export const dynamic = 'force-dynamic';
@@ -33,12 +35,13 @@ export const metadata: Metadata = {
  * simply skipped and the rest of the page still works.
  */
 export default async function HomePage() {
-  const [categories, featured] = await Promise.all([
+  const [categories, featured, settings] = await Promise.all([
     getSiteCategories(), // already loaded by the layout → cached, no 2nd query
     getFeaturedProducts(8).catch((err): ProductCardData[] => {
-      console.error('[home] featured products unavailable:', err);
+      logDataError('home featured', err);
       return [];
     }),
+    getSiteSettings(),
   ]);
 
   return (
@@ -51,6 +54,11 @@ export default async function HomePage() {
       <OemSection />
       <StatsStrip />
       <IndustriesSection />
+      {settings.social_instagram && (
+        <section className="mx-auto w-full max-w-site px-5 pb-16 sm:px-6 lg:px-12">
+          <InstagramCard url={settings.social_instagram} />
+        </section>
+      )}
     </>
   );
 }

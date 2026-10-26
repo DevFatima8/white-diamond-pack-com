@@ -12,19 +12,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async headers() {
-    return [
-      {
-        source: '/_next/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-    ];
-  },
+  // No custom Cache-Control for /_next/static: Next.js already caches hashed production
+  // files for a year by itself. Forcing "immutable" here also applied in development,
+  // where file names don't change on edit → browsers kept showing old code and colours.
 };
 
 export default nextConfig;

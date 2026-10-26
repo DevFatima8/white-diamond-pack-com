@@ -35,7 +35,7 @@ export const DEFAULT_SETTINGS: Record<SettingKey, string> = {
   ].join('\n'),
   whatsapp_number: '923216293333',
   contact_phone: '+92 321 6293333',
-  contact_email: 'whitediamond344@gmail.com',
+  contact_email: 'admin@whitediamondpack.com',
   contact_address: 'Hanif Garden No# 01, Sheikhupura Road, Faisalabad, Punjab, Pakistan',
   social_facebook: '',
   social_instagram: '',

@@ -33,7 +33,7 @@ export default function ProductCard({ product, className }: { product: ProductCa
   return (
     <article
       className={cn(
-        'group flex flex-col justify-between rounded-2xl border border-brand-border/70 bg-white p-3 shadow-level-1 sm:p-5 transition duration-300 hover:-translate-y-1.5 hover:shadow-level-2',
+        'group flex flex-col justify-between rounded-2xl border border-brand-border/70 bg-white p-3.5 shadow-level-1 sm:p-5 transition duration-300 hover:-translate-y-1.5 hover:shadow-level-2',
         className,
       )}
     >
@@ -49,8 +49,8 @@ export default function ProductCard({ product, className }: { product: ProductCa
           {(onSale || categoryName) && (
             <span
               className={cn(
-                'absolute start-2 top-2 z-10 max-w-[85%] truncate rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white sm:start-3 sm:top-3 sm:px-2.5 sm:text-[11px]',
-                onSale ? 'bg-brand-primary' : 'bg-brand-navy-dark/90',
+                'absolute start-2 top-2 z-10 max-w-[85%] truncate rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider sm:start-3 sm:top-3 sm:px-2.5 sm:text-[11px]',
+                onSale ? 'bg-brand-primary text-white' : 'bg-brand-accent text-brand-navy',
               )}
             >
               {onSale ? tf.onSale : categoryName}

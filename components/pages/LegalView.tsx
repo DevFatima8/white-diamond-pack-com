@@ -53,7 +53,7 @@ export default function LegalView({ page }: { page: LegalPageKey }) {
         </article>
 
         <aside className="lg:col-span-4">
-          <nav aria-label={p.common.onThisPage} className="sticky top-28 rounded-2xl bg-brand-tint p-5">
+          <nav aria-label={p.common.onThisPage} className="sticky top-28 rounded-2xl bg-brand-tint p-6">
             <ul className="space-y-1">
               {LEGAL_LINKS.map((l) => (
                 <li key={l.key}>

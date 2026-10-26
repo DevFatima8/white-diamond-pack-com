@@ -96,7 +96,7 @@ export default function CartDrawer() {
                     <button
                       type="button"
                       onClick={() => remove(item.productId)}
-                      className="-me-1 rounded-lg p-1 text-brand-muted hover:bg-[#FFF1F2] hover:text-brand-primary"
+                      className="-me-1 rounded-lg p-1 text-brand-muted hover:bg-[#FDECEC] hover:text-brand-primary"
                       aria-label={fill(tc.remove, { name })}
                     >
                       <Trash2 className="h-4 w-4" />

@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
+// This page replaces the root layout, so it must load the site styles itself
+// (otherwise links fall back to the browser's default blue).
+import './globals.css';
 
 export default function GlobalError({
   error,

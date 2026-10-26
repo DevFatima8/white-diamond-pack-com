@@ -52,14 +52,14 @@ export default function IndustryDetailView({ slug, products, whatsapp }: { slug:
               ))}
             </ul>
           </div>
-          <div className="rounded-3xl bg-brand-navy p-6 text-white sm:p-8">
+          <div className="rounded-3xl bg-white p-6 text-brand-ink ring-1 ring-brand-border sm:p-8">
             <h2 className="flex items-center gap-2 font-heading text-xl font-bold">
               <CircleCheck className="h-6 w-6 text-brand-primary" aria-hidden />
               {ti.solutionsTitle}
             </h2>
             <ul className="mt-5 space-y-3">
               {detail.solutions.map((s) => (
-                <li key={s} className="flex items-start gap-2.5 text-sm leading-6 text-[#E2E7FF]">
+                <li key={s} className="flex items-start gap-2.5 text-sm leading-6 text-brand-ink">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-primary" aria-hidden />
                   {s}
                 </li>

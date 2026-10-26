@@ -6,7 +6,7 @@ import { withFallback, type Locale } from './translations';
  * Careers, Contact, FAQ, legal pages, 404). Kept apart from translations.ts because it
  * is long and only these pages use it. Same rule: every string exists in EN and AR.
  *
- * DUMMY CONTENT: years, figures, jobs and certifications are placeholders — see the
+ * DUMMY CONTENT: years, figures and jobs are placeholders — see the
  * README "Before launch" list. Legal pages are templates and need a review.
  */
 
@@ -24,6 +24,10 @@ const en = {
     ctaWhatsapp: 'WhatsApp us',
     shopNow: 'Shop online',
     learnMore: 'Learn more',
+    instagramEyebrow: 'Follow us on Instagram',
+    instagramTitle: 'White Diamond on Instagram',
+    instagramText: 'New products, factory updates and packaging ideas.',
+    instagramCta: 'Follow',
   },
   form: {
     name: 'Your name',
@@ -87,7 +91,7 @@ const en = {
       { year: '2024', title: 'Eco-friendly range', desc: 'Bamboo cutlery, wooden skewers and paper alternatives to plastic.' },
       { year: '2026', title: 'Online shop', desc: 'Businesses and homes can now order online with delivery across Pakistan.' },
     ],
-    qualityEyebrow: 'Quality & certifications',
+    qualityEyebrow: 'Quality standards',
     qualityTitle: 'Checked at every step, from raw material to carton',
     qualityText:
       'Quality is not a final inspection — it is built into each step. Every batch is checked for thickness, weight, length and seal before it leaves the plant.',
@@ -97,14 +101,6 @@ const en = {
       { title: 'Hygienic packing area', desc: 'Separate clean area, hair nets and gloves, sealed shrink packing.' },
       { title: 'Batch traceability', desc: 'Each carton carries a batch code so any issue can be traced quickly.' },
     ],
-    certsTitle: 'Standards & certifications',
-    certs: [
-      { name: 'ISO 9001', desc: 'Quality management system' },
-      { name: 'ISO 22000', desc: 'Food safety management' },
-      { name: 'PSQCA', desc: 'Pakistan Standards & Quality Control Authority' },
-      { name: 'Halal compliant', desc: 'Materials and processes' },
-    ],
-    certsNote: 'Copies of certificates and material test reports are available on request.',
     infraEyebrow: 'Infrastructure',
     infraTitle: 'Our plant & distribution network',
     infraText:
@@ -112,16 +108,17 @@ const en = {
     infraFacts: [
       { value: '4', label: 'Manufacturing & storage units' },
       { value: '18', label: 'Regional sales centres' },
-      { value: '10,000+ t', label: 'Annual capacity' },
-      { value: '24–48 h', label: 'Nationwide dispatch' },
+      { value: '10,000+ tons', label: 'Annual production capacity (foil & packaging)' },
+      { value: '24–48 hours', label: 'Nationwide dispatch' },
     ],
+    galleryTabs: { all: 'All', office: 'Office', production: 'Production', products: 'Finished products' },
     gallery: [
-      { image: '/images/home/division-packaging.jpg', caption: 'Foil slitting & rewinding' },
-      { image: '/images/home/division-hygiene.jpg', caption: 'Clean packing hall' },
-      { image: '/images/home/cat-aluminium-foil-containers.jpg', caption: 'Container press line' },
-      { image: '/images/heavy-duty-foil.png', caption: 'Heavy-duty foil rolls' },
-      { image: '/images/home/cat-paper-bags.jpg', caption: 'Paper packaging' },
-      { image: '/images/home/hero-studio-showcase.jpg', caption: 'Finished goods store' },
+      { image: '/images/home/division-packaging-plant.jpg', caption: 'Foil slitting & rewinding', group: 'production' as const },
+      { image: '/images/home/cat-baking-paper.jpg', caption: 'Baking paper line', group: 'production' as const },
+      { image: '/images/home/cat-aluminium-foil-containers.jpg', caption: 'Container press line', group: 'production' as const },
+      { image: '/images/heavy-duty-foil.png', caption: 'Heavy-duty foil rolls', group: 'products' as const },
+      { image: '/images/home/cat-paper-bags.jpg', caption: 'Paper packaging', group: 'products' as const },
+      { image: '/images/home/hero-studio-showcase.jpg', caption: 'Finished goods store', group: 'products' as const },
     ],
   },
 
@@ -134,7 +131,7 @@ const en = {
     items: [
       {
         key: 'packaging',
-        image: '/images/home/division-packaging.jpg',
+        image: '/images/home/division-packaging-plant.jpg',
         tag: 'Division 01',
         title: 'White Diamond Packaging',
         desc: 'Large-scale production of food packaging — from household foil rolls to catering-size containers and paper bags.',
@@ -143,7 +140,7 @@ const en = {
       },
       {
         key: 'hygiene',
-        image: '/images/home/division-hygiene.jpg',
+        image: '/images/hero2.png',
         tag: 'Division 02',
         title: 'White Diamond Hygiene',
         desc: 'Hygienic disposables for kitchens and the food supply chain, produced and packed in clean conditions.',
@@ -419,7 +416,7 @@ const en = {
       },
       {
         heading: 'Contact',
-        paragraphs: ['Questions about this policy? Email whitediamond344@gmail.com or call +92 321 6293333.'],
+        paragraphs: ['Questions about this policy? Email admin@whitediamondpack.com or call +92 321 6293333.'],
       },
     ],
   } as LegalPage,
@@ -520,6 +517,10 @@ const ar: PageTexts = {
     ctaWhatsapp: 'راسلنا على واتساب',
     shopNow: 'تسوق أونلاين',
     learnMore: 'اعرف المزيد',
+    instagramEyebrow: 'تابعنا على إنستغرام',
+    instagramTitle: 'وايت دايموند على إنستغرام',
+    instagramText: 'منتجات جديدة وأخبار المصنع وأفكار للتغليف.',
+    instagramCta: 'تابعنا',
   },
   form: {
     name: 'الاسم',
@@ -582,7 +583,7 @@ const ar: PageTexts = {
       { year: '2024', title: 'منتجات صديقة للبيئة', desc: 'أدوات مائدة من الخيزران وأسياخ خشبية وبدائل ورقية للبلاستيك.' },
       { year: '2026', title: 'المتجر الإلكتروني', desc: 'يمكن للشركات والمنازل الآن الطلب أونلاين مع التوصيل في كل باكستان.' },
     ],
-    qualityEyebrow: 'الجودة والشهادات',
+    qualityEyebrow: 'معايير الجودة',
     qualityTitle: 'فحص في كل خطوة من المادة الخام حتى الكرتونة',
     qualityText: 'الجودة ليست فحصاً نهائياً فقط — بل جزء من كل خطوة. تُفحص كل دفعة من حيث السماكة والوزن والطول والإغلاق قبل خروجها من المصنع.',
     qualityPoints: [
@@ -591,30 +592,23 @@ const ar: PageTexts = {
       { title: 'منطقة تعبئة صحية', desc: 'منطقة نظيفة منفصلة، وأغطية شعر وقفازات، وتغليف حراري محكم.' },
       { title: 'تتبع الدفعات', desc: 'تحمل كل كرتونة رمز دفعة لتتبع أي مشكلة بسرعة.' },
     ],
-    certsTitle: 'المعايير والشهادات',
-    certs: [
-      { name: 'ISO 9001', desc: 'نظام إدارة الجودة' },
-      { name: 'ISO 22000', desc: 'إدارة سلامة الغذاء' },
-      { name: 'PSQCA', desc: 'هيئة المواصفات ومراقبة الجودة الباكستانية' },
-      { name: 'متوافق مع الحلال', desc: 'المواد وعمليات الإنتاج' },
-    ],
-    certsNote: 'نسخ الشهادات وتقارير فحص المواد متاحة عند الطلب.',
     infraEyebrow: 'البنية التحتية',
     infraTitle: 'مصنعنا وشبكة التوزيع',
     infraText: 'يجمع مصنعنا في فيصل آباد لف الألمنيوم وكبس العلب ولف الأفلام وتحويل الورق تحت سقف واحد، مع رصيف شحن يحمّل الشاحنات كل يوم عمل.',
     infraFacts: [
       { value: '4', label: 'وحدات تصنيع وتخزين' },
       { value: '18', label: 'مركز مبيعات إقليمي' },
-      { value: '+10,000 طن', label: 'الطاقة السنوية' },
+      { value: '+10,000 طن', label: 'الطاقة الإنتاجية السنوية (الألمنيوم والتغليف)' },
       { value: '24–48 ساعة', label: 'الشحن لكل باكستان' },
     ],
+    galleryTabs: { all: 'الكل', office: 'المكتب', production: 'الإنتاج', products: 'المنتجات الجاهزة' },
     gallery: [
-      { image: '/images/home/division-packaging.jpg', caption: 'تقطيع ولف ورق الألمنيوم' },
-      { image: '/images/home/division-hygiene.jpg', caption: 'صالة تعبئة نظيفة' },
-      { image: '/images/home/cat-aluminium-foil-containers.jpg', caption: 'خط كبس العلب' },
-      { image: '/images/heavy-duty-foil.png', caption: 'لفائف ألمنيوم للاستخدام الشاق' },
-      { image: '/images/home/cat-paper-bags.jpg', caption: 'التغليف الورقي' },
-      { image: '/images/home/hero-studio-showcase.jpg', caption: 'مخزن المنتجات الجاهزة' },
+      { image: '/images/home/division-packaging-plant.jpg', caption: 'تقطيع ولف ورق الألمنيوم', group: 'production' as const },
+      { image: '/images/home/cat-baking-paper.jpg', caption: 'خط ورق الخبز', group: 'production' as const },
+      { image: '/images/home/cat-aluminium-foil-containers.jpg', caption: 'خط كبس العلب', group: 'production' as const },
+      { image: '/images/heavy-duty-foil.png', caption: 'لفائف ألمنيوم للاستخدام الشاق', group: 'products' as const },
+      { image: '/images/home/cat-paper-bags.jpg', caption: 'التغليف الورقي', group: 'products' as const },
+      { image: '/images/home/hero-studio-showcase.jpg', caption: 'مخزن المنتجات الجاهزة', group: 'products' as const },
     ],
   },
 
@@ -627,7 +621,7 @@ const ar: PageTexts = {
     items: [
       {
         key: 'packaging',
-        image: '/images/home/division-packaging.jpg',
+        image: '/images/home/division-packaging-plant.jpg',
         tag: 'القسم 01',
         title: 'وايت دايموند للتغليف',
         desc: 'إنتاج واسع للتغليف الغذائي — من لفائف الألمنيوم المنزلية إلى علب التموين الكبيرة والأكياس الورقية.',
@@ -636,7 +630,7 @@ const ar: PageTexts = {
       },
       {
         key: 'hygiene',
-        image: '/images/home/division-hygiene.jpg',
+        image: '/images/hero2.png',
         tag: 'القسم 02',
         title: 'وايت دايموند للمنتجات الصحية',
         desc: 'منتجات صحية للاستعمال مرة واحدة للمطابخ وسلسلة توريد الغذاء، تُنتج وتُعبأ في ظروف نظيفة.',
@@ -912,7 +906,7 @@ const ar: PageTexts = {
       },
       {
         heading: 'التواصل',
-        paragraphs: ['أسئلة حول هذه السياسة؟ راسلنا على whitediamond344@gmail.com أو اتصل على ‎+92 321 6293333.'],
+        paragraphs: ['أسئلة حول هذه السياسة؟ راسلنا على admin@whitediamondpack.com أو اتصل على ‎+92 321 6293333.'],
       },
     ],
   },

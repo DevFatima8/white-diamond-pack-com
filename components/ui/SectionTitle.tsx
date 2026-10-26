@@ -45,8 +45,8 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
           className={cn(
             'inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-3.5 transition-all',
             isDark
-              ? 'bg-[#1E1B4B]/80 border border-[#6366F1]/30 text-[#818CF8]'
-              : 'bg-[#EEF2FF] border border-[#6366F1]/20 text-[#6366F1]',
+              ? 'bg-[#2B1212]/80 border border-[#FBD5D8]/30 text-[#F8C9CD]'
+              : 'bg-[#FDF3F3] border border-[#FBD5D8]/20 text-[#8B1414]',
             badgeClassName
           )}
         >
@@ -58,7 +58,7 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
       <h2
         className={cn(
           'text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight font-heading leading-tight',
-          isDark ? 'text-white' : 'text-[#1E1B4B]',
+          isDark ? 'text-white' : 'text-[#2B1212]',
           titleClassName
         )}
       >

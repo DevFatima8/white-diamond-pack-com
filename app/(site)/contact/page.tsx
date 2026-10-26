@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const s = await getSiteSettings();
-  return <ContactView contact={{ phone: s.contact_phone, email: s.contact_email, address: s.contact_address, whatsapp: s.whatsapp_number }} />;
+  return <ContactView contact={{ phone: s.contact_phone, email: s.contact_email, address: s.contact_address, whatsapp: s.whatsapp_number }} instagram={s.social_instagram} />;
 }

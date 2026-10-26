@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import db from '@/lib/db';
 import { serverError, validationError } from '@/lib/api';
 import { RateLimiter, getClientIp } from '@/lib/rate-limit';
 import { quoteRequestSchema } from '@/lib/validation/order';
+import { notifyNewMessage } from '@/lib/notify';
 
 // 5 quote requests per IP per 15 minutes (spam protection).
 const quoteLimiter = new RateLimiter(5, 15 * 60 * 1000);
@@ -24,10 +25,12 @@ export async function POST(request: NextRequest) {
       ? await db.product.findFirst({ where: { id: productId, isActive: true }, select: { id: true, name: true } })
       : null;
 
-    await db.message.create({
+    const saved = await db.message.create({
       data: { ...data, type: 'QUOTE', productId: product?.id ?? null, productName: product?.name ?? null },
     });
     quoteLimiter.hit(ip);
+    // Email the owner after responding, so the customer doesn't wait
+    after(() => notifyNewMessage(saved, `${request.nextUrl.origin}/admin/messages`));
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (err) {
     return serverError('quote POST', err, 'Could not send the request');

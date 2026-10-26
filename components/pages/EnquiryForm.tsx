@@ -214,7 +214,7 @@ export default function EnquiryForm({
       </div>
 
       {formError && (
-        <p className="rounded-xl bg-[#FFF1F2] px-4 py-3 text-sm text-brand-primary" role="alert">
+        <p className="rounded-xl bg-[#FDECEC] px-4 py-3 text-sm text-brand-primary" role="alert">
           {formError}
         </p>
       )}

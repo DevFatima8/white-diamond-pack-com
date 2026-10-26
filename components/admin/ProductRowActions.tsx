@@ -76,7 +76,7 @@ export function ProductRowActions({ productId, productName }: { productId: strin
       <button
         type="button"
         onClick={() => setConfirming(true)}
-        className="rounded-lg p-2 text-brand-muted hover:bg-[#FFF1F2] hover:text-brand-primary"
+        className="rounded-lg p-2 text-brand-muted hover:bg-[#FDECEC] hover:text-brand-primary"
         aria-label={`Delete ${productName}`}
       >
         <Trash2 className="h-4 w-4" />

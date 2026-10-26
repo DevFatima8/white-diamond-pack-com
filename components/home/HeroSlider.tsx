@@ -13,7 +13,7 @@ const SLIDE_IMAGES = [
   '/images/home/hero-studio-showcase.jpg',
   '/images/home/cat-aluminium-foil-containers.jpg',
   '/images/home/cat-eco-bagasse.jpg',
-  '/images/home/division-packaging.jpg',
+  '/images/home/division-packaging-plant.jpg',
 ];
 const INTERVAL_MS = 6000;
 const TRUST_ICONS = [BadgeCheck, Factory, Truck];
@@ -57,8 +57,8 @@ export default function HeroSlider() {
         {/* Text column */}
         <div className="relative z-10 flex flex-col gap-6 lg:col-span-6">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="rounded-full bg-[#E1E0FF] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#07006C] shadow-sm">{slide.badge}</span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-tint px-3 py-1 text-xs font-bold text-brand-secondary">
+            <span className="rounded-full bg-[#FCE8E9] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#5C0E0E] shadow-sm">{slide.badge}</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-accent px-3 py-1 text-xs font-bold text-brand-navy">
               <Star className="h-3.5 w-3.5 fill-brand-primary text-brand-primary" aria-hidden />
               {th.experience}
             </span>
@@ -96,7 +96,7 @@ export default function HeroSlider() {
             </Link>
             <Link
               href={routes.bulkQuote}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy-dark px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white shadow-md transition hover:bg-brand-secondary active:scale-95"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-secondary px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white shadow-md transition hover:bg-brand-secondary-hover active:scale-95"
             >
               <FileText className="h-4 w-4" aria-hidden />
               {th.bulkQuote}
@@ -160,7 +160,7 @@ export default function HeroSlider() {
         <div className="relative lg:col-span-6">
           <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-3xl bg-brand-tint p-4 shadow-sm sm:min-h-[460px] sm:p-6 lg:p-10">
             {/* dotted background pattern */}
-            <div className="absolute inset-0 bg-[radial-gradient(#6366F1_0.75px,transparent_0.75px)] opacity-20 [background-size:16px_16px]" aria-hidden />
+            <div className="absolute inset-0 bg-[radial-gradient(#FBD5D8_0.75px,transparent_0.75px)] opacity-20 [background-size:16px_16px]" aria-hidden />
             <div className="relative z-10 w-full overflow-hidden rounded-2xl bg-white p-2 shadow-lg">
               <div className="relative h-[240px] overflow-hidden rounded-xl sm:h-[360px]">
                 {SLIDE_IMAGES.map((src, i) => (
@@ -179,17 +179,17 @@ export default function HeroSlider() {
 
             {/* Floating spec badge */}
             {/* On phones the badge sits under the image; from sm up it floats over the bottom edge */}
-            <div className="relative z-20 mt-3 flex w-full flex-col items-start justify-between gap-3 rounded-2xl bg-brand-navy-dark/95 p-4 text-white shadow-xl backdrop-blur-md sm:absolute sm:inset-x-6 sm:bottom-6 sm:mt-0 sm:w-auto sm:flex-row sm:items-center lg:inset-x-10">
+            <div className="relative z-20 mt-3 flex w-full flex-col items-start justify-between gap-3 rounded-2xl bg-white/95 p-5 text-brand-ink shadow-level-3 ring-1 ring-brand-border backdrop-blur-md sm:absolute sm:inset-x-6 sm:bottom-6 sm:mt-0 sm:w-auto sm:flex-row sm:items-center lg:inset-x-10">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-primary shadow-md">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-primary text-white shadow-md">
                   <Layers className="h-5 w-5" aria-hidden />
                 </span>
                 <span>
                   <span className="block font-heading text-[15px] font-bold leading-tight">{slide.statTitle}</span>
-                  <span className="text-xs text-[#DAE2FD]/80">{slide.statDesc}</span>
+                  <span className="text-xs text-brand-muted">{slide.statDesc}</span>
                 </span>
               </div>
-              <span className="shrink-0 rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider">{slide.statTag}</span>
+              <span className="shrink-0 rounded-full bg-brand-accent-soft px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-secondary">{slide.statTag}</span>
             </div>
           </div>
         </div>

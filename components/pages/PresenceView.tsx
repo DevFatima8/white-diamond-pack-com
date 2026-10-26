@@ -24,11 +24,11 @@ export default function PresenceView({ address, whatsapp }: { address: string; w
 
       <section className="mx-auto grid w-full max-w-site gap-8 px-5 py-16 sm:px-6 lg:grid-cols-12 lg:px-12 lg:py-20">
         <Reveal className="lg:col-span-7">
-          <div className="relative h-full overflow-hidden rounded-3xl bg-brand-navy p-6 text-white shadow-level-3 lg:p-8">
+          <div className="relative h-full overflow-hidden rounded-3xl bg-white p-6 text-brand-ink shadow-level-2 ring-1 ring-brand-border lg:p-8">
             <div className="pointer-events-none absolute -end-24 -top-24 h-72 w-72 rounded-full bg-brand-secondary/25 blur-3xl" aria-hidden />
-            <div className="relative flex items-center justify-between gap-3 border-b border-white/10 pb-5">
+            <div className="relative flex items-center justify-between gap-3 border-b border-brand-border pb-5">
               <span className="font-heading text-[15px] font-bold">{tp.mapTitle}</span>
-              <span className="shrink-0 rounded-full bg-brand-secondary px-2.5 py-1 text-xs font-bold uppercase tracking-wider">{tp.mapTag}</span>
+              <span className="shrink-0 rounded-full bg-brand-secondary px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white">{tp.mapTag}</span>
             </div>
             <div className="relative flex justify-center py-6">
               <PakistanMap />
@@ -112,9 +112,9 @@ export default function PresenceView({ address, whatsapp }: { address: string; w
           </div>
           <p className="mt-3 text-xs text-brand-muted">{pr.deliveryNote}</p>
         </div>
-        <div className="rounded-3xl bg-brand-navy p-8 text-white lg:col-span-5">
+        <div className="rounded-3xl bg-brand-tint p-8 text-brand-ink ring-1 ring-brand-border lg:col-span-5">
           <h2 className="font-heading text-2xl font-bold">{pr.distributorTitle}</h2>
-          <p className="mt-3 text-sm leading-6 text-[#DAE2FD]/90">{pr.distributorText}</p>
+          <p className="mt-3 text-sm leading-6 text-brand-muted">{pr.distributorText}</p>
           <Link href={routes.contact} className={pillClass('primary', 'mt-6')}>
             {pr.distributorCta}
             <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden />

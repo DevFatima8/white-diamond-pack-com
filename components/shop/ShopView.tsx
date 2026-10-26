@@ -66,17 +66,17 @@ export default function ShopView(props: ShopViewProps) {
   return (
     <>
       {/* Banner */}
-      <section className="bg-brand-navy text-white">
+      <section className="border-b border-brand-border bg-brand-tint text-brand-ink">
         <div className="mx-auto max-w-site px-5 pb-8 pt-8 sm:px-6 lg:px-12 lg:pb-10">
           <nav aria-label="Breadcrumb" className="mb-5 text-xs">
-            <ol className="flex flex-wrap items-center gap-1.5 text-[#C7D2FE]/80">
+            <ol className="flex flex-wrap items-center gap-1.5 text-brand-muted">
               <li>
-                <Link href={routes.home} className="hover:text-white">{t.nav.home}</Link>
+                <Link href={routes.home} className="hover:text-brand-secondary">{t.nav.home}</Link>
               </li>
               <li aria-hidden>/</li>
               <li>
                 {fixedCategory ? (
-                  <Link href={routes.shop} className="hover:text-white">{ts.breadcrumb}</Link>
+                  <Link href={routes.shop} className="hover:text-brand-secondary">{ts.breadcrumb}</Link>
                 ) : (
                   <span className="rounded-full bg-brand-secondary px-2.5 py-0.5 font-semibold text-white">{ts.breadcrumb}</span>
                 )}
@@ -93,12 +93,12 @@ export default function ShopView(props: ShopViewProps) {
               )}
             </ol>
           </nav>
-          <span className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#C7D2FE]">
+          <span className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-secondary">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" aria-hidden />
             {ts.eyebrow}
           </span>
           <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-[40px] sm:leading-[48px]">{title}</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-[#DAE2FD]/85 sm:text-base">{subtitle}</p>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-brand-muted sm:text-base">{subtitle}</p>
 
           {/* Category pills */}
           <div className="scrollbar-none -mx-5 mt-6 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:px-0">
@@ -106,7 +106,7 @@ export default function ShopView(props: ShopViewProps) {
               href={shopHref(routes.shop, { ...params, category: '' })}
               className={cn(
                 'shrink-0 rounded-full px-4 py-2 text-xs font-semibold transition-colors',
-                !activeCategory ? 'bg-white text-brand-navy' : 'bg-white/10 text-white hover:bg-white/20',
+                !activeCategory ? 'bg-brand-secondary text-white' : 'bg-white text-brand-ink ring-1 ring-brand-border hover:text-brand-secondary',
               )}
             >
               {ts.allProducts}
@@ -118,10 +118,10 @@ export default function ShopView(props: ShopViewProps) {
                 aria-current={activeCategory?.slug === c.slug ? 'page' : undefined}
                 className={cn(
                   'shrink-0 rounded-full px-4 py-2 text-xs font-semibold transition-colors',
-                  activeCategory?.slug === c.slug ? 'bg-white text-brand-navy' : 'bg-white/10 text-white hover:bg-white/20',
+                  activeCategory?.slug === c.slug ? 'bg-brand-secondary text-white' : 'bg-white text-brand-ink ring-1 ring-brand-border hover:text-brand-secondary',
                 )}
               >
-                {catName(c)} <span className="opacity-60">({c.count})</span>
+                {catName(c)}
               </Link>
             ))}
           </div>
@@ -132,10 +132,10 @@ export default function ShopView(props: ShopViewProps) {
         <div className="mx-auto grid max-w-site gap-6 px-5 sm:px-6 lg:grid-cols-[280px_1fr] lg:px-12">
           {/* Desktop filter column */}
           <aside className="hidden space-y-5 lg:block" aria-label={ts.filters}>
-            <div className="rounded-2xl border border-brand-border bg-white p-5 shadow-level-1">{filterPanel}</div>
-            <div className="rounded-2xl bg-brand-navy-dark p-5 text-white">
+            <div className="rounded-2xl border border-brand-border bg-white p-6 shadow-level-1">{filterPanel}</div>
+            <div className="rounded-2xl border border-brand-border bg-brand-tint p-6 text-brand-ink">
               <p className="font-heading text-base font-bold">{ts.bulkTitle}</p>
-              <p className="mt-1 text-xs leading-5 text-[#C7D2FE]/80">{ts.bulkText}</p>
+              <p className="mt-1 text-xs leading-5 text-brand-muted">{ts.bulkText}</p>
               <a
                 href={whatsappLink(whatsapp, t.whatsapp.message)}
                 target="_blank"
@@ -149,7 +149,7 @@ export default function ShopView(props: ShopViewProps) {
 
           <div className="min-w-0">
             {/* Toolbar */}
-            <div className="mb-5 rounded-2xl border border-brand-border bg-white p-3 shadow-level-1 sm:p-4">
+            <div className="mb-5 rounded-2xl border border-brand-border bg-white p-4 shadow-level-1 sm:p-5">
               <div className="flex flex-wrap items-center gap-3">
                 <form action={basePath} method="GET" role="search" className="relative min-w-[200px] flex-1">
                   {/* keep the other filters when searching */}
@@ -206,7 +206,7 @@ export default function ShopView(props: ShopViewProps) {
                         aria-label={v === 'grid' ? ts.gridView : ts.listView}
                         aria-pressed={params.view === v}
                         scroll={false}
-                        className={cn('rounded-full p-1.5', params.view === v ? 'bg-brand-navy text-white' : 'text-brand-muted hover:text-brand-navy')}
+                        className={cn('rounded-full p-1.5', params.view === v ? 'bg-brand-secondary text-white' : 'text-brand-muted hover:text-brand-navy')}
                       >
                         <Icon className="h-4 w-4" aria-hidden />
                       </Link>
@@ -223,7 +223,7 @@ export default function ShopView(props: ShopViewProps) {
                   <Link
                     key={c.label}
                     href={c.href}
-                    className="inline-flex items-center gap-1 rounded-full bg-brand-tint px-2.5 py-1 text-[11px] font-semibold text-brand-secondary hover:bg-[#E0E7FF]"
+                    className="inline-flex items-center gap-1 rounded-full bg-brand-tint px-2.5 py-1 text-[11px] font-semibold text-brand-secondary hover:bg-[#FCE8E9]"
                   >
                     {c.label}
                     <X className="h-3 w-3" aria-label="Remove filter" />
@@ -283,7 +283,7 @@ export default function ShopView(props: ShopViewProps) {
                         aria-current={p === page ? 'page' : undefined}
                         className={cn(
                           'flex h-10 min-w-10 items-center justify-center rounded-full px-3 text-sm font-semibold',
-                          p === page ? 'bg-brand-navy text-white' : 'border border-brand-border bg-white hover:bg-brand-tint',
+                          p === page ? 'bg-brand-secondary text-white' : 'border border-brand-border bg-white hover:bg-brand-tint',
                         )}
                       >
                         {p}
@@ -372,7 +372,6 @@ function FilterPanel({
                 )}
               >
                 <span>{isRTL ? c.nameAr : c.name}</span>
-                <span className="text-xs text-brand-muted">{c.count}</span>
               </Link>
             </li>
           ))}
@@ -414,7 +413,7 @@ function FilterPanel({
             {ts.inStockOnly}
           </label>
         </fieldset>
-        <button type="submit" className="h-10 w-full rounded-full bg-brand-navy text-sm font-bold text-white hover:bg-[#2E2A72]">
+        <button type="submit" className="h-10 w-full rounded-full bg-brand-secondary text-sm font-bold text-white hover:bg-brand-secondary-hover">
           {ts.apply}
         </button>
       </form>
@@ -432,7 +431,7 @@ function ProductRow({ product }: { product: ProductCardData }) {
   const href = productHref(product);
 
   return (
-    <article className="flex gap-4 rounded-2xl border border-brand-border bg-white p-3 shadow-level-1 transition hover:shadow-level-2 sm:p-4">
+    <article className="flex gap-4 rounded-2xl border border-brand-border bg-white p-4 shadow-level-1 transition hover:shadow-level-2 sm:p-5">
       <Link href={href} className="relative h-24 w-28 shrink-0 overflow-hidden rounded-xl bg-brand-surface sm:h-28 sm:w-40" tabIndex={-1} aria-hidden>
         <Image src={product.image || '/images/product-placeholder.png'} alt="" fill sizes="160px" className="object-cover" />
       </Link>

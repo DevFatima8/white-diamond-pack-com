@@ -18,7 +18,7 @@ export default function CartSummary({ subtotal, delivery, children }: { subtotal
   return (
     <div className="space-y-4">
       {delivery.threshold > 0 && delivery.charge > 0 && (
-        <div className="rounded-xl bg-brand-tint p-4">
+        <div className="rounded-xl bg-brand-tint p-5">
           <p className="flex items-center gap-2 text-xs font-semibold text-brand-navy">
             <Truck className="h-4 w-4 text-brand-secondary" aria-hidden />
             {missing > 0 ? fill(tc.freeDeliveryProgress, { amount: formatPrice(missing) }) : tc.freeDeliveryReached}

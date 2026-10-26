@@ -19,7 +19,7 @@ export default function SiteError({ error, reset }: { error: Error & { digest?: 
 
   return (
     <div className="mx-auto flex max-w-lg flex-col items-center px-5 py-24 text-center" role="alert">
-      <div className="mb-4 rounded-full bg-[#FFF1F2] p-4 text-brand-primary">
+      <div className="mb-4 rounded-full bg-[#FDECEC] p-4 text-brand-primary">
         <AlertTriangle className="h-8 w-8" aria-hidden />
       </div>
       <h1 className="font-heading text-2xl font-bold">{isRTL ? 'حدث خطأ ما' : 'Something went wrong'}</h1>

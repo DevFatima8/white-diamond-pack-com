@@ -3,7 +3,7 @@
 import { useLanguage } from '@/context/LanguageContext';
 import { cn } from '@/lib/utils';
 
-/** EN | AR pill. The active language is highlighted in indigo. */
+/** EN | AR pill. The active language is highlighted (soft red on dark, maroon on light). */
 export default function LanguageToggle({ tone = 'dark' }: { tone?: 'dark' | 'light' }) {
   const { locale, setLocale } = useLanguage();
   const options = [
@@ -29,9 +29,11 @@ export default function LanguageToggle({ tone = 'dark' }: { tone?: 'dark' | 'lig
             className={cn(
               'rounded-full px-2.5 py-1 transition-colors',
               active
-                ? 'bg-brand-secondary text-white shadow-sm'
+                ? tone === 'dark'
+                  ? 'bg-brand-accent text-brand-navy shadow-sm' // soft red on a dark background
+                  : 'bg-brand-secondary text-white shadow-sm'
                 : tone === 'dark'
-                  ? 'text-[#C7D2FE] hover:text-white'
+                  ? 'text-[#EFCFD1] hover:text-white'
                   : 'text-brand-secondary hover:text-brand-navy',
             )}
           >

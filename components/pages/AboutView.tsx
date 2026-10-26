@@ -1,9 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BadgeCheck, Eye, Factory, Headphones, Layers, Ruler, Scale, ScanBarcode, ShieldCheck, Sparkles, Target } from 'lucide-react';
+import { Eye, Factory, Headphones, Layers, Ruler, Scale, ScanBarcode, ShieldCheck, Sparkles, Target } from 'lucide-react';
 import { routes } from '@/lib/routes';
+import { GALLERY_GROUPS, type GalleryGroup, type GalleryItem } from '@/lib/gallery-types';
+import { cn } from '@/lib/utils';
 import { Eyebrow, SectionTitle } from '@/components/ui/SectionRail';
 import Reveal from '@/components/ui/Reveal';
 import PageHero from './PageHero';
@@ -15,9 +18,16 @@ const VALUE_ICONS = [ShieldCheck, Scale, Factory, Headphones];
 const QUALITY_ICONS = [Layers, Ruler, Sparkles, ScanBarcode];
 
 /** /about — story, mission & vision, timeline, quality (#quality) and infrastructure (#infrastructure). */
-export default function AboutView({ whatsapp }: { whatsapp: string }) {
-  const { p } = usePageTexts();
+export default function AboutView({ whatsapp, gallery }: { whatsapp: string; gallery: GalleryItem[] }) {
+  const { p, isRTL } = usePageTexts();
   const a = p.about;
+  // Photos from Admin → Gallery; until the admin adds some, the built-in plant photos
+  const photos = gallery.length
+    ? gallery.map((g) => ({ image: g.image, caption: (isRTL && g.captionAr) || g.caption, group: g.group }))
+    : a.gallery;
+  const tabs = GALLERY_GROUPS.filter((g) => photos.some((ph) => ph.group === g));
+  const [tab, setTab] = useState<'all' | GalleryGroup>('all');
+  const shown = tab === 'all' ? photos : photos.filter((ph) => ph.group === tab);
 
   return (
     <>
@@ -41,9 +51,9 @@ export default function AboutView({ whatsapp }: { whatsapp: string }) {
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-brand-tint shadow-level-2">
             <Image src="/images/hero2.png" alt={a.storyImageAlt} fill sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" />
           </div>
-          <div className="absolute -bottom-6 start-6 rounded-2xl bg-brand-navy px-5 py-4 text-white shadow-level-3">
+          <div className="absolute -bottom-6 start-6 rounded-2xl bg-brand-secondary px-5 py-4 text-white shadow-level-3">
             <span className="block font-heading text-3xl font-bold">{a.timeline[0].year}</span>
-            <span className="text-xs text-[#C7D2FE]">{a.timeline[0].title}</span>
+            <span className="text-xs text-white/85">{a.timeline[0].title}</span>
           </div>
         </Reveal>
       </section>
@@ -103,40 +113,27 @@ export default function AboutView({ whatsapp }: { whatsapp: string }) {
         </ol>
       </section>
 
-      {/* Quality & certifications */}
-      <section id="quality" className="scroll-mt-28 bg-brand-navy py-16 text-white lg:py-24">
+      {/* Quality standards (the client holds no certificates — none are claimed) */}
+      <section id="quality" className="scroll-mt-28 bg-brand-tint py-16 text-brand-ink lg:py-24">
         <div className="mx-auto max-w-site px-5 sm:px-6 lg:px-12">
           <div className="max-w-3xl">
-            <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-[#A5B4FC]">{a.qualityEyebrow}</span>
+            <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-brand-secondary">{a.qualityEyebrow}</span>
             <h2 className="font-heading text-[28px] font-bold leading-9 tracking-tight sm:text-[40px] sm:leading-[48px]">{a.qualityTitle}</h2>
-            <p className="mt-4 text-base leading-7 text-[#DAE2FD]/90">{a.qualityText}</p>
+            <p className="mt-4 text-base leading-7 text-brand-muted">{a.qualityText}</p>
           </div>
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {a.qualityPoints.map((q, i) => {
               const Icon = QUALITY_ICONS[i % QUALITY_ICONS.length];
               return (
-                <li key={q.title} className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10">
-                  <Icon className="mb-4 h-7 w-7 text-[#A5B4FC]" aria-hidden />
+                <li key={q.title} className="rounded-2xl bg-white p-6 ring-1 ring-brand-border">
+                  <Icon className="mb-4 h-7 w-7 text-brand-secondary" aria-hidden />
                   <h3 className="font-heading text-base font-bold">{q.title}</h3>
-                  <p className="mt-1.5 text-sm leading-6 text-[#DAE2FD]/80">{q.desc}</p>
+                  <p className="mt-1.5 text-sm leading-6 text-brand-muted">{q.desc}</p>
                 </li>
               );
             })}
           </ul>
 
-          <h3 className="mt-14 font-heading text-xl font-bold">{a.certsTitle}</h3>
-          <ul className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {a.certs.map((c) => (
-              <li key={c.name} className="flex items-center gap-3 rounded-2xl bg-white p-4 text-brand-ink">
-                <BadgeCheck className="h-9 w-9 shrink-0 text-brand-secondary" aria-hidden />
-                <span>
-                  <span className="block font-heading text-sm font-bold" dir="auto">{c.name}</span>
-                  <span className="block text-xs text-brand-muted">{c.desc}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-4 text-xs text-[#C7D2FE]/80">{a.certsNote}</p>
         </div>
       </section>
 
@@ -150,27 +147,48 @@ export default function AboutView({ whatsapp }: { whatsapp: string }) {
           </div>
           <dl className="grid grid-cols-2 gap-4 lg:col-span-5">
             {a.infraFacts.map((f) => (
-              <div key={f.label} className="rounded-2xl bg-brand-tint p-4">
+              <div key={f.label} className="rounded-2xl bg-brand-tint p-5 sm:p-6">
                 <dt className="text-xs text-brand-muted">{f.label}</dt>
                 <dd className="font-heading text-2xl font-bold text-brand-secondary" dir="auto">{f.value}</dd>
               </div>
             ))}
           </dl>
         </div>
-        <ul className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-3">
-          {a.gallery.map((g, i) => (
-            <li key={g.image} className={i === 0 ? 'col-span-2 lg:col-span-2 lg:row-span-2' : undefined}>
-              <figure className="group relative h-full min-h-[160px] overflow-hidden rounded-2xl bg-brand-tint sm:min-h-[220px]">
+        {tabs.length > 1 && (
+          <div className="mt-10 flex flex-wrap gap-2" role="tablist" aria-label={a.infraTitle}>
+            {(['all', ...tabs] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                role="tab"
+                aria-selected={tab === t}
+                onClick={() => setTab(t)}
+                className={cn(
+                  'rounded-full px-4 py-2 text-sm font-semibold transition-colors',
+                  tab === t ? 'bg-brand-secondary text-white' : 'bg-white text-brand-ink ring-1 ring-brand-border hover:text-brand-secondary',
+                )}
+              >
+                {a.galleryTabs[t]}
+              </button>
+            ))}
+          </div>
+        )}
+        <ul className={cn('grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 lg:grid-cols-3', tabs.length > 1 ? 'mt-6' : 'mt-10')}>
+          {shown.map((g, i) => (
+            <li key={g.image + i} className={i === 0 ? 'min-[420px]:col-span-2 lg:col-span-2 lg:row-span-2' : undefined}>
+              <figure className="group relative h-full min-h-[200px] overflow-hidden rounded-2xl bg-brand-tint sm:min-h-[240px]">
                 <Image
                   src={g.image}
-                  alt={g.caption}
+                  alt={g.caption || a.infraTitle}
                   fill
                   sizes={i === 0 ? '(min-width: 1024px) 800px, 100vw' : '(min-width: 1024px) 400px, 50vw'}
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-navy-dark/85 to-transparent px-4 pb-3 pt-10 text-sm font-semibold text-white">
-                  {g.caption}
-                </figcaption>
+                {g.caption && (
+                  <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-navy-dark/85 to-transparent px-4 pb-3 pt-10 text-sm font-semibold text-white">
+                    {g.caption}
+                  </figcaption>
+                )}
               </figure>
             </li>
           ))}

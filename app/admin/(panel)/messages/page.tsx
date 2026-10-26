@@ -55,7 +55,7 @@ export default async function MessagesPage({ searchParams }: { searchParams: Sea
             aria-selected={t.active}
             className={cn(
               'rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
-              t.active ? 'bg-brand-secondary text-white' : 'bg-brand-tint text-brand-secondary hover:bg-[#E0E7FF]',
+              t.active ? 'bg-brand-secondary text-white' : 'bg-brand-tint text-brand-secondary hover:bg-[#FCE8E9]',
             )}
           >
             {t.label}
