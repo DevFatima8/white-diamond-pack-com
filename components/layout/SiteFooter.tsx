@@ -40,6 +40,10 @@ export default function SiteFooter({ categories, settings }: { categories: Categ
         <div>
           <Logo className="h-14" />
           <p className="mt-5 max-w-sm text-sm leading-6 text-brand-muted">{tf.about}</p>
+          <div className="mt-4">
+            <h2 className="text-sm font-semibold text-brand-ink">{tf.serviceAreas}</h2>
+            <p className="mt-1 max-w-sm text-sm leading-6 text-brand-muted">{tf.serviceAreasList}</p>
+          </div>
           {settings.socials.length > 0 && (
             <div className="mt-6">
               <p className="sr-only">{tf.followUs}</p>

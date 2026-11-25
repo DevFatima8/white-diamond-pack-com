@@ -89,6 +89,8 @@ const en = {
   footer: {
     about:
       'Faisalabad-based manufacturer and supplier of aluminium foil, food containers, cling film, baking paper and food-service disposables for businesses and homes across Pakistan.',
+    serviceAreas: 'Service Areas',
+    serviceAreasList: 'Islamabad, Gilgit, Gujranwala, Lahore, Sargodha, Sahiwal, Okara and cities across Azad Kashmir.',
     quickLinks: 'Quick Links',
     categories: 'Product Categories',
     contact: 'Contact & Head Office',
@@ -528,6 +530,8 @@ const ar: Translations = {
   footer: {
     about:
       'مصنّع ومورّد مقره فيصل آباد لورق الألمنيوم وعلب الطعام وأفلام التغليف وورق الخبز ومستلزمات خدمات الطعام للشركات والمنازل في جميع أنحاء باكستان.',
+    serviceAreas: 'مناطق الخدمة',
+    serviceAreasList: 'إسلام آباد، غلغت، گوجرانوالہ، لاهور، سرغودھا، ساهیول، أوكارا ومدن في آزاد كشمير.',
     quickLinks: 'روابط سريعة',
     categories: 'فئات المنتجات',
     contact: 'التواصل والمكتب الرئيسي',
