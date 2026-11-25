@@ -1,32 +1,10 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
-import { Plus_Jakarta_Sans, Outfit, Cairo } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { CartProvider } from '@/context/CartContext';
 import { ToastProvider } from '@/context/ToastContext';
 import type { Locale } from '@/lib/i18n/translations';
-
-const fontSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-});
-
-const fontHeading = Outfit({
-  subsets: ['latin'],
-  variable: '--font-heading',
-  weight: ['500', '600', '700', '800'],
-  display: 'swap',
-});
-
-const fontArabic = Cairo({
-  subsets: ['arabic', 'latin'],
-  variable: '--font-arabic',
-  weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   // Base for absolute URLs in social previews / canonical links. Set NEXT_PUBLIC_SITE_URL in production.
@@ -93,7 +71,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html
       lang={locale}
       dir={isRTL ? 'rtl' : 'ltr'}
-      className={`${fontSans.variable} ${fontHeading.variable} ${fontArabic.variable}`}
     >
       <body className="flex min-h-screen flex-col bg-white font-sans text-brand-ink antialiased">
         <LanguageProvider initialLocale={locale}>
