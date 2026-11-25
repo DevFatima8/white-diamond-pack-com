@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { Boxes, Package, PenTool, Phone, Ruler, Stamp } from 'lucide-react';
+import { contactIconText } from '@/lib/icon-colors';
 import { whatsappLink } from '@/lib/phone';
 import BrandIcon from '@/components/layout/BrandIcon';
 import { Eyebrow, SectionTitle } from '@/components/ui/SectionRail';
@@ -22,7 +23,7 @@ export default function CustomPackagingView({ phone, whatsapp }: { phone: string
     <>
       <PageHero eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
         <a href="#quote" className={pillClass('primary')}>{c.formTitle}</a>
-        <a href={whatsappLink(whatsapp, t.whatsapp.message)} target="_blank" rel="noreferrer" className={pillClass('ghost-dark')}>
+        <a href={whatsappLink(whatsapp, t.whatsapp.message)} target="_blank" rel="noreferrer" className={pillClass('whatsapp')}>
           <BrandIcon name="whatsapp" className="h-4 w-4" />
           {p.common.ctaWhatsapp}
         </a>
@@ -87,7 +88,7 @@ export default function CustomPackagingView({ phone, whatsapp }: { phone: string
           <p className="mt-3 text-base leading-7 text-brand-muted">{c.formText}</p>
           <div className="mt-8 space-y-3">
             <a href={`tel:${phone.replace(/\s/g, '')}`} className="flex items-center gap-3 rounded-2xl bg-brand-tint p-5 text-sm font-bold text-brand-navy hover:bg-[#FCE8E9]">
-              <Phone className="h-5 w-5 text-brand-secondary" aria-hidden />
+              <Phone className={`h-5 w-5 ${contactIconText('phone')}`} aria-hidden />
               <span dir="ltr">{phone}</span>
             </a>
             <a
@@ -96,7 +97,7 @@ export default function CustomPackagingView({ phone, whatsapp }: { phone: string
               rel="noreferrer"
               className="flex items-center gap-3 rounded-2xl bg-brand-tint p-5 text-sm font-bold text-brand-navy hover:bg-[#FCE8E9]"
             >
-              <BrandIcon name="whatsapp" className="h-5 w-5 text-brand-secondary" />
+              <BrandIcon name="whatsapp" className={`h-5 w-5 ${contactIconText('whatsapp')}`} />
               {p.common.ctaWhatsapp}
             </a>
           </div>

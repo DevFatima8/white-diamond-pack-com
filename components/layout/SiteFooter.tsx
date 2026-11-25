@@ -7,6 +7,7 @@ import { fill } from '@/lib/i18n/translations';
 import { whatsappLink } from '@/lib/phone';
 import { categoryHref, routes } from '@/lib/routes';
 import type { CategoryItem } from '@/lib/categories';
+import { contactIconText, socialLinkClasses } from '@/lib/icon-colors';
 import BrandIcon, { type BrandIconName } from './BrandIcon';
 import Logo from './Logo';
 
@@ -45,13 +46,7 @@ export default function SiteFooter({ categories, settings }: { categories: Categ
               <ul className="flex gap-2">
                 {settings.socials.map((s) => (
                   <li key={s.name}>
-                    <a
-                      href={s.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={s.label}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand-secondary shadow-level-1 transition-colors hover:bg-brand-secondary hover:text-white"
-                    >
+                    <a href={s.url} target="_blank" rel="noreferrer" aria-label={s.label} className={socialLinkClasses(s.name)}>
                       <BrandIcon name={s.name} className="h-4 w-4" />
                     </a>
                   </li>
@@ -93,10 +88,36 @@ export default function SiteFooter({ categories, settings }: { categories: Categ
               the address opens Google Maps; WhatsApp opens a chat. */}
           <ul className="space-y-1 text-sm text-brand-muted">
             {[
-              { key: 'address', icon: <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-secondary" aria-hidden />, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`, external: true, label: settings.address },
-              { key: 'phone', icon: <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand-secondary" aria-hidden />, href: `tel:${settings.phone.replace(/\s/g, '')}`, label: <span dir="ltr">{settings.phone}</span> },
-              { key: 'email', icon: <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand-secondary" aria-hidden />, href: `mailto:${settings.email}`, label: <span className="break-all">{settings.email}</span> },
-              { key: 'whatsapp', icon: <BrandIcon name="whatsapp" className="mt-0.5 h-4 w-4 shrink-0 text-brand-secondary" />, href: whatsappLink(settings.whatsapp, t.whatsapp.message), external: true, label: <>{tf.whatsapp} <span dir="ltr">+{settings.whatsapp}</span></> },
+              {
+                key: 'address',
+                icon: <MapPin className={`mt-0.5 h-4 w-4 shrink-0 ${contactIconText('location')}`} aria-hidden />,
+                href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`,
+                external: true,
+                label: settings.address,
+              },
+              {
+                key: 'phone',
+                icon: <Phone className={`mt-0.5 h-4 w-4 shrink-0 ${contactIconText('phone')}`} aria-hidden />,
+                href: `tel:${settings.phone.replace(/\s/g, '')}`,
+                label: <span dir="ltr">{settings.phone}</span>,
+              },
+              {
+                key: 'email',
+                icon: <Mail className={`mt-0.5 h-4 w-4 shrink-0 ${contactIconText('email')}`} aria-hidden />,
+                href: `mailto:${settings.email}`,
+                label: <span className="break-all">{settings.email}</span>,
+              },
+              {
+                key: 'whatsapp',
+                icon: <BrandIcon name="whatsapp" className={`mt-0.5 h-4 w-4 shrink-0 ${contactIconText('whatsapp')}`} />,
+                href: whatsappLink(settings.whatsapp, t.whatsapp.message),
+                external: true,
+                label: (
+                  <>
+                    {tf.whatsapp} <span dir="ltr">+{settings.whatsapp}</span>
+                  </>
+                ),
+              },
             ].map((row) => (
               <li key={row.key}>
                 <a

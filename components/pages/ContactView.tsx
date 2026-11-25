@@ -8,6 +8,7 @@ import { SectionTitle } from '@/components/ui/SectionRail';
 import PageHero from './PageHero';
 import EnquiryForm from './EnquiryForm';
 import InstagramCard from './InstagramCard';
+import { contactCardBorderHover, contactIconTile } from '@/lib/icon-colors';
 import { usePageTexts } from './usePageTexts';
 
 export interface ContactDetails {
@@ -23,17 +24,28 @@ export default function ContactView({ contact, instagram = '' }: { contact: Cont
   const c = p.contact;
   const mapQuery = encodeURIComponent(contact.address);
 
-  const cards: { icon: ReactNode; title: string; value: string; sub?: string; href: string; external?: boolean; ltr?: boolean }[] = [
-    { icon: <Phone className="h-5 w-5" aria-hidden />, title: c.callTitle, value: contact.phone, href: `tel:${contact.phone.replace(/\s/g, '')}`, ltr: true },
+  const cards: {
+    channel: 'phone' | 'whatsapp' | 'email' | 'location';
+    icon: ReactNode;
+    title: string;
+    value: string;
+    sub?: string;
+    href: string;
+    external?: boolean;
+    ltr?: boolean;
+  }[] = [
+    { channel: 'phone', icon: <Phone className="h-5 w-5" aria-hidden />, title: c.callTitle, value: contact.phone, href: `tel:${contact.phone.replace(/\s/g, '')}`, ltr: true },
     {
+      channel: 'whatsapp',
       icon: <BrandIcon name="whatsapp" className="h-5 w-5" />,
       title: c.whatsappTitle,
       value: c.whatsappText,
       href: whatsappLink(contact.whatsapp, t.whatsapp.message),
       external: true,
     },
-    { icon: <Mail className="h-5 w-5" aria-hidden />, title: c.emailTitle, value: contact.email, href: `mailto:${contact.email}`, ltr: true },
+    { channel: 'email', icon: <Mail className="h-5 w-5" aria-hidden />, title: c.emailTitle, value: contact.email, href: `mailto:${contact.email}`, ltr: true },
     {
+      channel: 'location',
       icon: <MapPin className="h-5 w-5" aria-hidden />,
       title: c.visitTitle,
       value: contact.address,
@@ -53,9 +65,11 @@ export default function ContactView({ contact, instagram = '' }: { contact: Cont
               <a
                 href={card.href}
                 {...(card.external && { target: '_blank', rel: 'noreferrer' })}
-                className="group flex h-full items-start gap-4 rounded-2xl border border-brand-border bg-white p-5 shadow-level-2 sm:p-6 transition-colors hover:border-brand-secondary"
+                className={`group flex h-full items-start gap-4 rounded-2xl border border-brand-border bg-white p-5 shadow-level-2 sm:p-6 transition-colors ${contactCardBorderHover(card.channel)}`}
               >
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-tint text-brand-secondary transition-colors group-hover:bg-brand-secondary group-hover:text-white">
+                <span
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors ${contactIconTile(card.channel)}`}
+                >
                   {card.icon}
                 </span>
                 <span className="min-w-0">

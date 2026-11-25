@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowRight, CalendarDays, Check, CreditCard, Hash, MapPin, Phone, Truck } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { fill } from '@/lib/i18n/translations';
+import { contactIconText } from '@/lib/icon-colors';
 import { formatPkMobile, whatsappLink } from '@/lib/phone';
 import { routes } from '@/lib/routes';
 import { formatPrice } from '@/lib/utils';
@@ -56,7 +57,7 @@ export default function OrderConfirmation({ order, bankDetails, whatsapp }: { or
             {to.subtitle.split('{phone}')[1]}
           </p>
           <p className="relative mx-auto mt-4 inline-flex items-center gap-2 rounded-xl bg-brand-tint px-4 py-2 text-xs text-brand-navy">
-            <Phone className="h-3.5 w-3.5 text-brand-secondary" aria-hidden /> {to.callNote}
+            <Phone className={`h-3.5 w-3.5 ${contactIconText('phone')}`} aria-hidden /> {to.callNote}
           </p>
           <div className="relative mt-7 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href={routes.shop} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand-primary px-7 text-sm font-bold text-white shadow-md hover:bg-brand-primary-hover">
@@ -66,7 +67,7 @@ export default function OrderConfirmation({ order, bankDetails, whatsapp }: { or
               href={whatsappLink(whatsapp, waText)}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand-secondary px-7 text-sm font-bold text-white hover:bg-brand-secondary-hover"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-icon-whatsapp px-7 text-sm font-bold text-white hover:bg-icon-whatsapp-hover"
             >
               <BrandIcon name="whatsapp" className="h-4 w-4" /> {to.whatsapp}
             </a>

@@ -140,7 +140,7 @@ export default function ShopView(props: ShopViewProps) {
                 href={whatsappLink(whatsapp, t.whatsapp.message)}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-4 flex h-10 items-center justify-center gap-2 rounded-full bg-brand-primary text-xs font-bold uppercase tracking-wider hover:bg-brand-primary-hover"
+                className="mt-4 flex h-10 items-center justify-center gap-2 rounded-full bg-icon-whatsapp text-xs font-bold uppercase tracking-wider text-white hover:bg-icon-whatsapp-hover"
               >
                 <BrandIcon name="whatsapp" className="h-4 w-4" /> WhatsApp
               </a>

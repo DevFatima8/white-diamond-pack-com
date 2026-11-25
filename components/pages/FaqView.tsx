@@ -59,7 +59,7 @@ export default function FaqView({ whatsapp }: { whatsapp: string }) {
             <h2 className="font-heading text-2xl font-bold">{f.stillTitle}</h2>
             <p className="mt-2 text-sm text-brand-muted">{f.stillText}</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href={whatsappLink(whatsapp, t.whatsapp.message)} target="_blank" rel="noreferrer" className={pillClass('primary')}>
+              <a href={whatsappLink(whatsapp, t.whatsapp.message)} target="_blank" rel="noreferrer" className={pillClass('whatsapp')}>
                 <BrandIcon name="whatsapp" className="h-4 w-4" />
                 {p.common.ctaWhatsapp}
               </a>

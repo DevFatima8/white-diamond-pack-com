@@ -108,14 +108,17 @@ export default function MobileMenu({
         <div className="mt-6 rounded-2xl bg-brand-tint p-4">
           <p className="mb-3 text-sm font-semibold text-brand-navy">{tn.contactTitle}</p>
           <div className="grid grid-cols-2 gap-2">
-            <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="flex h-11 items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-brand-navy">
-              <Phone className="h-4 w-4" aria-hidden /> <span dir="ltr">{contact.phone}</span>
+            <a
+              href={`tel:${contact.phone.replace(/\s/g, '')}`}
+              className="flex h-11 items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-brand-navy"
+            >
+              <Phone className="h-4 w-4 text-icon-phone" aria-hidden /> <span dir="ltr">{contact.phone}</span>
             </a>
             <a
               href={whatsappLink(contact.whatsapp, t.whatsapp.message)}
               target="_blank"
               rel="noreferrer"
-              className="flex h-11 items-center justify-center gap-2 rounded-full bg-brand-secondary text-sm font-semibold text-white"
+              className="flex h-11 items-center justify-center gap-2 rounded-full bg-icon-whatsapp text-sm font-semibold text-white hover:bg-icon-whatsapp-hover"
             >
               <BrandIcon name="whatsapp" className="h-4 w-4" /> WhatsApp
             </a>

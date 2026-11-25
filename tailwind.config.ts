@@ -37,6 +37,20 @@ const config: Config = {
           border: '#F1DFDF',
           surface: '#FFFAFA', // image wells, admin background
         },
+        // Recognisable service / platform colours for contact & social icons only
+        icon: {
+          whatsapp: { DEFAULT: '#25D366', hover: '#1DA851' },
+          email: { DEFAULT: '#EA4335', hover: '#D33426' },
+          phone: { DEFAULT: '#2563EB', hover: '#1D4ED8' },
+          location: { DEFAULT: '#F4511E', hover: '#E64A19' },
+        },
+        social: {
+          facebook: '#1877F2',
+          instagram: '#E4405F',
+          linkedin: '#0A66C2',
+          youtube: '#FF0000',
+          tiktok: '#000000',
+        },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'], // Plus Jakarta Sans

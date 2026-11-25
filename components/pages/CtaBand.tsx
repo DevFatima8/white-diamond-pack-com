@@ -29,7 +29,7 @@ export default function CtaBand({ whatsapp, title, text }: { whatsapp: string; t
             href={whatsappLink(whatsapp, t.whatsapp.message)}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-12 items-center gap-2 rounded-full bg-white/15 px-6 text-sm font-bold text-white ring-1 ring-white/50 transition-colors hover:bg-white/25"
+            className="inline-flex h-12 items-center gap-2 rounded-full bg-icon-whatsapp px-6 text-sm font-bold text-white transition-colors hover:bg-icon-whatsapp-hover"
           >
             <BrandIcon name="whatsapp" className="h-4 w-4" />
             {c.ctaWhatsapp}

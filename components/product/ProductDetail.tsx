@@ -225,7 +225,7 @@ export default function ProductDetail({
                 href={whatsappLink(whatsapp, waText)}
                 target="_blank"
                 rel="noreferrer"
-                className="flex h-12 items-center justify-center gap-2 rounded-full bg-brand-secondary text-sm font-semibold text-white transition hover:bg-brand-secondary-hover"
+                className="flex h-12 items-center justify-center gap-2 rounded-full bg-icon-whatsapp text-sm font-semibold text-white transition hover:bg-icon-whatsapp-hover"
               >
                 <BrandIcon name="whatsapp" className="h-4 w-4" /> {tp.whatsappOrder}
               </a>
