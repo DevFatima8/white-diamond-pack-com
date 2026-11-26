@@ -57,6 +57,17 @@ export const orderRequestSchema = z.object({
 });
 export type OrderRequest = z.input<typeof orderRequestSchema>;
 
+export const orderHistoryLookupSchema = z.object({
+  entries: z
+    .array(
+      z.object({
+        orderNumber: z.string().regex(/^WD-\d{1,9}$/i),
+        token: z.string().min(1).max(64),
+      }),
+    )
+    .max(50),
+});
+
 export const quoteRequestSchema = z.object({
   name: z.string().trim().min(2, 'name').max(120, 'name'),
   phone: pkMobileSchema,
