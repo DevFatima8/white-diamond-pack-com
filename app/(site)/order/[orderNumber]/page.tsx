@@ -4,7 +4,6 @@ import { formatDateTime } from '@/lib/dates';
 import { verifyOrderToken } from '@/lib/order-token';
 import { getSiteSettings } from '@/lib/site-data';
 import OrderConfirmation, { OrderNotFound } from '@/components/checkout/OrderConfirmation';
-import RememberOrder from '@/components/orders/RememberOrder';
 
 export const dynamic = 'force-dynamic';
 // Private page: never index, never send the URL (with its token) to other sites.
@@ -33,9 +32,7 @@ export default async function OrderPage({ params, searchParams }: { params: Para
   }
 
   return (
-    <>
-      <RememberOrder orderNumber={order.orderNumber} token={token!} />
-      <OrderConfirmation
+    <OrderConfirmation
       order={{
         orderNumber: order.orderNumber,
         createdAt: formatDateTime(order.createdAt),
@@ -53,6 +50,5 @@ export default async function OrderPage({ params, searchParams }: { params: Para
       bankDetails={settings.bank_details}
       whatsapp={settings.whatsapp_number}
     />
-    </>
   );
 }

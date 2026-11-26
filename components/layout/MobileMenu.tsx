@@ -93,16 +93,9 @@ export default function MobileMenu({
         </nav>
 
         <Link
-          href={routes.orders}
-          onClick={onClose}
-          className="mt-6 flex h-12 items-center justify-center rounded-full border border-brand-border text-sm font-bold text-brand-navy hover:border-brand-secondary hover:bg-brand-tint"
-        >
-          {tn.orderHistory}
-        </Link>
-        <Link
           href={routes.shop}
           onClick={onClose}
-          className="mt-3 flex h-12 items-center justify-center rounded-full bg-brand-primary text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-primary-hover"
+          className="mt-6 flex h-12 items-center justify-center rounded-full bg-brand-primary text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-primary-hover"
         >
           {tn.shopOnline}
         </Link>

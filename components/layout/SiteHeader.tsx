@@ -15,7 +15,6 @@ import {
   ShieldCheck,
   Search,
   ShoppingBag,
-  ClipboardList,
   X,
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
@@ -165,14 +164,6 @@ export default function SiteHeader({ categories, contact }: { categories: Catego
           <div className="hidden sm:block">
             <LanguageToggle tone="light" />
           </div>
-          <Link
-            href={routes.orders}
-            className="rounded-full p-2 text-brand-ink transition-colors hover:bg-brand-tint hover:text-brand-secondary"
-            aria-label={tn.orderHistoryLabel}
-            title={tn.orderHistory}
-          >
-            <ClipboardList className="h-[22px] w-[22px]" aria-hidden />
-          </Link>
           <button
             type="button"
             onClick={openDrawer}

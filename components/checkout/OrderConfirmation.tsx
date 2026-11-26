@@ -59,15 +59,9 @@ export default function OrderConfirmation({ order, bankDetails, whatsapp }: { or
           <p className="relative mx-auto mt-4 inline-flex items-center gap-2 rounded-xl bg-brand-tint px-4 py-2 text-xs text-brand-navy">
             <Phone className={`h-3.5 w-3.5 ${contactIconText('phone')}`} aria-hidden /> {to.callNote}
           </p>
-          <div className="relative mt-7 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
+          <div className="relative mt-7 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href={routes.shop} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand-primary px-7 text-sm font-bold text-white shadow-md hover:bg-brand-primary-hover">
               {to.continueShopping} <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden />
-            </Link>
-            <Link
-              href={routes.orders}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-brand-border bg-white px-7 text-sm font-bold text-brand-navy hover:border-brand-secondary hover:bg-brand-tint"
-            >
-              {to.viewHistory}
             </Link>
             <a
               href={whatsappLink(whatsapp, waText)}
