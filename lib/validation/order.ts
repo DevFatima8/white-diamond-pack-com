@@ -57,6 +57,20 @@ export const orderRequestSchema = z.object({
 });
 export type OrderRequest = z.input<typeof orderRequestSchema>;
 
+/** Client sends saved order number + token pairs; server verifies each token before returning data. */
+export const orderHistoryLookupSchema = z.object({
+  entries: z
+    .array(
+      z.object({
+        orderNumber: z.string().trim().min(1).max(20),
+        token: z.string().trim().min(1).max(64),
+      }),
+    )
+    .min(1)
+    .max(50),
+});
+export type OrderHistoryLookup = z.input<typeof orderHistoryLookupSchema>;
+
 export const quoteRequestSchema = z.object({
   name: z.string().trim().min(2, 'name').max(120, 'name'),
   phone: pkMobileSchema,

@@ -13,6 +13,7 @@ import { deliveryFor, type DeliverySettings } from '@/lib/delivery';
 import { fill, translations } from '@/lib/i18n/translations';
 import { unitName } from '@/lib/i18n/units';
 import { formatPkMobile } from '@/lib/phone';
+import { orderHistoryStore } from '@/lib/order-history-store';
 import { orderHref, routes } from '@/lib/routes';
 import { cn, formatPrice } from '@/lib/utils';
 import { orderCustomerSchema } from '@/lib/validation/order';
@@ -76,6 +77,7 @@ export default function CheckoutView({ delivery, bankDetails }: { delivery: Deli
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.data) {
         setPlaced(true); // show a spinner instead of the (now empty) cart
+        orderHistoryStore.add(json.data.orderNumber, json.data.token);
         clear(); // the order is saved — empty the cart
         router.replace(orderHref(json.data.orderNumber, json.data.token));
         return; // keep the button busy while the confirmation page loads

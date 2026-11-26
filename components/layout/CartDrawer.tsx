@@ -54,6 +54,13 @@ export default function CartDrawer() {
                 {tc.checkout}
               </Link>
             </div>
+            <Link
+              href={routes.orders}
+              onClick={closeDrawer}
+              className="flex h-10 w-full items-center justify-center text-xs font-semibold text-brand-secondary hover:underline"
+            >
+              {t.nav.orderHistory}
+            </Link>
           </div>
         ) : undefined
       }

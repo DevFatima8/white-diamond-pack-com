@@ -8,6 +8,7 @@ export const routes = {
   shop: '/shop',
   cart: '/cart',
   checkout: '/checkout',
+  orders: '/orders',
   about: '/about',
   quality: '/about#quality',
   infrastructure: '/about#infrastructure',
